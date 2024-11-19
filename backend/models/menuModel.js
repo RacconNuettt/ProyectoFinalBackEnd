@@ -10,6 +10,14 @@ const menuSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  dishes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Dish'
+  }],
+  drinks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Drink'
+  }],
   stock: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Stock',
