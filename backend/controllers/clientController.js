@@ -83,7 +83,7 @@ const deleteClient = async (req, res) => {
 
 module.exports = {
     createClient,
-    getClient,
+    postClient,
     updateClient,
     deleteClient,
 };
