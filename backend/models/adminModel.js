@@ -13,7 +13,12 @@ const adminSchema = new mongoose.Schema({
     adminEmail: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: {
+            validator: function (v) {
+                return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+            }, message: props => `${props.value} no es un correo válido.`
+        }
     }
 }, {
     timestamps: true

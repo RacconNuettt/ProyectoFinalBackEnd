@@ -1,17 +1,17 @@
 const mongoose = require('mongoose'); 
 
 const drinkSchema = new mongoose.Schema({
-    DrinkCategory: {
+    drinkCategory: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'DrinkCategory',
         required: true,
     },
-    Drinkname: {
+    drinkname: {
         type: String,
         required: true,
     },   
     
-    Drinkprice: {
+    drinkprice: {
         type: Number,
         required: true,
     },   
