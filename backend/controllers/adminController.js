@@ -42,7 +42,7 @@ const loginAdmin = async (req, res) => {
         }
   
         const token = jwt.sign({ id: admin._id, adminEmail: admin.adminEmail }, process.env.JWT_SECRET, {
-            expiresIn: "1d",
+            expiresIn: "2h",
         });
 
         res.json({ message: "Inicio de sesión exitoso", token });
@@ -69,7 +69,7 @@ const getAdmin = async (req, res) => {
 const updateAdmin = async (req, res) => {
     try {
         const { id } = req.params;
-        const { adminName, adminPassword, adminEmail } = req.body;
+        const { adminName, adminEmail, adminPassword } = req.body;
         const admin = await Admin.findById(id);
 
         if (!admin) {

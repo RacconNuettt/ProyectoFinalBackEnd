@@ -1,29 +1,31 @@
 const mongoose = require('mongoose');
 
 const stockSchema = new mongoose.Schema({
-  name: {
-    type: String,
+  dish: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Dish',
     required: true,
   },
   quantity: {
     type: Number,
     required: true,
   },
-  dishCategory: {
+
+  drink: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'DishCategory',
+    ref: 'Drink',
     required: true,
   },
-  drinkCategory: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'DrinkCategory'
-  },
-  provider: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Provider',
+  drinkQuantity: {
+    type: Number,
     required: true,
   },
 
+  provider: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Provider',
+  required: true,
+  }
 }, {
   timestamps: true,
 });

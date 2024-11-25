@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const saleSchema = new mongoose.Schema({
-  saleDetails: [{
+  saleDetail: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'SaleDetail',
     required: true,

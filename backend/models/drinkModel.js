@@ -6,12 +6,12 @@ const drinkSchema = new mongoose.Schema({
         ref: 'DrinkCategory',
         required: true,
     },
-    drinkname: {
+    drinkName: {
         type: String,
         required: true,
     },   
     
-    drinkprice: {
+    drinkPrice: {
         type: Number,
         required: true,
     },   

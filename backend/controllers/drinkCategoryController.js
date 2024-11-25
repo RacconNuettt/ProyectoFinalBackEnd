@@ -28,7 +28,7 @@ const getAllDrinksCategory = async (req, res) => {
     }
 }
 
-const getDrinkCategoryByid = async (req, res) => {
+const getDrinkCategoryById = async (req, res) => {
     try {
         const { id } = req.params;
         const category = await DrinkCategory.findById(id);
@@ -81,7 +81,7 @@ const deleteDrinkCategory = async (res, req) => {
 module.exports = {
     createDrinkCategory,
     getAllDrinksCategory,
-    getDrinkCategoryByid,
+    getDrinkCategoryById,
     updateDrinkCategory,
     deleteDrinkCategory,
 };
