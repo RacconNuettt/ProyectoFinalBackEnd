@@ -2,6 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const clientRoute = require('./routes/clientRoute');
+const adminRoute = require('./routes/adminRoute');
+const drinkCategoryRoute = require('./routes/drinkCategoryRoute')
+const drinkRoute = require('./routes/drinkRoute');
+const dishCategoryRoute = require('./routes/dishCategoryRoute');
+const dishRoute = require('./routes/dishRoute');
+const providerRoute = require('./routes/providerRoute');
+const stockRoute = require('./routes/stockRoute');
+const menuRoute = require('./routes/menuRoute');
+const orderDetailRoute = require('./routes/orderDetailRoute');
+const orderRoute = require('./routes/orderRoute')
+const saleDetailRoute = require('./routes/saleDetailRoute')
+const saleRoute = require('./routes/saleRoute');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -12,7 +24,19 @@ app.use(express.json());
 
 connectDB(); 
 
-app.use('/api', clientRoute);
+app.use('/client', clientRoute);
+app.use('/admin', adminRoute);
+app.use('/drinkC', drinkCategoryRoute);
+app.use('/drink', drinkRoute);
+app.use('/dishC', dishCategoryRoute);
+app.use('/provider', providerRoute);
+app.use('/dish', dishRoute);
+app.use('/stock', stockRoute);
+app.use('/menu', menuRoute);
+app.use('/orderDetail', orderDetailRoute);
+app.use('/order', orderRoute);
+app.use('/saleDetail', saleDetailRoute);
+app.use('/sale', saleRoute);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

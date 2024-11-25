@@ -6,15 +6,27 @@ const dishSchema = new mongoose.Schema({
         ref: 'DishCategory',
         required: true,
     },
+    
+    image: {
+        type: String,
+        required: true,
+    },
+
     dishName: {
         type: String,
         required: true,
     },   
+
+    dishDescription: {
+        type: String,
+        require: true,
+    },
     
     dishPrice: {
         type: Number,
         required: true,
-    },   
+    }, 
+    
 }, {
     timestamps: true,
 })

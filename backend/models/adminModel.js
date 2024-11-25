@@ -6,10 +6,6 @@ const adminSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    adminPassword: {
-        type: String,
-        required: true
-    },
     adminEmail: {
         type: String,
         required: true,
@@ -19,7 +15,12 @@ const adminSchema = new mongoose.Schema({
                 return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
             }, message: props => `${props.value} no es un correo válido.`
         }
-    }
+    },
+    adminPassword: {
+        type: String,
+        required: true
+    },
+  
 }, {
     timestamps: true
 });
