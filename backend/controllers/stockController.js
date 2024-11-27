@@ -96,31 +96,32 @@ const updateStock = async (req, res) => {
 
 const deleteStock = async (req, res) => {
     try {
-        const { stockId, itemType } = req.body;
-
-        if (!['dish', 'drink'].includes(itemType)) {
+        const { itemName, itemId } = req.body;
+  
+        if (!['dish', 'drink'].includes(itemName)) {
             return res.status(400).json({ message: "Tipo de artículo inválido, usa 'dish' o 'drink'." });
         }
 
-        const stock = await Stock.findById(stockId);
+        const stock = await Stock.findOne({ [itemName]: itemId });
         if (!stock) {
-            return res.status(404).json({ message: "No se encontró el stock." });
+            return res.status(404).json({ message: `${itemName === 'dish' ? 'Plato' : 'Bebida'} no encontrado en el stock.` });
         }
 
-        if (itemType === 'dish') {
-            stock.dish = null;
-            stock.quantity = 0;
-        } else if (itemType === 'drink') {
-            stock.drink = null;
-            stock.drinkQuantity = 0;
+        if (itemName === 'dish') {
+            stock.dish = null; 
+            stock.quantity = 0; 
+        } else if (itemName === 'drink') {
+            stock.drink = null; 
+            stock.drinkQuantity = 0; 
         }
-
+  
         await stock.save();
-        res.status(200).json({ message: `${itemType} eliminado del stock con éxito`, stock });
+        res.status(200).json({ message: `${itemName} eliminado del stock con éxito`, stock });
     } catch (error) {
         res.status(500).json({ message: "Error al eliminar del stock", error: error.message });
     }
-};
+  };
+  
 
 
 module.exports = {

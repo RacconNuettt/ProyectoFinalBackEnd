@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
+.navbar-custom {
+    background-color: #f8f9fa; 
+    font-family: "Nerko One", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+}
+
+.navbar-brand-custom {
+    color: green;
+    text-transform: uppercase;
+    
+}
+
+.navbar-brand-custom:hover {
+    color: darkgreen;
+    text-decoration: underline;
+}
+
+.navbar-toggler-custom {
+    border-color: green;
+}
+
+.navbar-collapse-custom {
+    margin-top: 10px;
+}
+
+.nav-links-custom .nav-link-custom {
+    color: green; 
+    text-transform: uppercase;
+    margin-right: 20px; 
+}
+
+.nav-links-custom .nav-link-custom:hover {
+    color: darkgreen;
+}
+
+.nav-dropdown-custom .dropdown-menu {
+    background-color: #f8f9fa; 
+}
+
+.form-custom {
+    display: flex;
+    align-items: center;
+}
+
+.form-control-custom {
+    border-radius: 0;
+}
+
+.button-custom {
+    border: 1px solid green;
+    color: green;
+}
+
+.button-custom:hover {
+    background-color: green;
+    color: white;
+}

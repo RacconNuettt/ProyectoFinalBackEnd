@@ -22,7 +22,7 @@ const createOrderDetail = async (req, res) => {
 const getAllOrderDetails = async (req, res) => {
     try {
         const orderDetails = await OrderDetail.find()
-            .populate('drink', 'name price') 
+            .populate('drink', 'name drinkPrice') 
             .populate('dish', 'dishName dishPrice')  
             .populate('client', 'clientname clientemail'); 
 
@@ -37,7 +37,7 @@ const getOrderDetailById = async (req, res) => {
         const { id } = req.params;
 
         const orderDetail = await OrderDetail.findById(id)
-            .populate('drink', 'name price')
+            .populate('drink', 'drinkName drinkPrice')
             .populate('dish', 'dishName dishPrice')
             .populate('client', 'clientname clientemail');
 

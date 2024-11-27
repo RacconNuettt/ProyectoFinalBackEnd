@@ -10,7 +10,6 @@ const createSale = async (req, res) => {
             return res.status(400).json({ message: "Algunos detalles de venta no son válidos" });
         }
 
-        // Calcular el monto total de la venta
         const totalAmount = details.reduce((total, detail) => total + detail.quantity * detail.price, 0);
 
         const newSale = new Sale({

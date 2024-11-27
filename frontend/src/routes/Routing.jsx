@@ -7,7 +7,7 @@ import AboutUs from "../pages/AboutUs"
 import Contacto from "../pages/Contacto"
 import Menu from "../pages/Menu"
 import Order from "../pages/Order"
-import ProtectedRoute from '../routes/ProtectedRoute'; 
+
 
 
 const Routing = () => {
@@ -21,8 +21,7 @@ const Routing = () => {
                 <Route path='/Contacto' element={<Contacto />}></Route>
                 <Route path='/Menu' element={<Menu />}></Route>
                 <Route path='/Order' element={<Order/>}></Route>
-
-                <Route path="/Admin" element={<ProtectedRoute><Admin/></ProtectedRoute>} />
+                <Route path="/Admin" element={<Admin/>}></Route>
             </Routes>
         </Router>
     )

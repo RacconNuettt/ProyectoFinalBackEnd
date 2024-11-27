@@ -1,0 +1,52 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.admin-container {
+    height: 100vh;
+    font-size: 2rem;
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+}
+
+.sidebar {
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 120vh;
+    font-size: 2rem;
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+}
+
+.logo img {
+    display: block;
+    margin: 0 auto;
+}
+
+.main-content {
+    background-color: #00c40d;
+    position: relative;
+    font-size: 2rem;
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+}
+
+.leaf-image {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    height: 100px;
+    width: auto;
+    font-size: 2rem;
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+}
+
+.content {
+    background-color: #f8f9fa;
+    border-radius: 20px;
+    font-size: 2rem;
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+    padding: 20px;
+}

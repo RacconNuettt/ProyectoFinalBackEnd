@@ -4,17 +4,17 @@ const stockSchema = new mongoose.Schema({
   dish: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Dish',
-    required: true,
+    required: null,
   },
   quantity: {
     type: Number,
-    required: true,
+    default: true,
   },
 
   drink: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Drink',
-    required: true,
+    default: null,
   },
   drinkQuantity: {
     type: Number,

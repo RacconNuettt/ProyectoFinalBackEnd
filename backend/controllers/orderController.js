@@ -1,22 +1,46 @@
-const Order = require('../models/orderModel'); 
+const Order = require('../models/orderModel');
 const OrderDetail = require('../models/orderDetailModel');
+
 
 const createOrder = async (req, res) => {
   try {
-    const { orderDetails } = req.body;
+    const { orderDetails, status } = req.body;
 
     if (!orderDetails || orderDetails.length === 0) {
-      return res.status(400).json({ message: 'Debe agregar al menos un detalle de orden' });
+      return res.status(400).json({ message: 'Debe agregar al menos un detalle de la orden' });
+    }
+
+    const details = await OrderDetail.find({ '_id': { $in: orderDetails } })
+      .populate('dish')
+      .populate('drink')
+      .populate('client');
+
+    if (details.length !== orderDetails.length) {
+      return res.status(400).json({ message: 'Uno o más detalles de la orden no son válidos o no existen.' });
     }
 
     const newOrder = new Order({
       orderDetails,
+      status: status || 'Pending',
       totalAmount: 0,
     });
 
-    await newOrder.calculateTotal();
+    let total = 0;
+    details.forEach(detail => {
+      const dishPrice = detail.dish ? detail.dish.dishPrice : 0;
+      const drinkPrice = detail.drink ? detail.drink.drinkPrice : 0;
+
+      total += detail.quantity * dishPrice + detail.quantity * drinkPrice;
+    });
+
+    if (isNaN(total)) {
+      return res.status(400).json({ message: 'Error en el cálculo del total, valores no válidos' });
+    }
+
+    newOrder.totalAmount = total;
 
     await newOrder.save();
+
     res.status(201).json({ message: 'Orden creada exitosamente', order: newOrder });
   } catch (error) {
     res.status(500).json({ message: 'Error al crear la orden', error: error.message });
@@ -24,12 +48,25 @@ const createOrder = async (req, res) => {
 };
 
 const getAllOrders = async (req, res) => {
+
   try {
     const orders = await Order.find()
-      .populate('orderDetails') 
-      .populate('orderDetails.dish')
-      .populate('orderDetails.drink') 
-      .populate('orderDetails.client'); 
+      .populate({
+        path: 'orderDetails',
+        populate: [
+          {
+            path: 'dish',
+            select: 'dishName dishPrice',
+            populate: { path: 'dishCategory', select: 'dishCategoryname' }
+          },
+          {
+            path: 'drink',
+            select: 'drinkName drinkPrice',
+            populate: { path: 'drinkCategory', select: 'drinkCategoryname' }
+          },
+          { path: 'client', select: 'clientname clientemail' },
+        ],
+      });
 
     res.status(200).json(orders);
   } catch (error) {
@@ -37,15 +74,26 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-// Obtener un pedido por ID
 const getOrderById = async (req, res) => {
   try {
     const { id } = req.params;
     const order = await Order.findById(id)
-      .populate('orderDetails')
-      .populate('orderDetails.dish') 
-      .populate('orderDetails.drink')
-      .populate('orderDetails.client'); 
+      .populate({
+        path: 'orderDetails',
+        populate: [
+          {
+            path: 'dish',
+            select: 'dishName dishPrice',
+            populate: { path: 'dishCategory', select: 'dishCategoryname' }
+          },
+          {
+            path: 'drink',
+            select: 'drinkName drinkPrice',
+            populate: { path: 'drinkCategory', select: 'drinkCategoryname' }
+          },
+          { path: 'client', select: 'clientname clientemail' },
+        ],
+      });
 
     if (!order) {
       return res.status(404).json({ message: 'Orden no encontrada' });
@@ -70,7 +118,7 @@ const updateOrderStatus = async (req, res) => {
     const order = await Order.findByIdAndUpdate(
       id,
       { status },
-      { new: true } 
+      { new: true }
     );
 
     if (!order) {

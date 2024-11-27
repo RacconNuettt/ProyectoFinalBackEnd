@@ -1,0 +1,86 @@
+.footer {
+    background-color: #333;
+    color: #fff;
+    font-size: 1.4rem;
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+}
+
+.footer-icon-col {
+    text-align: center;
+}
+
+.footer-icon {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 24px;
+}
+
+.footer-icon-img {
+    font-size: 2rem;
+}
+
+.footer-icon-text {
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+
+#whatsapp {
+    color: #25D366;
+}
+
+#instagram {
+    color: #E4405F;
+}
+
+#phone {
+    color: #34b7f1;
+}
+
+#address {
+    color: #FF5722;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        font-size: 1.2rem; 
+    }
+
+    .footer-icon {
+        font-size: 20px;
+    }
+
+    .footer-icon-text {
+        font-size: 0.8rem; 
+    }
+
+    .footer-icon-col {
+        margin-bottom: 15px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        font-size: 1rem; 
+    }
+
+    .footer-icon {
+        font-size: 18px; 
+    }
+
+    .footer-icon-text {
+        font-size: 0.7rem; 
+    }
+
+    h5 {
+        font-size: 1.2rem; 
+    }
+
+    p {
+        font-size: 0.9rem; 
+    }
+}
