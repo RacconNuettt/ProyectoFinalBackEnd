@@ -1,0 +1,17 @@
+.custom_carousel {
+    background-color: black;
+    color: white;
+}
+
+.custom_carousel .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.custom_carousel img {
+    filter: brightness(0.9);
+    max-height: 500px;
+    width: 20%;
+    object-fit: cover;
+}

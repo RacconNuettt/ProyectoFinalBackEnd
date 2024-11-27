@@ -1,0 +1,56 @@
+#Information-container h1{
+    font-size: 3rem;
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+}
+
+#Information-container p{
+    font-size: 1rem;
+    color: #000000;
+    font-family: 'Nerko One', cursive;
+}
+
+#Information-container h5{
+    color: #008000;
+    font-family: 'Nerko One', cursive;
+}
+
+@media (max-width: 768px) {
+    #Information-container h1 {
+        font-size: 2.5rem; 
+    }
+
+    #Information-container p {
+        font-size: 0.9rem; 
+    }
+
+    #Information-container h5 {
+        font-size: 1.2rem; 
+    }
+
+    .card {
+        margin-bottom: 20px; 
+    }
+}
+
+@media (max-width: 480px) {
+    #Information-container h1 {
+        font-size: 2rem; 
+    }
+
+    #Information-container p {
+        font-size: 0.8rem; 
+    }
+
+    #Information-container h5 {
+        font-size: 1rem; 
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .text-center {
+        font-size: 0.9rem; 
+    }
+}

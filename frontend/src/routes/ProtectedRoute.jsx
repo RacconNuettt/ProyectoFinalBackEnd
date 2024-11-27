@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
@@ -15,4 +15,4 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/Home" />;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoute; */

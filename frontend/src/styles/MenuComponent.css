@@ -1,0 +1,37 @@
+.menu-item {
+    width: 12rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.text-success{
+    font-family: 'Nerko One', cursive;
+}
+
+.menu-item:hover {
+    transform: scale(1.05); 
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); 
+}
+
+.custom-prev-icon, .custom-next-icon {
+    font-size: 2rem;
+    color: green;
+}
+
+.custom-prev-icon:hover, .custom-next-icon:hover {
+    color: darkgreen;
+}
+
+.d-flex {
+    justify-content: space-around;
+}
+
+.letters-container{
+    text-align: center;
+}
+
+.letters-container h2{
+    font-family: "Nerko One", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 35px;
+}

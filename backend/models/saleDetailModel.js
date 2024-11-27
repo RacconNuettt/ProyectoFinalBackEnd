@@ -6,12 +6,7 @@ const saleDetailSchema = new mongoose.Schema({
     ref: 'Order',
     required: true,
   },
-  quantity: {
-    type: Number,
-    required: true,
-    default: 1,
-  },
-  price: {
+  billNumber: {
     type: Number,
     required: true,
   },

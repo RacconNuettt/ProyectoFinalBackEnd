@@ -10,10 +10,6 @@ const saleSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  totalAmount: {
-    type: Number,
-    required: true,
-  },
   paymentMethod: {
     type: String,
     enum: ['Efectivo', 'Tarjeta de debito', 'Sinpe Movil'],
