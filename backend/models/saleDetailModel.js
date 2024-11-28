@@ -10,7 +10,6 @@ const saleDetailSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-
 }, {
   timestamps: true,
 });

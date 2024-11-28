@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/system';
+import { registerClient } from '../services/client';  
 
 const CustomContainer = styled(Container)({
     display: 'flex',
@@ -20,10 +21,9 @@ const FormContainer = styled(Box)({
     color: 'white',
     padding: '2rem',
     borderRadius: '8px',
-    backgroundImage: 'url(src\assets\plantaloginyregister.png',
+    backgroundImage: 'url(src/assets/plantaloginyregister.png)',  // Corregido el error de la ruta
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '100px bottom',
-    
 });
 
 const StyledTextField = styled(TextField)({
@@ -58,9 +58,9 @@ const CustomButton = styled(Button)({
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
-        nombre: '',
-        email: '',
-        password: ''
+        clientname: '',
+        clientemail: '',
+        clientpassword: ''
     });
 
     const navigate = useNavigate(); 
@@ -70,35 +70,22 @@ const RegisterForm = () => {
     };
 
     const validateForm = async () => {
-        const { nombre, email, password } = formData;
+        const { clientname, clientemail, clientpassword } = formData;
 
-        if (!nombre || !email || !password) {
+        if (!clientname || !clientemail || !clientpassword) { 
             toast.error("Todos los campos son obligatorios");
             return false;
         }
-        if (password.length < 8) {
+        if (clientpassword.length < 8) {
             toast.error("La contraseña debe tener al menos 8 caracteres");
             return false;
         }
-        const hasUpperCase = /[A-Z]/.test(password);
-        const hasLowerCase = /[a-z]/.test(password);
-        const hasNumber = /\d/.test(password);
+        const hasUpperCase = /[A-Z]/.test(clientpassword);
+        const hasLowerCase = /[a-z]/.test(clientpassword);
+        const hasNumber = /\d/.test(clientpassword);
 
         if (!hasUpperCase || !hasLowerCase || !hasNumber) {
             toast.error("La contraseña debe contener al menos una mayúscula, una minúscula y un número");
-            return false;
-        }
-
-        const users = await fetch('http://localhost:3008/users')
-            .then(response => response.json());
-
-        if (users.some(user => user.email === email)) {
-            toast.error("Este correo ya está registrado");
-            return false;
-        }
-
-        if (users.some(user => user.nombre === nombre)) {
-            toast.error("Este nombre de usuario ya está en uso");
             return false;
         }
 
@@ -110,12 +97,12 @@ const RegisterForm = () => {
 
         if (await validateForm()) {
             try {
-                await postRegister(formData.nombre, formData.email, formData.password); 
+                const response = await registerClient(formData);
                 toast.success("Usuario registrado exitosamente");
                 setFormData({
-                    nombre: '',
-                    email: '',
-                    password: ''
+                    clientname: '',
+                    clientemail: '',
+                    clientpassword: ''
                 });
                 setTimeout(() => {
                     navigate('/login');
@@ -135,25 +122,25 @@ const RegisterForm = () => {
                     <StyledTextField
                         label="Nombre Completo"
                         placeholder="Nombre"
-                        id="nombre"
-                        value={formData.nombre}
+                        id="clientname"  
+                        value={formData.clientname}
                         onChange={handleChange}
                         fullWidth
                     />
                     <StyledTextField
                         label="Correo Electrónico"
                         placeholder="Email"
-                        id="email"
-                        value={formData.email}
+                        id="clientemail"  // Usamos 'clientemail' como en el estado
+                        value={formData.clientemail}
                         onChange={handleChange}
                         fullWidth
                     />
                     <StyledTextField
                         label="Contraseña"
                         placeholder="Contraseña"
-                        id="password"
+                        id="clientpassword"  // Usamos 'clientpassword' como en el estado
                         type="password"
-                        value={formData.password}
+                        value={formData.clientpassword}
                         onChange={handleChange}
                         fullWidth
                     />

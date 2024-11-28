@@ -6,15 +6,16 @@ const clientSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    clientpassword: {
-        type: String,
-        required: true
-    },
     clientemail: {
         type: String,
         required: true,
         unique: true
-    }
+    },
+    clientpassword: {
+        type: String,
+        required: true
+    },
+  
 }, {
     timestamps: true
 });
