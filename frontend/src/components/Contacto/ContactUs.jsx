@@ -8,12 +8,12 @@ const ContactUs = () => {
     const zoom = 15;
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', fontFamily: 'Nerko one' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', fontFamily: 'Nerko one', color: "#008000"  }}>
             <h1>Puedes encontrarnos en la siguiente direccion</h1>
             <MapContainer
                 center={position}
                 zoom={zoom}
-                style={{ border: 'solid 2px #ffffff', padding: '5px', height: "300px", width: "80%" }}
+                style={{ border: 'solid 2px #008000', padding: '5px', height: "300px", width: "80%" }}
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
