@@ -37,7 +37,6 @@ const HomePage = () => {
                     fontFamily: "'Patrick Hand', cursive",
                     width: 200,
                     height: 200,
-                    backgroundColor: "#008000",
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
@@ -49,9 +48,9 @@ const HomePage = () => {
                     src={logo}
                     alt="El Alamo Logo"
                     style={{
-                        width: "70%",
-                        height: "70%",
-                        objectFit: "contain",
+                        width: "300%",
+                        height: "300%",
+                        objectFit: "cover",
                         borderRadius: "50%",
                     }}
                 />
