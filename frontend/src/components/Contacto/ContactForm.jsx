@@ -94,7 +94,7 @@ const ContactForm = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    sx={{ marginBottom: 2, fontFamily: "'Patrick Hand', cursive", color: "##008000" }}
+                    sx={{ marginBottom: 2, fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
                 />
                 Apellidos
                 <TextField

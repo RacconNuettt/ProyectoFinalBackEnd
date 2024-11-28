@@ -27,7 +27,7 @@ const InformationUs = () => {
                 >
                     Sobre Nosotros
                 </Typography>
-                <Typography variant="body1" align="center" sx={{ marginBottom: 4, lineHeight: 1.8, height: "100%",fontFamily: "'Patrick Hand', cursive", color: "#008000" }}>
+                <Typography variant="body1" align="center" sx={{ marginBottom: 4, lineHeight: 1.8, height: "100%",fontFamily: "'Patrick Hand', cursive", color: "#000000" }}>
                     Bienvenidos a El Álamo, una sodita con corazón costarricense. Desde nuestras raíces, hemos
                     trabajado con pasión para ofrecerles lo mejor de la cocina tradicional costarricense. En
                     El Álamo, cada plato es preparado con ingredientes frescos, locales y una buena dosis de
@@ -59,7 +59,7 @@ const InformationUs = () => {
                                 <Typography variant="body2" color="text.secondary"
                                 sx={{height: "100%",
                                     fontFamily: "'Patrick Hand', cursive",
-                                    color: "#008000" }}
+                                    color: "#000000" }}
                                 >
                                     Somos una sodita que inició como una oportunidad maravillosa que se presentó.
                                     Gracias a nuestros clientes hemos logrado crear una reputación que respalda
@@ -93,7 +93,7 @@ const InformationUs = () => {
                                 <Typography variant="body2" color="text.secondary"
                                 sx={{height: "100%",
                                     fontFamily: "'Patrick Hand', cursive",
-                                    color: "#008000" }}
+                                    color: "#000000" }}
                                 >
                                     
                                     Cada miembro de nuestro equipo comparte una profunda conexión con la cocina, y
@@ -130,7 +130,7 @@ const InformationUs = () => {
                                 <Typography variant="body2" 
                                 sx={{height: "100%",
                                     fontFamily: "'Patrick Hand', cursive",
-                                    color: "#008000" }}
+                                    color: "#000000" }}
                                 >
                                     Nuestro principal objetivo es crear un espacio acogedor donde puedas disfrutar de
                                     sabores auténticos, como los que siempre has amado. Desde un casado bien cargado
