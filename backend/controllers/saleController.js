@@ -10,11 +10,8 @@ const createSale = async (req, res) => {
             return res.status(400).json({ message: "Algunos detalles de venta no son válidos" });
         }
 
-        const totalAmount = details.reduce((total, detail) => total + detail.quantity * detail.price, 0);
-
         const newSale = new Sale({
             saleDetail,
-            totalAmount,
             paymentMethod,
         });
 
@@ -28,7 +25,14 @@ const createSale = async (req, res) => {
 const getAllSales = async (req, res) => {
     try {
         const sales = await Sale.find()
-            .populate('saleDetail')
+            .populate({
+                path: 'saleDetail',
+                populate: [
+                    {
+                        path: 'order'
+                    }
+                ]
+            })
             .sort({ createdAt: -1 });
 
         res.json(sales);
@@ -40,7 +44,15 @@ const getAllSales = async (req, res) => {
 const getSaleById = async (req, res) => {
     try {
         const { id } = req.params;
-        const sale = await Sale.findById(id).populate('saleDetail');
+        const sale = await Sale.findById(id).populate({
+            path: 'saleDetail',
+            populate: [
+                {
+                    path: 'order',
+                    select: 'orderDetails'
+                },
+            ],
+        });
 
         if (!sale) {
             return res.status(404).json({ message: "Venta no encontrada" });

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/system';
+import { loginClient } from '../services/client';
 
 const CustomContainer = styled(Container)({
     display: 'flex',
@@ -20,7 +21,7 @@ const FormContainer = styled(Box)({
     color: 'white',
     padding: '2rem',
     borderRadius: '8px',
-    backgroundImage: 'url(../assets/plantaloginyregister.png)',
+    backgroundImage: 'url(src/assets/plantaloginyregister.png)', 
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '100px bottom',
 });
@@ -56,38 +57,31 @@ const CustomButton = styled(Button)({
 });
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [clientemail, setEmail] = useState('');
+    const [clientpassword, setPassword] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!email || !password) {
+        if (!clientemail || !clientpassword) {
             toast.error("Por favor completa todos los campos");
             return;
         }
 
+        const loginData = { clientemail, clientpassword }; 
+
         try {
-            const response = await fetch('http://localhost:3008/users');
-            const users = await response.json();
+            const response = await loginClient(loginData);
+            const clients = await response.json();
 
-            const user = users.find(user => user.email === email && user.password === password);
+            const client = clients.find(client => client.clientemail === clientemail && client.clientpassword === clientpassword);
 
-            if (user) {
-                if (email === 'admin@gmail.com' && password === 'Admin1234') {
-                    localStorage.setItem('isAuthenticated', true);
-                    localStorage.setItem('isAdmin', true);
-                    setTimeout(() => navigate('/Admin'), 1500);
-                    toast.success("Bienvenida devuelta Reina Isabel!");
-                } else {
-                    localStorage.setItem('isAuthenticated', true);
-                    localStorage.setItem('isAdmin', false);
-                    setTimeout(() => navigate('/Home'), 1500);
-                    toast.success("Inicio de sesión exitoso!");
-                }
-            } else {
+            if(!client){
                 toast.error("Usuario o contraseña incorrectos");
+            } else {
+                toast.success("Inicio de sesión exitoso!");
+                navigate('/home'); 
             }
         } catch (error) {
             toast.error("Error al conectar con el servidor");
@@ -105,17 +99,17 @@ const LoginForm = () => {
                     <StyledTextField
                         label="Correo Electrónico"
                         placeholder="Email"
-                        id="email"
-                        value={email}
+                        id="clientemail"
+                        value={clientemail} 
                         onChange={(e) => setEmail(e.target.value)}
                         fullWidth
                     />
                     <StyledTextField
                         label="Contraseña"
                         placeholder="Contraseña"
-                        id="password"
+                        id="clientpassword"
                         type="password"
-                        value={password}
+                        value={clientpassword} 
                         onChange={(e) => setPassword(e.target.value)}
                         fullWidth
                     />
