@@ -22,7 +22,6 @@ const Header = () => {
     return (
         <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#008000" }}>
             <Toolbar>
-                {/* Título y enlaces (Desktop y Tablet) */}
                 <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: "center" }}>
                     <Typography
                         variant="h6"
@@ -95,7 +94,6 @@ const Header = () => {
                     </Button>
                 </Box>
 
-                {/* Menú hamburguesa (Solo en móviles) */}
                 <IconButton
                     edge="end"
                     aria-controls="menu-appbar"
