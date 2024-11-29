@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const URL = import.meta.env.VITE_API_URL;
+
 const registerClient = async (clientData) => {
     try {
-        const response = await axios.post('http://localhost:3001/client/register', clientData);  
+        const response = await axios.post(`${URL}/client/register`, clientData);  
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al registrar el cliente" };
@@ -11,7 +13,7 @@ const registerClient = async (clientData) => {
 
 const loginClient = async (loginData) => {
     try {
-        const response = await axios.post('http://localhost:3001/client/login', loginData);  
+        const response = await axios.post(`${URL}/client/login`, loginData);  
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al iniciar sesión" };

@@ -1,25 +1,25 @@
 const mongoose = require('mongoose'); 
 
 const dishSchema = new mongoose.Schema({
-    dishCategory: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'DishCategory',
-        required: true,
-    },
     
-    image: {
-        type: String,
-        required: true,
-    },
-
     dishName: {
         type: String,
         required: true,
     },   
 
+    dishCategory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'DishCategory',
+        required: true,
+    },
+
     dishDescription: {
         type: String,
         require: true,
+    },
+    image: {
+        type: String,
+        required: true,
     },
     
     dishPrice: {

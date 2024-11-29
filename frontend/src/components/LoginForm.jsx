@@ -73,17 +73,20 @@ const LoginForm = () => {
 
         try {
             const response = await loginClient(loginData);
-            const clients = await response.json();
+            console.log('Respuesta del servidor:', response);
 
-            const client = clients.find(client => client.clientemail === clientemail && client.clientpassword === clientpassword);
+            if (response && response.token) {
+               
+                localStorage.setItem('token', response.token);
 
-            if(!client){
-                toast.error("Usuario o contraseña incorrectos");
-            } else {
                 toast.success("Inicio de sesión exitoso!");
+
                 navigate('/home'); 
+            } else {
+                toast.error("Usuario o contraseña incorrectos");
             }
         } catch (error) {
+            console.error("Error al conectar con el servidor:", error);
             toast.error("Error al conectar con el servidor");
         }
     };
