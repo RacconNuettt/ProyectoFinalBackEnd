@@ -1,11 +1,16 @@
 const mongoose = require('mongoose'); 
 
 const dishSchema = new mongoose.Schema({
-    
+
     dishName: {
         type: String,
         required: true,
     },   
+
+    dishDescription: {
+        type: String,
+        require: true,
+    },
 
     dishCategory: {
         type: mongoose.Schema.Types.ObjectId,
@@ -13,19 +18,16 @@ const dishSchema = new mongoose.Schema({
         required: true,
     },
 
-    dishDescription: {
-        type: String,
-        require: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
-    
     dishPrice: {
         type: Number,
         required: true,
     }, 
+    
+    image: {
+        type: String,
+        required: true,
+    },
+
     
 }, {
     timestamps: true,
