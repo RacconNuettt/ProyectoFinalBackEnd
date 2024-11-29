@@ -3,7 +3,7 @@ const DishCategory = require('../models/dishCategoryModel');
 
 const createDish = async (req, res) => {
     try {
-        const { dishCategory, image, dishName, dishDescription, dishPrice } = req.body;
+        const { dishName, dishDescription, dishCategory, dishPrice, image} = req.body;
 
         const categoryExists = await DishCategory.findById(dishCategory);
         if (!categoryExists) {
@@ -11,11 +11,11 @@ const createDish = async (req, res) => {
         }
 
         const newDish = new Dish({
-            dishCategory,
-            image,
             dishName,
             dishDescription,
+            dishCategory,
             dishPrice,
+            image,
         });
 
         await newDish.save();
@@ -52,7 +52,7 @@ const getDishById = async (req, res) => {
 const updateDish = async (req, res) => {
     try {
         const { id } = req.params;
-        const { dishCategory, image, dishName, dishDescription, dishPrice } = req.body;
+        const { dishName, dishDescription, dishCategory, dishPrice, image} = req.body;
 
         const dish = await Dish.findById(id);
         if (!dish) {
@@ -67,11 +67,11 @@ const updateDish = async (req, res) => {
             dish.dishCategory = dishCategory;
         }
 
-        if (image) dish.image = image;
         if (dishName) dish.dishName = dishName;
         if (dishDescription) dish.dishDescription = dishDescription;
         if (dishPrice) dish.dishPrice = dishPrice;
-
+        if (image) dish.image = image;
+        
         await dish.save();
         res.status(200).json({ message: "Plato actualizado", dish });
     } catch (error) {
@@ -79,7 +79,6 @@ const updateDish = async (req, res) => {
     }
 };
 
-// Eliminar un plato por ID
 const deleteDish = async (req, res) => {
     try {
         const { id } = req.params;
