@@ -59,8 +59,16 @@ const Header = () => {
                     >
                         Menú
                     </Typography>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{ cursor: "pointer", mr: 2, fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
+                        onClick={() => (window.location.href = "/User")}
+                    >
+                        Perfil
+                    </Typography>
                 </Box>
-
                 {/* Búsqueda */}
                 <Box sx={{ display: "flex", alignItems: "center", flexGrow: { xs: 1, md: 0 } }}>
                     <TextField
@@ -93,7 +101,6 @@ const Header = () => {
                         Search
                     </Button>
                 </Box>
-
                 <IconButton
                     edge="end"
                     aria-controls="menu-appbar"
@@ -104,7 +111,6 @@ const Header = () => {
                     <MenuIcon />
                 </IconButton>
             </Toolbar>
-
             {/* Menú desplegable para móviles */}
             {mobileMenuOpen && (
                 <Box
@@ -120,6 +126,7 @@ const Header = () => {
                     <MenuItem onClick={() => (window.location.href = "/AboutUs")}>Quienes Somos</MenuItem>
                     <MenuItem onClick={() => (window.location.href = "/Contacto")}>Contáctenos</MenuItem>
                     <MenuItem onClick={() => (window.location.href = "/Menu")}>Menú</MenuItem>
+                    <MenuItem onClick={() => (window.location.href = "/User")}>Perfil</MenuItem>
                 </Box>
             )}
         </AppBar>
