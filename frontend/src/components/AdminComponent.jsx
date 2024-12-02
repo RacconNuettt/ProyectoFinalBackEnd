@@ -18,6 +18,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  styled,
 } from '@mui/material';
 import { FaHome, FaFileAlt, FaBell, FaSignOutAlt, FaUserAlt, FaList } from 'react-icons/fa';
 
@@ -75,7 +76,7 @@ const AdminPage = () => {
   const renderOpciones = () => (
     <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
       <Typography variant="h5" gutterBottom>
-        Crear Categorías y Bebidas
+        Categorías y Bebidas
       </Typography>
 
       <Tabs
@@ -170,31 +171,52 @@ const AdminPage = () => {
   );
 
   const renderAdministradoresClientes = () => (
+    <>
     <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
-      <Typography variant="h5" gutterBottom>
-        Administradores y Clientes
+      <Typography variant="h5" gutterBottom fontFamily={"'Patrick Hand', cursive"}>
+        Administradores
       </Typography>
       <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 2 }}>
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
             <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Rol</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Nombre</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Email</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Rol</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>Admin 1</TableCell>
-              <TableCell>admin1@example.com</TableCell>
-              <TableCell>Administrador</TableCell>
-              <TableCell>Editar | Eliminar</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Admin 1</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>admin@gmail.com</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Administrador</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Editar | Eliminar</TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
     </Card>
+    <Card sx={{p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
+      <Typography variant="h5" gutterBottom fontFamily={"'Patrick Hand', cursive"}>
+        Clientes
+      </Typography>
+      <TableContainer component={Paper} sx={{mt: 3, boxShadow: 2}}>
+        <Table>
+          <TableHead sx={{ backgroundColor: '#f5f5f5'}}>
+            <TableRow>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Nombre</TableCell>
+              <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Correo</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>Jose Daniel</TableCell>
+            <TableCell sx={{fontFamily:"'Patrick Hand', cursive"}}>jgonzalezfuentes0@gmail.com</TableCell>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Card>
+    </>
   );
 
   const content = () => {
@@ -259,26 +281,26 @@ const AdminPage = () => {
           >
             <Typography
               variant="h6"
-              sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold' }}
+              sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold',fontFamily: "'Patrick Hand', cursive" }}
             >
               Admin Panel
             </Typography>
-            <Button fullWidth startIcon={<FaHome />} sx={{ color: 'white', mb: 2 }} onClick={() => optionMenu('Inicio')}>
+            <Button fullWidth startIcon={<FaHome />} sx={{ color: 'white', mb: 2,fontFamily: "'Patrick Hand', cursive" }} onClick={() => optionMenu('Inicio')}>
               Inicio
             </Button>
-            <Button fullWidth startIcon={<FaFileAlt />} sx={{ color: 'white', mb: 2 }} onClick={() => optionMenu('Almacén')}>
+            <Button fullWidth startIcon={<FaFileAlt />} sx={{ color: 'white', mb: 2,fontFamily: "'Patrick Hand', cursive" }} onClick={() => optionMenu('Almacén')}>
               Almacén
             </Button>
-            <Button fullWidth startIcon={<FaBell />} sx={{ color: 'white', mb: 2 }} onClick={() => optionMenu('Órdenes')}>
+            <Button fullWidth startIcon={<FaBell />} sx={{ color: 'white', mb: 2,fontFamily: "'Patrick Hand', cursive" }} onClick={() => optionMenu('Órdenes')}>
               Órdenes
             </Button>
-            <Button fullWidth startIcon={<FaUserAlt />} sx={{ color: 'white', mb: 2 }} onClick={() => optionMenu('Administradores')}>
+            <Button fullWidth startIcon={<FaUserAlt />} sx={{ color: 'white', mb: 2,fontFamily: "'Patrick Hand', cursive" }} onClick={() => optionMenu('Administradores')}>
               Administradores
             </Button>
-            <Button fullWidth startIcon={<FaList />} sx={{ color: 'white', mb: 2 }} onClick={() => optionMenu('Opciones')}>
+            <Button fullWidth startIcon={<FaList />} sx={{ color: 'white', mb: 2,fontFamily: "'Patrick Hand', cursive" }} onClick={() => optionMenu('Opciones')}>
               Opciones
             </Button>
-            <Button fullWidth startIcon={<FaSignOutAlt />} sx={{ color: 'white' }} onClick={() => optionMenu('Salir')}>
+            <Button fullWidth startIcon={<FaSignOutAlt />} sx={{ color: 'white',fontFamily: "'Patrick Hand', cursive" }} onClick={() => optionMenu('Salir')}>
               Salir
             </Button>
           </Grid>
