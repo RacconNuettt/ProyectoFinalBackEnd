@@ -7,6 +7,7 @@ import AboutUs from "../pages/AboutUs"
 import Contacto from "../pages/Contacto"
 import Menu from "../pages/Menu"
 import Order from "../pages/Order"
+import User from "../pages/User"
 
 
 
@@ -22,6 +23,7 @@ const Routing = () => {
                 <Route path='/Menu' element={<Menu />}></Route>
                 <Route path='/Order' element={<Order/>}></Route>
                 <Route path="/Admin" element={<Admin/>}></Route>
+                <Route path="/User" element={<User/>}></Route>
             </Routes>
         </Router>
     )
