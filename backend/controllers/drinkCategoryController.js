@@ -25,8 +25,8 @@ const getAllDrinksCategory = async (req, res) => {
         res.json(categories);
     } catch (error) {
         res.status(500).json({ message: "Error al obtener las categorias", error: error.message })
-    }
-}
+    };
+};
 
 const getDrinkCategoryById = async (req, res) => {
     try {
@@ -35,12 +35,12 @@ const getDrinkCategoryById = async (req, res) => {
 
         if (!category) {
             return res.status(404).json({ message: "categoria no encontrada"});
-        }
+        };
 
         res.json(category);
     } catch (error) {
         res.status(500).json({ message: "Error al obtener la categoria", error: error.message });
-    }
+    };
 };
 
 const updateDrinkCategory = async (req, res) => {
@@ -51,7 +51,7 @@ const updateDrinkCategory = async (req, res) => {
         const category = await DrinkCategory.findById(id);
         if (!category) {
             return res.status(404).json({ message: "Categoria no encontrada"});
-        }
+        };
 
         if (drinkCategoryname) category.DrinkCategory = drinkCategoryname;
 
@@ -60,23 +60,24 @@ const updateDrinkCategory = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ message: "Error al actualizar la categoria", error: error.message });
-    }
+    };
 };
 
-const deleteDrinkCategory = async (res, req) => {
+const deleteDrinkCategory = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const category = await DrinkCategory.findByIdAndDelete;
+        const category = await DrinkCategory.findByIdAndDelete(id);
+
         if (!category) {
             return res.status(400).json({ message: "Categoria no encontrada" });
-        }
+        };
 
         res.json({ message: "Categoria eliminada" });
     } catch (error) {
         res.status(500).json({ message: "Error al eliminar la categoria", error: error.message})
-    }
-}
+    };
+};
 
 module.exports = {
     createDrinkCategory,
