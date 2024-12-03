@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.post('/', authMiddleware, createDishCategory);
+router.post('/', createDishCategory);
 router.get('/', getAllDishCategories);
 router.get('/:id', getDishCategoryById);
 router.put('/:id', updateDishCategory);
