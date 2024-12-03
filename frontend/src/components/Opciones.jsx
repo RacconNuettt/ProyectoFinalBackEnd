@@ -1,42 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Typography, Tabs, Tab, Box, TextField, Button, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';  // Asegúrate de importar el ToastContainer
+import {
+  Card, Typography, Tabs, Tab, Box, TextField, Button, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, MenuItem, Select, FormControl, InputLabel,
+} from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { postDishCategory, getDishCategory, deleteDishCategory } from '../services/Dishcategory';
 import { postDrinkCategory, getDrinkCategory, deleteDrinkCategory } from '../services/Drinkcategory';
+import { postDrink, getDrink, putDrink, deleteDrink } from '../services/Drink';
 
 const Opciones = () => {
   const [tab, setTab] = useState(0);
   const [newCategory, setNewCategory] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [categoryType, setCategoryType] = useState('Platillo'); 
+  const [categories, setCategories] = useState({ platillos: [], bebidas: [] });
+  const [categoryType, setCategoryType] = useState('Platillo');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newDrinkName, setNewDrinkName] = useState('');
   const [newDrinkPrice, setNewDrinkPrice] = useState('');
+  const [drinks, setDrinks] = useState([]);
 
-  // Cargar las categorías al cambiar de pestaña
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const dishCategories = await getDishCategory();
-        const drinkCategories = await getDrinkCategory();
-        setCategories({
-          platillos: dishCategories,
-          bebidas: drinkCategories,
-        });
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-        toast.error('Error al obtener categorías.');
-      }
-    };
     fetchCategories();
+    fetchDrinks();
   }, []);
 
-  // Crear categoría
+  const fetchCategories = async () => {
+    try {
+      const dishCategories = await getDishCategory();
+      const drinkCategories = await getDrinkCategory();
+      setCategories({ platillos: dishCategories, bebidas: drinkCategories });
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      toast.error('Error al obtener categorías.');
+    }
+  };
+
+  const fetchDrinks = async () => {
+    try {
+      const drinks = await getDrink();
+      setDrinks(drinks);
+    } catch (error) {
+      console.error('Error fetching drinks:', error);
+      toast.error('Error al obtener bebidas.');
+    }
+  };
+
   const handleCreateCategory = async () => {
     if (newCategory.trim()) {
       try {
-        const categoryData = { name: newCategory }; 
         if (categoryType === 'Platillo') {
           await postDishCategory({ dishCategoryname: newCategory });
         } else {
@@ -52,7 +62,6 @@ const Opciones = () => {
     }
   };
 
-  // Eliminar categoría
   const handleDeleteCategory = async (id) => {
     try {
       if (categoryType === 'Platillo') {
@@ -68,20 +77,20 @@ const Opciones = () => {
     }
   };
 
-  // Crear bebida
   const handleCreateDrink = async () => {
     if (newDrinkName.trim() && newDrinkPrice > 0 && selectedCategory) {
       try {
         const drinkData = {
-          name: newDrinkName,
-          price: newDrinkPrice,
-          category: selectedCategory,
+          drinkName: newDrinkName,
+          drinkPrice: newDrinkPrice,
+          drinkCategory: selectedCategory,
         };
-        // Aquí deberías enviar la bebida a la API (reemplazar con tu lógica)
+        await postDrink(drinkData);
         toast.success('Bebida creada correctamente.');
         setNewDrinkName('');
         setNewDrinkPrice('');
         setSelectedCategory('');
+        fetchDrinks();
       } catch (error) {
         console.error('Error creating drink:', error);
         toast.error('Error al crear la bebida.');
@@ -91,18 +100,25 @@ const Opciones = () => {
     }
   };
 
-  // Función para recargar las categorías
-  const fetchCategories = async () => {
+  const handleDeleteDrink = async (id) => {
     try {
-      const dishCategories = await getDishCategory();
-      const drinkCategories = await getDrinkCategory();
-      setCategories({
-        platillos: dishCategories,
-        bebidas: drinkCategories,
-      });
+      await deleteDrink(id);
+      toast.success('Bebida eliminada correctamente.');
+      fetchDrinks();
     } catch (error) {
-      console.error('Error fetching categories:', error);
-      toast.error('Error al obtener categorías.');
+      console.error('Error deleting drink:', error);
+      toast.error('Error al eliminar la bebida.');
+    }
+  };
+
+  const handleEditDrink = async (id) => {
+    try {
+      await putDrink(id);
+      toast.success('Bebida actualizada correctamente.');
+      fetchDrinks();
+    } catch (error) {
+      console.error('Error updating drink:', error);
+      toast.error('Error al actualizar la bebida.');
     }
   };
 
@@ -120,12 +136,9 @@ const Opciones = () => {
         {tab === 0 && (
           <>
             <Typography variant="h6" gutterBottom>
-              Categorías Generales
-            </Typography>
-            <Typography variant="h6" gutterBottom>
               Platillos
             </Typography>
-            <TableContainer component={Paper} sx={{ mt: 2 }}>
+            <TableContainer component={Paper}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -134,9 +147,9 @@ const Opciones = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {categories.platillos && categories.platillos.map((category) => (
+                  {categories.platillos.map((category) => (
                     <TableRow key={category._id}>
-                      <TableCell>{category.dishCategoryname}</TableCell>  {/* Asegúrate de acceder al nombre correcto */}
+                      <TableCell>{category.dishCategoryname}</TableCell>
                       <TableCell>
                         <Button variant="contained" color="error" onClick={() => handleDeleteCategory(category._id)}>
                           Eliminar
@@ -151,7 +164,7 @@ const Opciones = () => {
             <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
               Bebidas
             </Typography>
-            <TableContainer component={Paper} sx={{ mt: 2 }}>
+            <TableContainer component={Paper}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -160,7 +173,7 @@ const Opciones = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {categories.bebidas && categories.bebidas.map((category) => (
+                  {categories.bebidas.map((category) => (
                     <TableRow key={category._id}>
                       <TableCell>{category.drinkCategoryname}</TableCell>
                       <TableCell>
@@ -188,20 +201,19 @@ const Opciones = () => {
               value={newCategory}
               onChange={(e) => setNewCategory(e.target.value)}
             />
-            <Button variant="contained" onClick={handleCreateCategory}>
-              Agregar
-            </Button>
-            <FormControl fullWidth sx={{ mt: 3 }}>
+            <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>Tipo de Categoría</InputLabel>
               <Select
                 value={categoryType}
-                label="Tipo de Categoría"
                 onChange={(e) => setCategoryType(e.target.value)}
               >
                 <MenuItem value="Platillo">Platillo</MenuItem>
                 <MenuItem value="Bebida">Bebida</MenuItem>
               </Select>
             </FormControl>
+            <Button variant="contained" onClick={handleCreateCategory}>
+              Agregar
+            </Button>
           </>
         )}
 
@@ -229,10 +241,9 @@ const Opciones = () => {
               <InputLabel>Categoría</InputLabel>
               <Select
                 value={selectedCategory}
-                label="Categoría"
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                {categories.bebidas && categories.bebidas.map((category) => (
+                {categories.bebidas.map((category) => (
                   <MenuItem key={category._id} value={category._id}>
                     {category.drinkCategoryname}
                   </MenuItem>
@@ -242,6 +253,49 @@ const Opciones = () => {
             <Button variant="contained" onClick={handleCreateDrink}>
               Crear Bebida
             </Button>
+
+            <Typography variant="h6" sx={{ mt: 3 }} gutterBottom>
+              Lista de Bebidas
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Nombre</TableCell>
+                    <TableCell>Precio</TableCell>
+                    <TableCell>Categoría</TableCell>
+                    <TableCell>Acciones</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {drinks.map((drink) => (
+                    <TableRow key={drink._id}>
+                      <TableCell>{drink.drinkName}</TableCell>
+                      <TableCell>${drink.drinkPrice}</TableCell>
+                      <TableCell>{drink.drinkCategory?.drinkCategoryname}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          sx={{ mr: 1 }}
+                          onClick={() => handleEditDrink(drink._id)}
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => handleDeleteDrink(drink._id)}
+                        >
+                          Eliminar
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+
+              </Table>
+            </TableContainer>
           </>
         )}
       </Box>
