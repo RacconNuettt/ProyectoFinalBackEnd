@@ -22,7 +22,7 @@ const loginClient = async (loginData) => {
 
 const getClientById = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:3001/client/${id}`);
+        const response = await axios.get(`${URL}/client/${id}`);
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al obtener el cliente" };

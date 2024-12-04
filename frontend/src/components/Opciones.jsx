@@ -271,7 +271,7 @@ const Opciones = () => {
                   {drinks.map((drink) => (
                     <TableRow key={drink._id}>
                       <TableCell>{drink.drinkName}</TableCell>
-                      <TableCell>${drink.drinkPrice}</TableCell>
+                      <TableCell>₡{drink.drinkPrice}</TableCell>
                       <TableCell>{drink.drinkCategory?.drinkCategoryname}</TableCell>
                       <TableCell>
                         <Button

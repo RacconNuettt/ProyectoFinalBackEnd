@@ -10,7 +10,7 @@ import Order from "../pages/Order";
 import User from "../pages/User";
 import Almacen from "../components/Almacen";
 import Ordenes from "../components/Ordenes";
-import Administradores from "../components/Administradores";
+import Clientes from "../components/Clientes";
 import Opciones from "../components/Opciones";
 
 const Routing = () => {
@@ -27,7 +27,7 @@ const Routing = () => {
         <Route path="/Admin" element={<Admin />}>
           <Route path="almacen" element={<Almacen />} />
           <Route path="ordenes" element={<Ordenes />} />
-          <Route path="administradores" element={<Administradores />} />
+          <Route path="clientes" element={<Clientes />} />
           <Route path="opciones" element={<Opciones />} />
         </Route>
         <Route path="/User" element={<User />} />
