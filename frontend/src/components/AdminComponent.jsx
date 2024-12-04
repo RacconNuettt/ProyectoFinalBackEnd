@@ -77,9 +77,9 @@ const AdminPage = () => {
               startIcon={<FaUserAlt />}
               sx={{ color: 'white', mb: 2 }}
               component={Link}
-              to="/admin/administradores"
+              to="/admin/clientes"
             >
-              Administradores
+              Clientes
             </Button>
             <Button
               fullWidth
