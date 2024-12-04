@@ -70,17 +70,16 @@ const UserPage = () => {
             </Typography>
 
             {/* Información de usuario */}
-            <Box
-                sx={{
-                    backgroundColor: '#f0f0f0',
-                    p: 2,
-                    mb: 2,
-                    borderRadius: 2,
-                    boxShadow: 2,
-                }}
-            >
-                <Typography variant="h6">Datos Actuales:</Typography>
-                <Typography>
+                <Typography variant="h6"sx={{
+                    display:'flex',
+                    justifyContent:'center',
+                    flexWrap:'wrap-reverse'
+                }}><strong>Datos Actuales</strong></Typography>
+                <Typography
+                    sx={{
+                        border: '#008000'
+                    }}
+                >
                     <strong>Nombre:</strong> {userInfo.name}
                 </Typography>
                 <Typography>
@@ -96,18 +95,21 @@ const UserPage = () => {
                         backgroundColor: "#008000",
                         color: "#fff",
                         "&:hover": { backgroundColor: "#008000" },
+                        backgroundColor: '#008000',
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'center'
                     }}
                 >
                     Actualizar Datos
                 </Button>
-            </Box>
         </Card>
     );
 
     const dataUpdateModal = () => (
         <Dialog open={showModal} onClose={() => setShowModal(false)} maxWidth="sm" fullWidth>
             <DialogTitle>Actualizar Datos</DialogTitle>
-            <DialogContent>
+            <DialogContent >
                 <TextField
                     fullWidth
                     label="Nombre"
@@ -135,7 +137,7 @@ const UserPage = () => {
                 <Button
                     variant="contained"
                     onClick={() => setShowModal(false)}
-                    sx={{ backgroundColor: '#008000' }}
+                    sx={{ backgroundColor: '#008000',display:'flex',justifyContent:'center',}}
                 >
                     Guardar Cambios
                 </Button>
