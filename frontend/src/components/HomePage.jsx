@@ -1,8 +1,13 @@
 import React from "react";
+import { jwtDecode } from "jwt-decode";
 import { Box, Typography } from "@mui/material";
 import logo from "../assets/logo.png";
 
 const HomePage = () => {
+    const codedToken  = sessionStorage.getItem("token");
+    const decodedToken = jwtDecode(codedToken);
+    const peru = decodedToken.payload.clientname
+    console.log(peru)
     return (
         <Box
             sx={{

@@ -52,8 +52,8 @@ const LoginForm = () => {
             const response = await loginClient(loginData);
 
             if (response && response.token) {
-                localStorage.setItem('token', response.token);
-
+                //localStorage.setItem('token', response.token);
+                sessionStorage.setItem(/*'correocliente'*/'token',/*clientemail*/response.token);
                 toast.success("Inicio de sesión exitoso!");
                 navigate('/home');
             } else {
