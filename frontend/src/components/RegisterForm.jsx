@@ -74,11 +74,11 @@ const RegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (validateForm()) {
             setLoading(true);
             try {
-                await registerClient(formData);
+                const response = await registerClient(formData);
                 toast.success("Usuario registrado exitosamente");
                 setFormData({
                     clientname: '',
@@ -87,12 +87,14 @@ const RegisterForm = () => {
                 });
                 setTimeout(() => navigate('/login'), 2000);
             } catch (error) {
-                toast.error("Hubo un error al registrar el usuario");
+                const errorMsg = error.response?.data?.message || "Hubo un error al registrar el usuario";
+                toast.error(errorMsg);
             } finally {
                 setLoading(false);
             }
         }
     };
+    
 
     return (
         <ThemeProvider theme={theme}>

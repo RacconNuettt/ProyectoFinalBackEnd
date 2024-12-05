@@ -40,8 +40,8 @@ const loginAdmin = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).json({ message: "Credenciales inválidas" });
         }
-  
-        const token = jwt.sign({ id: admin._id, adminEmail: admin.adminEmail }, process.env.JWT_SECRET, {
+
+        const token = jwt.sign({ id: admin._id, role: 'admin' }, process.env.JWT_SECRET_ADMINS, {
             expiresIn: "2h",
         });
 

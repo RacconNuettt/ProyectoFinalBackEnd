@@ -1,13 +1,34 @@
-import React from "react";
+import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Box, Typography } from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
 import logo from "../assets/logo.png";
 
 const HomePage = () => {
-    const codedToken  = sessionStorage.getItem("token");
-    const decodedToken = jwtDecode(codedToken);
-    const peru = decodedToken.payload.clientname
-    console.log(peru)
+    useEffect(() => {
+        const codedToken = sessionStorage.getItem("token");
+
+        if (!codedToken) {
+            console.error("No se encontró token en la sessionStorage");
+            return;
+        }
+
+        try {
+            const decodedToken = jwtDecode(codedToken);
+            console.log("Decoded Token:", decodedToken);
+
+            const clientName = decodedToken.name;
+            if (clientName) {
+                console.log("Cliente:", clientName);
+                toast.success(`Bienvenido, ${clientName}!`);
+            } else {
+                console.warn("El nombre del cliente no se encuentra en el token");
+            }
+        } catch (error) {
+            console.error("Error al desencriptar token:", error);
+        }
+    }, []);
+
     return (
         <Box
             sx={{
@@ -23,11 +44,9 @@ const HomePage = () => {
                 padding: 2,
             }}
         >
-            {/* Welcome Message */}
             <Typography
                 variant="h1"
                 sx={{
-                    fontFamily: "'Patrick Hand', cursive",
                     fontSize: { xs: "2.5rem", sm: "4rem" },
                     fontWeight: "bold",
                     marginBottom: 4,
@@ -35,11 +54,8 @@ const HomePage = () => {
             >
                 BIENVENIDO/A
             </Typography>
-
-            {/* Logo Section */}
             <Box
                 sx={{
-                    fontFamily: "'Patrick Hand', cursive",
                     width: 200,
                     height: 200,
                     borderRadius: "50%",
@@ -56,10 +72,11 @@ const HomePage = () => {
                         width: "300%",
                         height: "300%",
                         objectFit: "cover",
-                        borderRadius: "50%",
+                        borderRadius: "10%",
                     }}
                 />
             </Box>
+            <ToastContainer />
         </Box>
     );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Box, IconButton, Menu, MenuItem, TextField, Button, InputAdornment } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -59,18 +60,15 @@ const Header = () => {
                     >
                         Menú
                     </Typography>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ cursor: "pointer", mr: 2, fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
-                        onClick={() => (window.location.href = "/User")}
-                    >
-                        Perfil
-                    </Typography>
                 </Box>
-                {/* Búsqueda */}
+                {/* Ícono de perfil y Búsqueda */}
                 <Box sx={{ display: "flex", alignItems: "center", flexGrow: { xs: 1, md: 0 } }}>
+                    <IconButton
+                        onClick={() => (window.location.href = "/User")}
+                        sx={{ color: "#008000", mr: 2 }}
+                    >
+                        <AccountCircleIcon />
+                    </IconButton>
                     <TextField
                         variant="outlined"
                         placeholder="Search"
@@ -126,7 +124,9 @@ const Header = () => {
                     <MenuItem onClick={() => (window.location.href = "/AboutUs")}>Quienes Somos</MenuItem>
                     <MenuItem onClick={() => (window.location.href = "/Contacto")}>Contáctenos</MenuItem>
                     <MenuItem onClick={() => (window.location.href = "/Menu")}>Menú</MenuItem>
-                    <MenuItem onClick={() => (window.location.href = "/User")}>Perfil</MenuItem>
+                    <MenuItem onClick={() => (window.location.href = "/User")}>
+                        <AccountCircleIcon sx={{ mr: 1 }} /> Perfil
+                    </MenuItem>
                 </Box>
             )}
         </AppBar>
