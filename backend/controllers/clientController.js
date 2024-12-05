@@ -5,14 +5,22 @@ const jwt = require('jsonwebtoken');
 const registerClient = async (req, res) => {
     try {
         const { clientname, clientemail, clientpassword } = req.body;
-        const existingClient = await Client.findOne({ clientemail });
 
+        // Validación de campos requeridos
+        if (!clientname || !clientemail || !clientpassword) {
+            return res.status(400).json({ message: "Todos los campos son obligatorios" });
+        }
+
+        // Verificar si el cliente ya existe
+        const existingClient = await Client.findOne({ clientemail });
         if (existingClient) {
             return res.status(400).json({ message: "El cliente ya existe" });
         }
 
+        // Hashear la contraseña
         const hashedPassword = await bcrypt.hash(clientpassword, 10);
 
+        // Crear un nuevo cliente
         const newClient = new Client({
             clientname,
             clientemail,
@@ -20,21 +28,28 @@ const registerClient = async (req, res) => {
         });
 
         await newClient.save();
-        const token = jwt.sign({ id: newClient._id, clientemail: newClient.clientemail }, process.env.JWT_SECRET, {
-            expiresIn: "1d",
-        });
 
-        res.status(201).json({ message: "Cliente registrado exitosamente", token });
+        // Enviar respuesta sin el token
+        res.status(201).json({
+            message: "Cliente registrado exitosamente",
+            client: {
+                id: newClient._id,
+                clientname: newClient.clientname,
+                clientemail: newClient.clientemail,
+            }
+        });
     } catch (error) {
+        console.error("Error al registrar el cliente:", error);
         res.status(500).json({ message: "Error al registrar el cliente", error: error.message });
     }
 };
 
+
 const loginClient = async (req, res) => {
     try {
         const { clientemail, clientpassword } = req.body;
-
         const client = await Client.findOne({ clientemail });
+
         if (!client) {
             return res.status(404).json({ message: "Cliente no encontrado" });
         }
@@ -44,11 +59,17 @@ const loginClient = async (req, res) => {
             return res.status(400).json({ message: "Credenciales inválidas" });
         }
 
-        const token = jwt.sign({ id: client._id, clientemail: client.clientemail }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
-        });
+        const token = jwt.sign(
+            { id: client._id, role: 'client', name: client.clientname }, 
+            process.env.JWT_SECRET_CLIENTS, 
+            { expiresIn: "1h" }
+        );
 
-        res.json({ message: "Inicio de sesión exitoso", token });
+        res.json({ 
+            message: "Inicio de sesión exitoso", 
+            token, 
+            clientName: client.clientname 
+        });
     } catch (error) {
         res.status(500).json({ message: "Error al iniciar sesión", error: error.message });
     }

@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-    TextField,
-    Button,
-    Typography,
-    Container,
-    Box,
-    Divider,
-    useMediaQuery,
-} from '@mui/material';
+import { TextField, Button, Typography, Container, Box, Divider, useMediaQuery } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +27,6 @@ const LoginForm = () => {
     const [clientpassword, setPassword] = useState('');
     const navigate = useNavigate();
 
-    // Media query to detect small screens
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleSubmit = async (e) => {
@@ -52,9 +43,8 @@ const LoginForm = () => {
             const response = await loginClient(loginData);
 
             if (response && response.token) {
-                //localStorage.setItem('token', response.token);
-                sessionStorage.setItem(/*'correocliente'*/'token',/*clientemail*/response.token);
-                toast.success("Inicio de sesión exitoso!");
+                sessionStorage.setItem('token', response.token);
+                sessionStorage.setItem('clientName', response.clientName);
                 navigate('/home');
             } else {
                 toast.error("Usuario o contraseña incorrectos");
@@ -95,7 +85,7 @@ const LoginForm = () => {
                         gutterBottom
                         sx={{
                             fontSize: { xs: '1.8rem', md: '2.2rem' },
-                            color:'#ffffff'
+                            color: '#ffffff'
                         }}
                     >
                         Inicio de Sesión
@@ -103,7 +93,6 @@ const LoginForm = () => {
                     <Divider sx={{ backgroundColor: 'text.primary', mb: 2 }} />
                     <form onSubmit={handleSubmit}>
                         <TextField
-                            //label="Correo Electrónico"
                             placeholder="Email"
                             id="clientemail"
                             value={clientemail}
@@ -113,7 +102,6 @@ const LoginForm = () => {
                                 mb: 2,
                                 backgroundColor: '#fff',
                                 borderRadius: 1,
-                                '& label': { color: 'text.secondary' },
                                 '& input': { fontFamily: 'Patrick Hand, cursive' },
                                 '& fieldset': { borderColor: 'white' },
                                 '&:hover fieldset': { borderColor: 'primary.main' },
@@ -121,7 +109,6 @@ const LoginForm = () => {
                             }}
                         />
                         <TextField
-                            //label="Contraseña"
                             placeholder="Contraseña"
                             id="clientpassword"
                             type="password"
@@ -132,7 +119,6 @@ const LoginForm = () => {
                                 mb: 2,
                                 backgroundColor: '#fff',
                                 borderRadius: 1,
-                                '& label': { color: 'text.secondary' },
                                 '& input': { fontFamily: 'Patrick Hand, cursive' },
                                 '& fieldset': { borderColor: 'white' },
                                 '&:hover fieldset': { borderColor: 'primary.main' },
@@ -162,7 +148,7 @@ const LoginForm = () => {
                         variant="body2"
                         mt={2}
                         sx={{
-                            color:'#ffffff',
+                            color: '#ffffff',
                             mt: 2,
                             fontSize: { xs: '0.8rem', sm: '1rem' },
                         }}
@@ -179,8 +165,8 @@ const LoginForm = () => {
                         </Link>
                     </Typography>
                 </Box>
-                <ToastContainer />
             </Container>
+            <ToastContainer />
         </ThemeProvider>
     );
 };

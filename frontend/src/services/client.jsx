@@ -2,11 +2,15 @@ import axios from 'axios';
 
 const URL = import.meta.env.VITE_API_URL;
 
+
 const registerClient = async (clientData) => {
+    console.log('Sending client data:', clientData);  
+
     try {
-        const response = await axios.post(`${URL}/client/register`, clientData);  
+        const response = await axios.post(`${URL}/client/register`, clientData)
         return response.data;
     } catch (error) {
+        console.error("Error response:", error.response);  
         throw error.response?.data || { message: "Error al registrar el cliente" };
     }
 };
@@ -14,8 +18,7 @@ const registerClient = async (clientData) => {
 const loginClient = async (loginData) => {
     try {
         const response = await axios.post(`${URL}/client/login`, loginData);  
-        sessionStorage.setItem('username', response.data.username);
-
+        sessionStorage.setItem('clientName', response.data.clientName); // Corrected key
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al iniciar sesión" };
@@ -33,7 +36,7 @@ const getClientById = async (id) => {
 
 const updateClient = async (id, updatedData) => {
     try {
-        const response = await axios.put(`http://localhost:3001/api/client/${id}`, updatedData); 
+        const response = await axios.put(`${URL}/client/${id}`, updatedData); // Fixed URL
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al actualizar el cliente" };
@@ -42,7 +45,7 @@ const updateClient = async (id, updatedData) => {
 
 const deleteClient = async (id) => {
     try {
-        const response = await axios.delete(`http://localhost:3001/client/${id}`); 
+        const response = await axios.delete(`${URL}/client/${id}`); // Fixed URL
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al eliminar el cliente" };
