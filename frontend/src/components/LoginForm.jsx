@@ -27,8 +27,6 @@ const LoginForm = () => {
     const [clientpassword, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 

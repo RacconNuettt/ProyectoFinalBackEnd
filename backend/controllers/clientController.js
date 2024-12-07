@@ -60,7 +60,7 @@ const loginClient = async (req, res) => {
         }
 
         const token = jwt.sign(
-            { id: client._id, role: 'client', name: client.clientname }, 
+            { id: client._id, role: 'client', name: client.clientname, email: client.clientemail }, 
             process.env.JWT_SECRET_CLIENTS, 
             { expiresIn: "1h" }
         );
@@ -68,7 +68,8 @@ const loginClient = async (req, res) => {
         res.json({ 
             message: "Inicio de sesión exitoso", 
             token, 
-            clientName: client.clientname 
+            clientName: client.clientname,
+            clientemail: client.clientemail 
         });
     } catch (error) {
         res.status(500).json({ message: "Error al iniciar sesión", error: error.message });

@@ -18,8 +18,10 @@ const HomePage = () => {
             console.log("Decoded Token:", decodedToken);
 
             const clientName = decodedToken.name;
+            const clientemail = decodedToken.email;
             if (clientName) {
                 console.log("Cliente:", clientName);
+                console.log("Email: ", clientemail)
                 toast.success(`Bienvenido, ${clientName}!`);
             } else {
                 console.warn("El nombre del cliente no se encuentra en el token");

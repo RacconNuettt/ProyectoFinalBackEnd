@@ -40,9 +40,6 @@ const RegisterForm = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Media query to detect small screens
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
