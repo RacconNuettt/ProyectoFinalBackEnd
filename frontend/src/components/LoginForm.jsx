@@ -40,11 +40,14 @@ const LoginForm = () => {
         const loginData = { clientemail, clientpassword };
 
         try {
+            // aqui estoy obteniendo los datos del cliente por medio del login data que carga desde los services 
+            // client service 
             const response = await loginClient(loginData);
 
+            // Esto simplemente para observar los datos que estoy trayendo del backend
             if (response && response.token) {
-                sessionStorage.setItem('token', response.token);
-                sessionStorage.setItem('clientName', response.clientName);
+                sessionStorage.setItem('token', response.token); //ejemplo de aqui obtengo el token
+                sessionStorage.setItem('clientName', response.clientName);// y aqui en especifico el cliente
                 navigate('/home');
             } else {
                 toast.error("Usuario o contraseña incorrectos");

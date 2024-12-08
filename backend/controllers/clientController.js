@@ -59,6 +59,7 @@ const loginClient = async (req, res) => {
             return res.status(400).json({ message: "Credenciales inválidas" });
         }
 
+        //aqui estoy agregando la informacion que quiero que el token me suministre
         const token = jwt.sign(
             { id: client._id, role: 'client', name: client.clientname }, 
             process.env.JWT_SECRET_CLIENTS, 
