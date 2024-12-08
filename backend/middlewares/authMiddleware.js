@@ -8,6 +8,7 @@ const authMiddleware = (roles) => (req, res, next) => {
     }
 
     try {
+        //esto que estoy haciendo aqui es realizando la validacion de roles
         let decoded;
         if (roles.includes('admin')) {
             decoded = jwt.verify(token, process.env.JWT_SECRET_ADMINS);
