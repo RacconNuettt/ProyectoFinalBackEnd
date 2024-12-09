@@ -80,15 +80,15 @@ const loginClient = async (req, res) => {
 const getClient = async (req, res) => {
     try {
         const { id } = req.params;
-        const client = await Client.findById(id);
+        const client = await Client.findOne();
 
         if (!client) {
-            return res.status(404).json({ message: "Cliente no encontrado" });
+            return res.status(404).json({ message: "Clientes no encontrados" });
         }
 
         res.json(client);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener el cliente", error: error.message });
+        res.status(500).json({ message: "Error al obtener los clientes", error: error.message });
     }
 };
 

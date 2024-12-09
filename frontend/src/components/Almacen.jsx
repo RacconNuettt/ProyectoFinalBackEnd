@@ -1,5 +1,5 @@
-import React from 'react';
 import { Card, Typography, TextField, Button, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import React, {useState} from 'react'
 
 const Almacen = () => {
   return (
@@ -26,7 +26,7 @@ const Almacen = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* Aquí se mostrarán los platillos dinámicamente */}
+            
           </TableBody>
         </Table>
       </TableContainer>
