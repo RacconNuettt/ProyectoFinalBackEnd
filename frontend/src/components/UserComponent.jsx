@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";// Asegúrate de importar correctamente esta función
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 import { Container, Grid, Button, Typography, Card, CssBaseline, GlobalStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Dialog, DialogTitle, DialogContent, DialogActions} from '@mui/material';
 import { FaHome, FaClipboardList, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
-import { updateClient } from '../../../backend/controllers/clientController';
-//import { updateClient } from '../../../backend/controllers/clientController';
+import { updateClient } from '../services/client';
+
 const UserPage = () => {
     const [menu, setMenu] = useState('Información de Usuario');
     const [showModal, setShowModal] = useState(false);

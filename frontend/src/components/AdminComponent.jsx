@@ -103,6 +103,7 @@ const AdminPage = () => {
           <Grid item xs={12} sm={9} md={10} sx={{ padding: 2 }}>
             <Outlet /> {/* Este es el lugar donde se renderizarán las rutas anidadas */}
           </Grid>
+          
         </Grid>
       </Container>
     </>

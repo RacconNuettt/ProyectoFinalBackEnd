@@ -1,37 +1,52 @@
 const Dish = require('../models/dishModel');
 const DishCategory = require('../models/dishCategoryModel');
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); 
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage });
 
 const createDish = async (req, res) => {
-    try {
-        const { dishName, dishDescription, dishCategory, dishPrice, image} = req.body;
+  try {
+    const { dishName, dishDescription, dishCategory, dishPrice } = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : null;
 
-        const categoryExists = await DishCategory.findById(dishCategory);
-        if (!categoryExists) {
-            return res.status(404).json({ message: "La categoría no existe" });
-        }
-
-        const newDish = new Dish({
-            dishName,
-            dishDescription,
-            dishCategory,
-            dishPrice,
-            image,
-        });
-
-        await newDish.save();
-        res.status(201).json({ message: "Plato creado exitosamente", dish: newDish });
-    } catch (error) {
-        res.status(500).json({ message: "Error al crear el plato", error: error.message });
+    const categoryExists = await DishCategory.findById(dishCategory);
+    if (!categoryExists) {
+      return res.status(404).json({ message: "La categoría no existe" });
     }
+
+    const newDish = new Dish({
+      dishName,
+      dishDescription,
+      dishCategory,
+      dishPrice,
+      image,
+    });
+
+    await newDish.save();
+    res.status(201).json({ message: "Plato creado exitosamente", dish: newDish });
+  } catch (error) {
+    res.status(500).json({ message: "Error al crear el plato", error: error.message });
+  }
 };
 
 const getDishes = async (req, res) => {
-    try {
-        const dishes = await Dish.find().populate('dishCategory', 'dishCategoryname');
-        res.status(200).json(dishes);
-    } catch (error) {
-        res.status(500).json({ message: "Error al obtener los platos", error: error.message });
-    }
+  try {
+    const dishes = await Dish.find().populate('dishCategory', 'dishCategoryname');
+    res.status(200).json(dishes);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los platos", error: error.message });
+  }
 };
 
 const getDishById = async (req, res) => {
@@ -100,4 +115,5 @@ module.exports = {
     getDishById,
     updateDish,
     deleteDish,
+    upload,
 };

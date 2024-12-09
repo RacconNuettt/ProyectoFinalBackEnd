@@ -18,10 +18,19 @@ const registerClient = async (clientData) => {
 const loginClient = async (loginData) => {
     try {
         const response = await axios.post(`${URL}/client/login`, loginData);  
-        sessionStorage.setItem('clientName', response.data.clientName); // Corrected key
+        sessionStorage.setItem('clientName', response.data.clientName); 
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al iniciar sesión" };
+    }
+};
+
+const getClient = async () => {
+    try {
+        const response = await axios.get(`${URL}/client`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: "Error al obtener el clientes" };
     }
 };
 
@@ -52,4 +61,4 @@ const deleteClient = async (id) => {
     }
 };
 
-export { registerClient, loginClient, getClientById, updateClient, deleteClient };
+export { registerClient, loginClient, getClientById, getClient, updateClient, deleteClient };

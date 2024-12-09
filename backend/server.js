@@ -15,6 +15,7 @@ const orderRoute = require('./routes/orderRoute')
 const saleDetailRoute = require('./routes/saleDetailRoute')
 const saleRoute = require('./routes/saleRoute');
 const connectDB = require('./config/db');
+const path = require('path')
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use('/client', clientRoute);
 app.use('/admin', adminRoute);
 app.use('/drinkC', drinkCategoryRoute);
 app.use('/drink', drinkRoute);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/dishC', dishCategoryRoute);
 app.use('/provider', providerRoute);
 app.use('/dish', dishRoute);
