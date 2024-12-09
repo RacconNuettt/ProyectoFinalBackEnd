@@ -6,13 +6,14 @@ import logo from "../assets/logo.png";
 
 const HomePage = () => {
     useEffect(() => {
+        //este codigo de aqui me permite obtener el token
         const codedToken = sessionStorage.getItem("token");
 
         if (!codedToken) {
             console.error("No se encontró token en la sessionStorage");
             return;
         }
-
+        // y aqui lo desencripta 
         try {
             const decodedToken = jwtDecode(codedToken);
             console.log("Decoded Token:", decodedToken);
