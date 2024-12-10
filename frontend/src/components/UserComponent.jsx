@@ -4,6 +4,21 @@ import { jwtDecode } from "jwt-decode";
 import { toast } from 'react-toastify';
 import { updateClient } from '../services/client';
 import { Container, Grid, Button, Typography, Card, CssBaseline, GlobalStyles, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { updateClient } from '../services/client';
+import {
+    Container,
+    Grid,
+    Button,
+    Typography,
+    Card,
+    CssBaseline,
+    GlobalStyles,
+    TextField,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+} from '@mui/material';
 import { FaHome, FaClipboardList, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 
 const UserPage = () => {
