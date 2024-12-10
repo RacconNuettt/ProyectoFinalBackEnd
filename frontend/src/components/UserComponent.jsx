@@ -3,29 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { toast } from 'react-toastify';
 import { updateClient } from '../services/client';
-import {
-    Container,
-    Grid,
-    Button,
-    Typography,
-    Card,
-    CssBaseline,
-    GlobalStyles,
-    TextField,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-} from '@mui/material';
+import { Container, Grid, Button, Typography, Card, CssBaseline, GlobalStyles, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { FaHome, FaClipboardList, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 
 const UserPage = () => {
     const [menu, setMenu] = useState('Información de Usuario');
     const [showModal, setShowModal] = useState(false);
-    const [userInfo, setUserInfo] = useState({ name: '', email: '' });
-    const [newUserName, setNewUserName] = useState('');
-    const [newEmail, setNewEmail] = useState('');
-    const [newPassword, setNewPassword] = useState('');
+    const [clientInfo, setClientInfo] = useState({ name: '', email: '' });
+    const [newClientName, setNewClientName] = useState('');
+    const [newClientEmail, setNewClientEmail] = useState('');
+    const [newClientPassword, setNewClientPassword] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,10 +25,11 @@ const UserPage = () => {
 
         try {
             const decodedToken = jwtDecode(codedToken);
-            const clientName = decodedToken.name || "Usuario";
-            const clientEmail = decodedToken.email || "No disponible";
+            const clientId = decodedToken.id           
+            const clientName = decodedToken.name
+            const clientEmail = decodedToken.email
 
-            setUserInfo({ name: clientName, email: clientEmail });
+            setClientInfo({id: clientId, name: clientName, email: clientEmail });
             toast.success(`Bienvenido, ${clientName}!`);
         } catch (error) {
             console.error("Error al desencriptar token:", error);
@@ -51,7 +39,7 @@ const UserPage = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         
-        const newdata = {newUserName, newEmail,newPassword};
+        const newData = {newClientName, newClientEmail,newClientPassword};
         
         try {
             const response = await updateClient(newData);
@@ -62,16 +50,16 @@ const UserPage = () => {
         }
     };
 
-    const renderUserInfo = () => (
+    const renderClientInfo = () => (
         <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
             <Typography variant="h5" gutterBottom>
                 Información de Usuario
             </Typography>
             <Typography>
-                <strong>Nombre:</strong> {userInfo.name}
+                <strong>Nombre:</strong> {clientInfo.name}
             </Typography>
             <Typography>
-                <strong>Correo Electrónico:</strong> {userInfo.email}
+                <strong>Correo Electrónico:</strong> {clientInfo.email}
             </Typography>
             <Button
                 variant="outlined"
@@ -96,23 +84,23 @@ const UserPage = () => {
                     <TextField
                         fullWidth
                         label="Nombre"
-                        value={newUserName}
-                        onChange={(e) => setNewUserName(e.target.value)}
+                        value={newClientName}
+                        onChange={(e) => setNewClientName(e.target.value)}
                         sx={{ mb: 2 }}
                     />
                     <TextField
                         fullWidth
                         label="Correo Electrónico"
-                        value={newEmail}
-                        onChange={(e) => setNewEmail(e.target.value)}
+                        value={newClientEmail}
+                        onChange={(e) => setNewClientEmail(e.target.value)}
                         sx={{ mb: 2 }}
                     />
                     <TextField
                         fullWidth
                         label="Nueva Contraseña"
                         type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
+                        value={newClientPassword}
+                        onChange={(e) => setNewClientPassword(e.target.value)}
                         sx={{ mb: 2 }}
                     />
                 </DialogContent>
@@ -141,7 +129,7 @@ const UserPage = () => {
             case 'Historial de Órdenes':
                 return <div>Historial de Órdenes</div>;
             case 'Información de Usuario':
-                return renderUserInfo();
+                return renderClientInfo();
             case 'Salir':
                 navigate('/Login');
                 return null;
