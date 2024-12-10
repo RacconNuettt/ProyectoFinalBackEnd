@@ -80,7 +80,7 @@ const loginClient = async (req, res) => {
 const getClient = async (req, res) => {
     try {
         const { id } = req.params;
-        const client = await Client.findOne();
+        const client = await Client.findById(id);
 
         if (!client) {
             return res.status(404).json({ message: "Clientes no encontrados" });
@@ -91,6 +91,20 @@ const getClient = async (req, res) => {
         res.status(500).json({ message: "Error al obtener los clientes", error: error.message });
     }
 };
+
+const getAllClients = async (req, res) => {
+    try {
+      const clients = await Client.find({}, { clientpassword: 0 }); // Excluir clientpassword en la consulta
+  
+      res.json(clients);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener los clientes", error: error.message });
+    }
+  };
+  
+  module.exports = { getAllClients };
+  
+
 
 const updateClient = async (req, res) => {
     try {
@@ -136,6 +150,7 @@ module.exports = {
     registerClient,
     loginClient,
     getClient,
+    getAllClients,
     updateClient,
     deleteClient,
 };

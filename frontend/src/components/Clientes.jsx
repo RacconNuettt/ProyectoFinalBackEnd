@@ -10,7 +10,7 @@ import {
   TableCell,
   TableBody,
 } from '@mui/material';
-import { getClient } from '../services/client'; 
+import { getAllClients } from '../services/client'; // Servicio para obtener clientes
 
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
@@ -21,7 +21,8 @@ const Clientes = () => {
     const fetchClientes = async () => {
       try {
         setLoading(true);
-        const data = await getClient();
+        const data = await getAllClients();
+        console.log("Datos obtenidos:", data); // Para depuración
         setClientes(data);
       } catch (err) {
         setError(err.message || 'Error al cargar los clientes');
@@ -51,21 +52,23 @@ const Clientes = () => {
               <TableRow>
                 <TableCell>Nombre</TableCell>
                 <TableCell>Email</TableCell>
+                <TableCell>Contraseña</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {clientes.length > 0 ? (
                 clientes.map((cliente) => (
-                  <TableRow key={cliente.id}>
-                    <TableCell>{cliente.name}</TableCell>
-                    <TableCell>{cliente.email}</TableCell>
+                  <TableRow key={cliente._id}>
+                    <TableCell>{cliente.clientname}</TableCell>
+                    <TableCell>{cliente.clientemail}</TableCell>
+                    <TableCell>*****</TableCell> {/* Contraseña en asteriscos */}
                     <TableCell>Editar | Eliminar</TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={3} align="center">
+                  <TableCell colSpan={4} align="center">
                     No hay clientes registrados.
                   </TableCell>
                 </TableRow>
