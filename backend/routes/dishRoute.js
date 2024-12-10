@@ -1,10 +1,10 @@
 const express = require('express');
-const { createDish, getDishes, getDishById, updateDish, deleteDish } = require('../controllers/dishController');
+const { createDish, getDishes, getDishById, updateDish, deleteDish, upload } = require('../controllers/dishController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.post('/', authMiddleware, createDish);
+router.post('/', upload.single('image'), createDish);
 router.get('/', getDishes);
 router.get('/:id', getDishById);
 router.put('/:id', updateDish);
