@@ -23,7 +23,13 @@ const dishSchema = new mongoose.Schema({
         required: true,
     }, 
     
-    image: {
+    typeDish:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'TypeDish',
+        required: true
+    },
+    
+    imageUrl: {
         type: String,
     },
 

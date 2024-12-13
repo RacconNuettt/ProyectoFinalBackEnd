@@ -20,7 +20,7 @@ const getDrink = async () => {
     };
 };
 
-const putDrink = async (id) => {
+const putDrink = async (id, datos) => {
     try {
         const response = await axios.put(`${URL}/drink/${id}`);
         return response.data;
