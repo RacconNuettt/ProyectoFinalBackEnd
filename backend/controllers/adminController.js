@@ -19,7 +19,7 @@ const registerAdmin = async (req, res) => {
             adminEmail,
             adminPassword: hashedPassword,
         });
-
+        
         await newAdmin.save();
         res.status(201).json({ message: "Administrador registrado exitosamente" });
     } catch (error) {

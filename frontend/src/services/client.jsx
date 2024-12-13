@@ -47,7 +47,7 @@ const getClientById = async (id) => {
 
 const updateClient = async (id, updatedData) => {
     try {
-        const response = await axios.put(`${URL}/client/${id}`, updatedData); // Fixed URL
+        const response = await axios.put(`${URL}/client/${id}`, updatedData);
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al actualizar el cliente" };
