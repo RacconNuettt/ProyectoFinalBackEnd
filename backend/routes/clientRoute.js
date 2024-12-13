@@ -10,7 +10,7 @@ router.post('/login', loginClient);
 
 router.get('/', getAllClients);
 router.get('/:id', authMiddleware(['client']), getClient); 
-router.put('/:id', authMiddleware(['client']), updateClient); 
+router.put('/:id', authMiddleware(['client']),updateClient); 
 router.delete('/:id', authMiddleware(['client']), deleteClient); 
 
 module.exports = router;

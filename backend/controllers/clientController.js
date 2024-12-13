@@ -61,7 +61,7 @@ const loginClient = async (req, res) => {
 
         //aqui estoy agregando la informacion que quiero que el token me suministre
         const token = jwt.sign(
-            { id: client._id, role: 'client', name: client.clientname, email: client.clientemail }, 
+            { id: client._id, role: 'client', name: client.clientname, email: client.clientemail, password: client.clientpassword }, 
             process.env.JWT_SECRET_CLIENTS, 
             { expiresIn: "1h" }
         );
@@ -70,7 +70,8 @@ const loginClient = async (req, res) => {
             message: "Inicio de sesión exitoso", 
             token, 
             clientName: client.clientname,
-            clientemail: client.clientemail 
+            clientemail: client.clientemail, 
+            clientpassword: client.password
         });
     } catch (error) {
         res.status(500).json({ message: "Error al iniciar sesión", error: error.message });
@@ -106,15 +107,21 @@ const getAllClients = async (req, res) => {
   
 
 
-const updateClient = async (req, res) => {
+  const updateClient = async (req, res) => {
     try {
+        console.log("Request Body:", req.body); // Debug
         const { id } = req.params;
         const { clientname, clientemail, clientpassword } = req.body;
-        const client = await Client.findById(id);
 
+        if (!clientname && !clientemail && !clientpassword) {
+            return res.status(400).json({ message: "No se enviaron datos para actualizar" });
+        }
+
+        const client = await Client.findById(id);
         if (!client) {
             return res.status(404).json({ message: "Cliente no encontrado" });
         }
+
         if (clientname) client.clientname = clientname;
         if (clientemail) client.clientemail = clientemail;
 
@@ -129,6 +136,31 @@ const updateClient = async (req, res) => {
         res.status(500).json({ message: "Error al actualizar el cliente", error: error.message });
     }
 };
+
+// const updateClient = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const { clientname, clientemail, clientpassword } = req.body;
+//         const client = await Client.findById(id);
+
+//         if (!client) {
+//             return res.status(404).json({ message: "Cliente no encontrado" });
+//         }
+//         if (clientname) client.clientname = clientname;
+//         if (clientemail) client.clientemail = clientemail;
+
+//         if (clientpassword) {
+//             const hashedPassword = await bcrypt.hash(clientpassword, 10);
+//             client.clientpassword = hashedPassword;
+//         }
+
+//         await client.save();
+//         res.json({ message: "Cliente actualizado", client });
+//     } catch (error) {
+//         res.status(500).json({ message: "Error al actualizar el cliente", error: error.message });
+//     }
+// };
+
 
 const deleteClient = async (req, res) => {
     try {

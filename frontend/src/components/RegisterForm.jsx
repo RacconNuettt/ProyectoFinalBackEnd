@@ -123,8 +123,7 @@ const RegisterForm = () => {
                         gutterBottom
                         sx={{
                             color: '#000000',
-                            fontSize: { xs: '1.8rem', md: '2.2rem' }, 
-                            color:'#ffffff',
+                            fontSize: { xs: '1.8rem', md: '2.2rem' }
                         }}
                     >
                         Regístrate
