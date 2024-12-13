@@ -14,6 +14,7 @@ const orderDetailRoute = require('./routes/orderDetailRoute');
 const orderRoute = require('./routes/orderRoute')
 const saleDetailRoute = require('./routes/saleDetailRoute')
 const saleRoute = require('./routes/saleRoute');
+const typeDish = require('./routes/typeDishRoute')
 const connectDB = require('./config/db');
 const path = require('path')
 
@@ -39,6 +40,7 @@ app.use('/orderDetail', orderDetailRoute);
 app.use('/order', orderRoute);
 app.use('/saleDetail', saleDetailRoute);
 app.use('/sale', saleRoute);
+app.use('/typeDish', typeDish);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
