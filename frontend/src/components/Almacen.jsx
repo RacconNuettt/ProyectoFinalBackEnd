@@ -1,35 +1,40 @@
-import { 
-  Select, 
-  InputLabel, 
+import {
+  Select,
+  InputLabel,
   FormControl,
-  Card, 
-  Typography, 
-  TextField, 
-  Button, 
-  TableContainer, 
-  Paper, 
-  Table, 
-  TableHead, 
-  TableRow, 
-  TableCell, 
-  TableBody, 
-  MenuItem 
-} from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import { getDishCategory } from '../services/Dishcategory';
+  Card,
+  Typography,
+  TextField,
+  Button,
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  MenuItem,
+} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { getDishCategory } from "../services/Dishcategory";
+import { getAllTypeDish } from "../services/typeDish";
+import { postDish, getDish, getDishById, updateDish, deleteDish } from "../services/Dish";
 
 const Almacen = () => {
-  const [nombre, setNombre] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [precio, setPrecio] = useState('');
-  const [categoria, setCategoria] = useState('');
+  const [nombre, setNombre] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [precio, setPrecio] = useState("");
+  const [categoria, setCategoria] = useState("");
   const [imagen, setImagen] = useState(null);
   const [platillos, setPlatillos] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedTypeDish, setSelectedTypeDish] = useState(""); 
   const [categories, setCategories] = useState({ platillos: [] });
+  const [typeDishes, setTypeDishes] = useState([]); 
 
   useEffect(() => {
     fetchCategoryDish();
+    fetchTypeDishes();
   }, []);
 
   const fetchCategoryDish = async () => {
@@ -37,7 +42,16 @@ const Almacen = () => {
       const dishCategories = await getDishCategory();
       setCategories({ platillos: dishCategories });
     } catch (error) {
-      console.error('Error al cargar las categorías');
+      console.error("Error al cargar las categorías");
+    }
+  };
+
+  const fetchTypeDishes = async () => {
+    try {
+      const response = await getAllTypeDish();
+      setTypeDishes(response); 
+    } catch (error) {
+      console.error("Error al cargar los tipos de platillos");
     }
   };
 
@@ -77,7 +91,7 @@ const Almacen = () => {
       />
       <FormControl fullWidth sx={{ mb: 2 }}>
         <InputLabel>Categoria</InputLabel>
-        <Select 
+        <Select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
@@ -88,17 +102,38 @@ const Almacen = () => {
           ))}
         </Select>
       </FormControl>
+
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel>Tipo de Platillo</InputLabel>
+        <Select
+          value={selectedTypeDish}
+          onChange={(e) => setSelectedTypeDish(e.target.value)}
+        >
+          {typeDishes.map((typeDish) => (
+            <MenuItem key={typeDish._id} value={typeDish._id}>
+              {typeDish.typeName}{" "}
+              {/* Asegúrate de que el nombre del tipo de platillo esté en 'name' */}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
       <input
         type="file"
         accept="image/*"
         onChange={handleImageUpload}
-        style={{ marginBottom: '16px' }}
+        style={{ marginBottom: "16px" }}
       />
       {imagen && (
         <img
           src={imagen}
           alt="Previsualización"
-          style={{ width: '100px', height: '100px', objectFit: 'cover', marginBottom: '16px' }}
+          style={{
+            width: "100px",
+            height: "100px",
+            objectFit: "cover",
+            marginBottom: "16px",
+          }}
         />
       )}
       <Button
@@ -110,13 +145,14 @@ const Almacen = () => {
       </Button>
       <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 2 }}>
         <Table>
-          <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+          <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
             <TableRow>
               <TableCell>Imagen</TableCell>
               <TableCell>Nombre</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Precio</TableCell>
               <TableCell>Categoría</TableCell>
+              <TableCell>Tipo de Platillo</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
@@ -127,13 +163,19 @@ const Almacen = () => {
                   <img
                     src={platillo.imagen}
                     alt={platillo.nombre}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                    }}
                   />
                 </TableCell>
                 <TableCell>{platillo.nombre}</TableCell>
                 <TableCell>{platillo.descripcion}</TableCell>
                 <TableCell>{platillo.precio}</TableCell>
                 <TableCell>{platillo.categoria}</TableCell>
+                <TableCell>{platillo.tipoPlatillo}</TableCell>{" "}
+                {/* Mostrar el tipo de platillo */}
                 <TableCell>Editar | Eliminar</TableCell>
               </TableRow>
             ))}
@@ -143,5 +185,6 @@ const Almacen = () => {
     </Card>
   );
 };
+
 
 export default Almacen;

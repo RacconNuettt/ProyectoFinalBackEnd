@@ -2,23 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { toast } from 'react-toastify';
-import { updateClient } from '../services/client';
 import { Container, Grid, Button, Typography, Card, CssBaseline, GlobalStyles, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { updateClient } from '../services/client';
-import {
-    Container,
-    Grid,
-    Button,
-    Typography,
-    Card,
-    CssBaseline,
-    GlobalStyles,
-    TextField,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-} from '@mui/material';
 import { FaHome, FaClipboardList, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 
 const UserPage = () => {
@@ -58,7 +43,7 @@ const UserPage = () => {
         
         try {
             const response = await updateClient(newData);
-        
+            
         } catch (error) {
             console.error("Error al actualizar datos, error:", error);
             toast.error("Error al conectar con el servidor");
