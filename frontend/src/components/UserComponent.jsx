@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { toast } from 'react-toastify';
-import { updateClient } from '../services/client';
 import { Container, Grid, Button, Typography, Card, CssBaseline, GlobalStyles, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { updateClient } from '../services/client';
 import { FaHome, FaClipboardList, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { getAllClients } from '../services/client';
 import { getClientById } from '../services/client';
@@ -103,13 +103,8 @@ const UserPage = () => {
         };
     
         try {
-            const response = await updateClient(idC, newData);
-            if (response) {
-                toast.success("Datos actualizados exitosamente.");
-                setShowModal(false); // Close the modal
-            } else {
-                toast.error("Respuesta inesperada del servidor.");
-            }
+            const response = await updateClient(newData);
+        
         } catch (error) {
             console.error("Error al actualizar datos:", error);
             toast.error(error?.message || "Error al conectar con el servidor.");
