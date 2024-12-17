@@ -19,10 +19,12 @@ const HomePage = () => {
             console.log("Decoded Token:", decodedToken);
 
             const clientName = decodedToken.name;
-            const clientemail = decodedToken.email;
+            const clientEmail = decodedToken.email;
+            const clientPassword = decodedToken.password;
             if (clientName) {
                 console.log("Cliente:", clientName);
-                console.log("Email: ", clientemail)
+                console.log("Email: ", clientEmail)
+                console.log("Contraseña: ", clientPassword)
                 toast.success(`Bienvenido, ${clientName}!`);
             } else {
                 console.warn("El nombre del cliente no se encuentra en el token");
@@ -55,7 +57,7 @@ const HomePage = () => {
                     marginBottom: 4,
                 }}
             >
-                BIENVENIDO/A
+                BIENVENIDES
             </Typography>
             <Box
                 sx={{

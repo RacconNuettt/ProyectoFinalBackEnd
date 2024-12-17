@@ -4,21 +4,21 @@ const URL = import.meta.env.VITE_API_URL;
 
 
 const registerClient = async (clientData) => {
-    console.log('Sending client data:', clientData);  
+    console.log('Sending client data:', clientData);
 
     try {
         const response = await axios.post(`${URL}/client/register`, clientData)
         return response.data;
     } catch (error) {
-        console.error("Error response:", error.response);  
+        console.error("Error response:", error.response);
         throw error.response?.data || { message: "Error al registrar el cliente" };
     }
 };
 
 const loginClient = async (loginData) => {
     try {
-        const response = await axios.post(`${URL}/client/login`, loginData);  
-        sessionStorage.setItem('clientName', response.data.clientName); 
+        const response = await axios.post(`${URL}/client/login`, loginData);
+        sessionStorage.setItem('clientName', response.data.clientName);
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al iniciar sesión" };
@@ -28,29 +28,71 @@ const loginClient = async (loginData) => {
 
 const getAllClients = async () => {
     try {
-        const response = await axios.get(`${URL}/client`); 
+        const response = await axios.get(`${URL}/client`);
         return response.data;
     } catch (error) {
         console.error("Error al obtener los clientes:", error.response || error);
         throw error.response?.data || { message: "Error al obtener los clientes" };
     }
 };
+// const getClientById = async (id) => {
+//     try {
+//         const response = await axios.get(`${URL}/client/${id}`);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data || { message: "Error al obtener el cliente" };
+//     }
+// };
 
-const getClientById = async (id) => {
+export const getClientById = async (clientId) => {
+    const codedToken = sessionStorage.getItem("token");
+    if (!codedToken) {
+        throw new Error("Token not found in sessionStorage");
+    }
+
     try {
-        const response = await axios.get(`${URL}/client/${id}`);
+        const response = await axios.get(`${URL}/client/${clientId}`, {
+            headers: {
+                Authorization: `Bearer ${codedToken}`, // Add token in headers
+            },
+        });
         return response.data;
     } catch (error) {
-        throw error.response?.data || { message: "Error al obtener el cliente" };
+        console.error("Error in getClientById:", error.response?.data || error);
+        throw error.response?.data || error;
     }
 };
 
-const updateClient = async (id, updatedData) => {
+
+// const updateClient = async (id, updatedData) => {
+//     try {
+//         const response = await axios.put(`${URL}/client/${id}`, updatedData); // Fixed URL
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data || { message: "Error al actualizar el cliente" };
+//     }
+// };
+const updateClient = async (id, clientData) => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+        throw new Error("Token not found in sessionStorage");
+    }
+    
     try {
+        const response = await axios.put(`${URL}/client/${id}`, clientData, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Include token
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data; // Ensure this returns data
+
         const response = await axios.put(`${URL}/client/${id}`, updatedData);
         return response.data;
+
     } catch (error) {
-        throw error.response?.data || { message: "Error al actualizar el cliente" };
+        console.error("Error in updateClient:", error.response?.data || error);
+        throw error.response?.data || error;
     }
 };
 
@@ -63,4 +105,4 @@ const deleteClient = async (id) => {
     }
 };
 
-export { registerClient, loginClient, getClientById, getAllClients, updateClient, deleteClient };
+export { registerClient, loginClient, getAllClients, updateClient, deleteClient };
