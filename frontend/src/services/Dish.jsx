@@ -4,14 +4,14 @@ const URL = import.meta.env.VITE_API_URL;
 
 const postDish = async (dishData) => {
     try {
-        const response = await axios.post(`${URL}/dish`);
+        const response = await axios.post(`${URL}/dish`, dishData);
         return response.data
     } catch (error) {
         throw error.response?.data || { message: "Error al crear el platillo"}
     };
 };
 
-const getDish = async (dishData) => {
+const getDish = async () => {
     try {
         const response = await axios.get(`${URL}/dish`);
         response.data;

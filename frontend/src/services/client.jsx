@@ -72,6 +72,8 @@ export const getClientById = async (clientId) => {
 //         throw error.response?.data || { message: "Error al actualizar el cliente" };
 //     }
 // };
+
+
 const updateClient = async (id, clientData) => {
     const token = sessionStorage.getItem("token");
     if (!token) {

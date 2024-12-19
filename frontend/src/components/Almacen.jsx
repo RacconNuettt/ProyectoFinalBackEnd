@@ -18,131 +18,156 @@ import {
 import React, { useState, useEffect } from "react";
 import { getDishCategory } from "../services/Dishcategory";
 import { getAllTypeDish } from "../services/typeDish";
-import { postDish, getDish, getDishById, updateDish, deleteDish } from "../services/Dish";
+import { postDish, getDish } from "../services/Dish";
 
 const Almacen = () => {
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [imagen, setImagen] = useState(null);
-  const [platillos, setPlatillos] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedTypeDish, setSelectedTypeDish] = useState(""); 
-  const [categories, setCategories] = useState({ platillos: [] });
-  const [typeDishes, setTypeDishes] = useState([]); 
+  const [formData, setFormData] = useState({
+    dishName: "",
+    dishDescription: "",
+    dishPrice: "",
+    image: null, // cambio de imageUrl a image
+    dishCategory: "",
+    typeDish: "",
+  });
+  const [dishes, setDishes] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [typeDishes, setTypeDishes] = useState([]);
 
   useEffect(() => {
     fetchCategoryDish();
     fetchTypeDishes();
+    fetchDishes();
   }, []);
 
   const fetchCategoryDish = async () => {
     try {
       const dishCategories = await getDishCategory();
-      setCategories({ platillos: dishCategories });
+      setCategories(dishCategories);
     } catch (error) {
-      console.error("Error al cargar las categorías");
+      console.error("Error al cargar las categorías:", error);
     }
   };
 
   const fetchTypeDishes = async () => {
     try {
       const response = await getAllTypeDish();
-      setTypeDishes(response); 
+      setTypeDishes(response);
     } catch (error) {
-      console.error("Error al cargar los tipos de platillos");
+      console.error("Error al cargar los tipos de platillos:", error);
     }
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImagen(URL.createObjectURL(file));
+  const fetchDishes = async () => {
+    try {
+      const response = await getDish();
+      setDishes(response || []);
+    } catch (error) {
+      console.error("Error al cargar los platillos:", error);
     }
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({ ...formData, image: file });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("dishName", formData.dishName);
+    data.append("dishDescription", formData.dishDescription);
+    data.append("dishPrice", formData.dishPrice);
+    data.append("dishCategory", formData.dishCategory);
+    data.append("typeDish", formData.typeDish);
+    if (formData.image) {
+      data.append("image", formData.image);
+    }
+  
+    console.log(data);
+    
+    try {
+      const response = await postDish(data);
+      console.log(response.message);
+    } catch (error) {
+      console.error("Error al agregar el platillo:", error.response?.data?.message || error.message);
+    }
+  };
+  
 
   return (
     <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
       <Typography variant="h5" gutterBottom>
         Agregar Platillos
       </Typography>
-      <TextField
-        fullWidth
-        label="Nombre del Platillo"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        fullWidth
-        label="Descripción"
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        fullWidth
-        label="Precio"
-        type="number"
-        value={precio}
-        onChange={(e) => setPrecio(e.target.value)}
-        sx={{ mb: 2 }}
-      />
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel>Categoria</InputLabel>
-        <Select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          {categories.platillos.map((category) => (
-            <MenuItem key={category._id} value={category._id}>
-              {category.dishCategoryname}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel>Tipo de Platillo</InputLabel>
-        <Select
-          value={selectedTypeDish}
-          onChange={(e) => setSelectedTypeDish(e.target.value)}
-        >
-          {typeDishes.map((typeDish) => (
-            <MenuItem key={typeDish._id} value={typeDish._id}>
-              {typeDish.typeName}{" "}
-              {/* Asegúrate de que el nombre del tipo de platillo esté en 'name' */}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        style={{ marginBottom: "16px" }}
-      />
-      {imagen && (
-        <img
-          src={imagen}
-          alt="Previsualización"
-          style={{
-            width: "100px",
-            height: "100px",
-            objectFit: "cover",
-            marginBottom: "16px",
-          }}
+      <form onSubmit={handleSubmit}>
+        <TextField
+          fullWidth
+          label="Nombre del Platillo"
+          name="dishName"
+          value={formData.dishName}
+          onChange={handleInputChange}
+          sx={{ mb: 2 }}
         />
-      )}
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{ mt: 2 }}
-      >
-        Agregar Platillo
-      </Button>
+        <TextField
+          fullWidth
+          label="Descripción"
+          name="dishDescription"
+          value={formData.dishDescription}
+          onChange={handleInputChange}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          fullWidth
+          label="Precio"
+          name="dishPrice"
+          type="number"
+          value={formData.dishPrice}
+          onChange={handleInputChange}
+          sx={{ mb: 2 }}
+        />
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <InputLabel>Categoría</InputLabel>
+          <Select
+            name="dishCategory"
+            value={formData.dishCategory}
+            onChange={handleInputChange}
+          >
+            {categories.map((category) => (
+              <MenuItem key={category._id} value={category._id}>
+                {category.dishCategoryname}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <InputLabel>Tipo de Platillo</InputLabel>
+          <Select
+            name="typeDish"
+            value={formData.typeDish}
+            onChange={handleInputChange}
+          >
+            {typeDishes.map((typeDish) => (
+              <MenuItem key={typeDish._id} value={typeDish._id}>
+                {typeDish.typeName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          style={{ marginBottom: "16px" }}
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Agregar Platillo
+        </Button>
+      </form>
       <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 2 }}>
         <Table>
           <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
@@ -157,34 +182,43 @@ const Almacen = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {platillos.map((platillo) => (
-              <TableRow key={platillo.id}>
-                <TableCell>
-                  <img
-                    src={platillo.imagen}
-                    alt={platillo.nombre}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      objectFit: "cover",
-                    }}
-                  />
+            {dishes.length > 0 ? (
+              dishes.map((dish) => (
+                <TableRow key={dish._id}>
+                  <TableCell>
+                    <img
+                      src={dish.image}
+                      alt={dish.name}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>{dish.name}</TableCell>
+                  <TableCell>{dish.description}</TableCell>
+                  <TableCell>{dish.price}</TableCell>
+                  <TableCell>{dish.dishCategory?.dishCategoryname || "Sin categoría"}</TableCell>
+                  <TableCell>{dish.typeDish?.typeName || "Sin tipo"}</TableCell>
+                  <TableCell>
+                    <Button color="primary">Editar</Button>
+                    <Button color="secondary">Eliminar</Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  No hay platillos disponibles.
                 </TableCell>
-                <TableCell>{platillo.nombre}</TableCell>
-                <TableCell>{platillo.descripcion}</TableCell>
-                <TableCell>{platillo.precio}</TableCell>
-                <TableCell>{platillo.categoria}</TableCell>
-                <TableCell>{platillo.tipoPlatillo}</TableCell>{" "}
-                {/* Mostrar el tipo de platillo */}
-                <TableCell>Editar | Eliminar</TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
     </Card>
   );
 };
-
 
 export default Almacen;

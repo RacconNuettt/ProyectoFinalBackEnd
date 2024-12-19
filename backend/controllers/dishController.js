@@ -17,32 +17,39 @@ const upload = multer({ storage });
 
 const createDish = async (req, res) => {
   try {
+    console.log("Datos recibidos en el backend:", req.body);
+    console.log("Archivo recibido:", req.file);
+
     const { dishName, dishDescription, dishCategory, dishPrice, typeDish } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
     const categoryExists = await DishCategory.findById(dishCategory);
     if (!categoryExists) {
+      console.log("La categoría no existe");
       return res.status(404).json({ message: "La categoría no existe" });
     }
 
     const typeDishExists = await TypeDish.findById(typeDish);
     if (!typeDishExists) {
+      console.log("El tipo de plato no existe");
       return res.status(404).json({ message: "El tipo de plato no existe" });
     }
 
     const newDish = new Dish({
       dishName,
       dishDescription,
-      dishCategory,
       dishPrice,
+      dishCategory,
       typeDish,
-      image,
+      imageUrl,
     });
 
     await newDish.save();
-    res.status(201).json({ message: "Plato creado exitosamente", dish: newDish });
+    console.log("Platillo creado exitosamente:", newDish);
+    res.status(201).json({ message: "Platillo creado exitosamente", dish: newDish });
   } catch (error) {
-    res.status(500).json({ message: "Error al crear el plato", error: error.message });
+    console.error("Error al crear el platillo:", error.message);
+    res.status(500).json({ message: "Error al crear el platillo", error: error.message });
   }
 };
 
