@@ -18,14 +18,16 @@ const UserPage = () => {
     const [newClientPassword, setNewClientPassword] = useState('');
     const [placeholderName, setPlaceholderName] = useState('');
     const [placeholderEmail, setPlaceholderEmail] = useState('');
+    const [renderClientName, setRenderClientName] = useState('');
+    const [renderClientEmail, setRenderClientEmail] = useState('');
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const codedToken = sessionStorage.getItem("token");
         const decodedToken = jwtDecode(codedToken);
         const clientId = decodedToken.id           
-        const clientName = decodedToken.name
-        const clientEmail = decodedToken.email
+        renderClientInfo();
 
         if (!codedToken) {
             console.error("No se encontró token en la sessionStorage");
@@ -33,12 +35,9 @@ const UserPage = () => {
         }
 
         try {
-                     
-            const clientName = decodedToken.name
-            const clientEmail = decodedToken.email
-
-            setClientInfo({id: clientId, name: clientName, email: clientEmail });
-            toast.success(`Bienvenido, ${clientName}!`);
+            const { id, name, email } = decodedToken;
+            setClientInfo({ id, name, email });
+            toast.success(`Bienvenido, ${name}!`);
         } catch (error) {
             console.error("Error al desencriptar token:", error);
         }
@@ -87,51 +86,90 @@ const UserPage = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
     
-        const token = sessionStorage.getItem("token");
-        if (!token) {
-            toast.error("No se encontró el token.");
+        if (!newClientName && !newClientEmail && !newClientPassword) {
+            toast.error("No hay cambios para guardar.");
             return;
         }
     
-        const decodedToken = jwtDecode(token);
-        const idC = decodedToken.id;
-    
-        const newData = {
-            clientname: newClientName,
-            clientemail: newClientEmail,
-            clientpassword: newClientPassword,
-        };
-    
         try {
-
-            const response = await updateClient(idC, newData);
+            const token = sessionStorage.getItem("token");
+            if (!token) throw new Error("No se encontró el token.");
+    
+            const { id } = jwtDecode(token);
+            const newData = {
+                clientname: newClientName || placeholderName,
+                clientemail: newClientEmail || placeholderEmail,
+                clientpassword: newClientPassword,
+            };
+    
+            const response = await updateClient(id, newData);
             if (response) {
                 toast.success("Datos actualizados exitosamente.");
-                setShowModal(false); // Close the modal
+                setShowModal(false);
+                renderClientInfo(); // Actualiza los datos renderizados
             } else {
                 toast.error("Respuesta inesperada del servidor.");
             }
-            const response = await updateClient(newData);
-
         } catch (error) {
             console.error("Error al actualizar datos:", error);
-            toast.error(error?.message || "Error al conectar con el servidor.");
+            toast.error("Error al conectar con el servidor.");
         }
     };
     
 
-    const renderClientInfo = () => (
+    const renderClientInfo = async () => {
+        try {
+            const codedToken = sessionStorage.getItem("token");
+    
+            if (!codedToken) {
+                throw new Error("No se encontró token en la sessionStorage");
+            }
+    
+            const decodedToken = jwtDecode(codedToken);
+    
+            if (!decodedToken || !decodedToken.id) {
+                throw new Error("Token inválido o no contiene un ID");
+            }
+    
+            const clientId = decodedToken.id;
+    
+            const clientData = await getClientById(clientId); // Llama a la API con el ID del cliente
+    
+            if (!clientData || !clientData.clientname || !clientData.clientemail) {
+                throw new Error("Datos del cliente incompletos o incorrectos");
+            }
+    
+            // Actualiza el estado con los datos obtenidos
+            setRenderClientName(clientData.clientname);
+            setRenderClientEmail(clientData.clientemail);
+    
+            // Finaliza la carga
+            setLoading(false);
+        } catch (error) {
+            console.error("Error al obtener datos del cliente:", error);
+            toast.error("Error al cargar los datos del cliente.");
+            setLoading(false); // Asegúrate de que no se quede en estado de carga
+        }
+    };
+    
+    
+
+    const clientProfile = () => (
         <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
-            <Typography variant="h5" gutterBottom>
-                Información de Usuario
-            </Typography>
-            <Typography>
-                <strong>Nombre:</strong> {clientInfo.name}
-            </Typography>
-            <Typography>
-                <strong>Correo Electrónico:</strong> {clientInfo.email}
-            </Typography>
-            <Button
+            {loading ? (
+                <Typography>Cargando información del cliente...</Typography>
+            ) : (
+                <>
+                    <Typography variant="h5" gutterBottom>
+                        Información de Usuario
+                    </Typography>
+                    <Typography>
+                        <strong>Nombre:</strong> {renderClientName || "No disponible"}
+                    </Typography>
+                    <Typography>
+                        <strong>Correo Electrónico:</strong> {renderClientEmail || "No disponible"}
+                    </Typography>
+                                <Button
     variant="outlined"
     onClick={async () => {
         try {
@@ -154,10 +192,12 @@ const UserPage = () => {
 >
     Actualizar Datos
 </Button>
-
-
+                </>
+                
+            )}
         </Card>
     );
+    
 
     const dataUpdateModal = () => (
 <Dialog open={showModal} onClose={() => setShowModal(false)} maxWidth="sm" fullWidth>
@@ -216,7 +256,7 @@ const UserPage = () => {
             case 'Historial de Órdenes':
                 return <div>Historial de Órdenes</div>;
             case 'Información de Usuario':
-                return renderClientInfo();
+                return clientProfile();
             case 'Salir':
                 navigate('/Login');
                 return null;

@@ -122,7 +122,7 @@ const RegisterForm = () => {
                         variant="h4"
                         gutterBottom
                         sx={{
-                            color: '#000000',
+                            color: '#fff',
                             fontSize: { xs: '1.8rem', md: '2.2rem' }
                         }}
                     >
