@@ -102,9 +102,7 @@ const UserPage = () => {
                 clientpassword: newClientPassword,
             };
     
-        try {
-
-            const response = await updateClient(idC, newData);
+            const response = await updateClient(id, newData);
             if (response) {
                 toast.success("Datos actualizados exitosamente.");
                 setShowModal(false);
@@ -112,8 +110,6 @@ const UserPage = () => {
             } else {
                 toast.error("Respuesta inesperada del servidor.");
             }
-            const response = await updateClient(newData);
-
         } catch (error) {
             console.error("Error al actualizar datos:", error);
             toast.error("Error al conectar con el servidor.");
@@ -173,7 +169,7 @@ const UserPage = () => {
                     <Typography>
                         <strong>Correo Electrónico:</strong> {renderClientEmail || "No disponible"}
                     </Typography>
-                    <Button
+                                <Button
     variant="outlined"
     onClick={async () => {
         try {
