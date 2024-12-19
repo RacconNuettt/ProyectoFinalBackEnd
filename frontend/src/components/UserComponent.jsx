@@ -42,7 +42,7 @@ const UserPage = () => {
         } catch (error) {
             console.error("Error al desencriptar token:", error);
         }
-    }, []);
+    },[]);
 
     // const fetchClientId = async () => {
     //     try {
@@ -111,7 +111,6 @@ const UserPage = () => {
             } else {
                 toast.error("Respuesta inesperada del servidor.");
             }
-            const response = await updateClient(newData);
 
         } catch (error) {
             console.error("Error al actualizar datos:", error);

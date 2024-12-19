@@ -72,6 +72,8 @@ export const getClientById = async (clientId) => {
 //         throw error.response?.data || { message: "Error al actualizar el cliente" };
 //     }
 // };
+
+
 const updateClient = async (id, clientData) => {
     const token = sessionStorage.getItem("token");
     if (!token) {
@@ -86,9 +88,6 @@ const updateClient = async (id, clientData) => {
             },
         });
         return response.data; // Ensure this returns data
-
-        const response = await axios.put(`${URL}/client/${id}`, updatedData);
-        return response.data;
 
     } catch (error) {
         console.error("Error in updateClient:", error.response?.data || error);

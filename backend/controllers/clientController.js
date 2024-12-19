@@ -102,10 +102,6 @@ const getAllClients = async (req, res) => {
       res.status(500).json({ message: "Error al obtener los clientes", error: error.message });
     }
   };
-  
-  module.exports = { getAllClients };
-  
-
 
   const updateClient = async (req, res) => {
     try {
