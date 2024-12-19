@@ -87,6 +87,9 @@ const updateClient = async (id, clientData) => {
         });
         return response.data; // Ensure this returns data
 
+        const response = await axios.put(`${URL}/client/${id}`, updatedData);
+        return response.data;
+
     } catch (error) {
         console.error("Error in updateClient:", error.response?.data || error);
         throw error.response?.data || error;
