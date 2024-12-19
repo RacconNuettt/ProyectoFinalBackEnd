@@ -61,16 +61,16 @@ const loginClient = async (req, res) => {
 
         //aqui estoy agregando la informacion que quiero que el token me suministre
         const token = jwt.sign(
-            { id: client._id, role: 'client', name: client.clientname, email: client.clientemail, password: client.clientpassword }, 
-            process.env.JWT_SECRET_CLIENTS, 
+            { id: client._id, role: 'client', name: client.clientname, email: client.clientemail, password: client.clientpassword },
+            process.env.JWT_SECRET_CLIENTS,
             { expiresIn: "1h" }
         );
 
-        res.json({ 
-            message: "Inicio de sesión exitoso", 
-            token, 
+        res.json({
+            message: "Inicio de sesión exitoso",
+            token,
             clientName: client.clientname,
-            clientemail: client.clientemail, 
+            clientemail: client.clientemail,
             clientpassword: client.password
         });
     } catch (error) {
@@ -95,19 +95,15 @@ const getClient = async (req, res) => {
 
 const getAllClients = async (req, res) => {
     try {
-      const clients = await Client.find({}, { clientpassword: 0 }); // Excluir clientpassword en la consulta
-  
-      res.json(clients);
+        const clients = await Client.find({}, { clientpassword: 0 }); // Excluir clientpassword en la consulta
+
+        res.json(clients);
     } catch (error) {
-      res.status(500).json({ message: "Error al obtener los clientes", error: error.message });
+        res.status(500).json({ message: "Error al obtener los clientes", error: error.message });
     }
-  };
-  
-  module.exports = { getAllClients };
-  
+};
 
-
-  const updateClient = async (req, res) => {
+const updateClient = async (req, res) => {
     try {
         console.log("Request Body:", req.body); // Debug
         const { id } = req.params;

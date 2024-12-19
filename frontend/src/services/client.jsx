@@ -79,8 +79,14 @@ const updateClient = async (id, clientData) => {
     }
     
     try {
-        const response = await axios.put(`${URL}/client/${id}`, updatedData);
-        return response.data;
+        const response = await axios.put(`${URL}/client/${id}`, clientData, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Include token
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data; // Ensure this returns data
+
     } catch (error) {
         console.error("Error in updateClient:", error.response?.data || error);
         throw error.response?.data || error;
