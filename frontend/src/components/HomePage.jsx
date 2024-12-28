@@ -1,19 +1,78 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Box, Typography } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import logo from "../assets/logo.png";
 
 const HomePage = () => {
+    const [newClientPassword, setNewClientPassword] = useState('');
+    const [placeholderName, setPlaceholderName] = useState('');
+    const [placeholderEmail, setPlaceholderEmail] = useState('');
+    const [renderClientName, setRenderClientName] = useState('');
+    const [renderClientEmail, setRenderClientEmail] = useState('');
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        //este codigo de aqui me permite obtener el token
         const codedToken = sessionStorage.getItem("token");
+            const fetchClientId = async () => {
+                try {
+                    const codedToken = sessionStorage.getItem("token");
+            
+                    if (!codedToken) {
+                        throw new Error("Token not found in sessionStorage");
+                    }
+            
+                    const decodedToken = jwtDecode(codedToken);
+                    const clientId = decodedToken.id;
+            
+                    const clientData = await getClientById(clientId); // Automatically sends token
+                    return clientData;
+                } catch (error) {
+                    console.error('Error fetching the client id:', error);
+                    throw error;
+                }
+            };
+
+            const renderClientInfo = async () => {
+                    try {
+                        const codedToken = sessionStorage.getItem("token");
+                
+                        if (!codedToken) {
+                            throw new Error("No se encontró token en la sessionStorage");
+                        }
+                
+                        const decodedToken = jwtDecode(codedToken);
+                
+                        if (!decodedToken || !decodedToken.id) {
+                            throw new Error("Token inválido o no contiene un ID");
+                        }
+                
+                        const clientId = decodedToken.id;
+                
+                        const clientData = await getClientById(clientId); // Llama a la API con el ID del cliente
+                
+                        if (!clientData || !clientData.clientname || !clientData.clientemail) {
+                            throw new Error("Datos del cliente incompletos o incorrectos");
+                        }
+                
+                        // Actualiza el estado con los datos obtenidos
+                        setRenderClientName(clientData.clientname);
+                        setRenderClientEmail(clientData.clientemail);
+                
+                        // Finaliza la carga
+                        setLoading(false);
+                    } catch (error) {
+                        console.error("Error al obtener datos del cliente:", error);
+                        toast.error("Error al cargar los datos del cliente.");
+                        setLoading(false); // Asegúrate de que no se quede en estado de carga
+                    }
+                };
 
         if (!codedToken) {
             console.error("No se encontró token en la sessionStorage");
             return;
         }
-        // y aqui lo desencripta 
+
         try {
             const decodedToken = jwtDecode(codedToken);
             console.log("Decoded Token:", decodedToken);
@@ -25,7 +84,7 @@ const HomePage = () => {
                 console.log("Cliente:", clientName);
                 console.log("Email: ", clientEmail)
                 console.log("Contraseña: ", clientPassword)
-                toast.success(`Bienvenido, ${clientName}!`);
+                toast.success(`Bienvenido, ${renderClientName}!`);
             } else {
                 console.warn("El nombre del cliente no se encuentra en el token");
             }
@@ -57,7 +116,7 @@ const HomePage = () => {
                     marginBottom: 4,
                 }}
             >
-                BIENVENIDES
+                BIENVENIDO
             </Typography>
             <Box
                 sx={{
