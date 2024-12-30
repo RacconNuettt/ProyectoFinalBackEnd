@@ -176,8 +176,8 @@ const UserPage = () => {
         try {
             const clientData = await fetchClientId();
             setShowModal(true); // Open modal
-            setPlaceholderName(clientData.name); // Set name for placeholder
-            setPlaceholderEmail(clientData.email); // Set email for placeholder
+            setPlaceholderName(renderClientName); // Set name for placeholder
+            setPlaceholderEmail(renderClientEmail); // Set email for placeholder
             
         } catch (error) {
             console.error("Error fetching client data:", error);
@@ -274,7 +274,7 @@ const UserPage = () => {
         <>
             <CssBaseline />
             <GlobalStyles styles={{ body: { fontFamily: "'Patrick Hand', cursive" } }} />
-            <Container maxWidth="xl" sx={{ backgroundColor: '#fafafa', minHeight: '100vh', padding: 2 }}>
+            <Container maxWidth="xl" sx={{ backgroundColor: '#fafafa ', minHeight: '100vh', padding: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={3} md={2} sx={{ backgroundColor: '#008000', color: 'white', padding: 2 }}>
                         <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 2 }}>
