@@ -167,8 +167,8 @@ const HomePage = () => {
                     </Typography>
                     <Box
                         sx={{
-                            width: 400,
-                            height: 400,
+                            width: 200,
+                            height: 200,
                             borderRadius: "50%",
                             display: "flex",
                             alignItems: "center",
@@ -190,7 +190,6 @@ const HomePage = () => {
                     </Box>
                 </Grid>
 
-                {/* Right Side (User Greeting, Promotions, and Schedule) */}
                 <Grid item xs={12} sm={6}>
                     <Box sx={{ textAlign: "left" }}>
                         {user && (
@@ -200,7 +199,7 @@ const HomePage = () => {
                         )}
 
                         <Typography variant="body1" sx={{ marginBottom: 4, maxWidth: "600px" }}>
-                            Disfruta de nuestras promociones y menús exclusivos. Explora, pide y relájate con lo mejor de nuestra cocina.
+                            Disfruta de nuestras promociones y menús. Explora, pide y relájate con lo mejor de nuestra cocina.
                         </Typography>
 
                         <Stack spacing={3}>
@@ -209,15 +208,14 @@ const HomePage = () => {
                                     Promociones del Día
                                 </Typography>
                                 <Typography variant="body1">- 2x1 en bebidas después de las 5 PM</Typography>
-                                <Typography variant="body1">- Descuento del 10% para estudiantes</Typography>
                             </Paper>
 
                             <Paper elevation={3} sx={{ padding: 3 }}>
                                 <Typography variant="h6" gutterBottom>
                                     Horarios
                                 </Typography>
-                                <Typography variant="body1">Lunes a Viernes: 8 AM - 9 PM</Typography>
-                                <Typography variant="body1">Sábado y Domingo: 10 AM - 11 PM</Typography>
+                                <Typography variant="body1">Lunes a Viernes: 6 AM - 9 PM</Typography>
+                                <Typography variant="body1">Sábado y Domingo: 6 AM - 2 PM</Typography>
                             </Paper>
                         </Stack>
 

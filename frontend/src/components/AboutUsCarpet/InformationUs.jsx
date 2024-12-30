@@ -20,14 +20,15 @@ const InformationUs = () => {
                     align="center"
                     gutterBottom
                     sx={{
-                        marginBottom: 3,
+                        marginBottom: 4,
                         fontFamily: "'Patrick Hand', cursive",
-                        color: "#008000"
+                        color: "#008000",
+                        fontWeight: "bold",
                     }}
                 >
                     Sobre Nosotros
                 </Typography>
-                <Typography variant="body1" align="center" sx={{ marginBottom: 4, lineHeight: 1.8, height: "100%",fontFamily: "'Patrick Hand', cursive", color: "#000000" }}>
+                <Typography variant="body1" align="center" sx={{ marginBottom: 4, lineHeight: 1.8, height: "100%", fontFamily: "'Patrick Hand', cursive", color: "#000000" }}>
                     Bienvenidos a El Álamo, una sodita con corazón costarricense. Desde nuestras raíces, hemos
                     trabajado con pasión para ofrecerles lo mejor de la cocina tradicional costarricense. En
                     El Álamo, cada plato es preparado con ingredientes frescos, locales y una buena dosis de
@@ -37,29 +38,48 @@ const InformationUs = () => {
                 <Grid container spacing={4}>
                     {/* Nuestra Historia */}
                     <Grid item xs={12} md={4}>
-                        <Card sx={{ boxShadow: 3, height: "100%",
+                        <Card
+                            sx={{
+                                boxShadow: 6,
+                                borderRadius: 2,
+                                overflow: "hidden",
+                                height: "100%",
+                                "&:hover": {
+                                    transform: "scale(1.05)",
+                                    transition: "all 0.3s ease-in-out",
+                                },
                                 fontFamily: "'Patrick Hand', cursive",
-                                color: "#008000" }}>
+                                color: "#008000",
+                            }}
+                        >
                             <CardMedia
                                 component="img"
                                 alt="Nuestra Historia"
                                 height="200"
                                 image={imagen1}
-                                sx={{ borderRadius: "4px 4px 0 0"
-                                }}
+                                sx={{ objectFit: "cover" }}
                             />
                             <CardContent>
-                                <Typography variant="h5" component="div" gutterBottom
-                                sx={{height: "100%",
-                                    fontFamily: "'Patrick Hand', cursive",
-                                    color: "#008000" }}
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    gutterBottom
+                                    sx={{
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        color: "#008000",
+                                        fontWeight: "bold",
+                                    }}
                                 >
                                     Nuestra Historia
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary"
-                                sx={{height: "100%",
-                                    fontFamily: "'Patrick Hand', cursive",
-                                    color: "#000000" }}
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        color: "#000000",
+                                        lineHeight: 1.6,
+                                    }}
                                 >
                                     Somos una sodita que inició como una oportunidad maravillosa que se presentó.
                                     Gracias a nuestros clientes hemos logrado crear una reputación que respalda
@@ -71,31 +91,49 @@ const InformationUs = () => {
 
                     {/* Quiénes Somos */}
                     <Grid item xs={12} md={4}>
-                        <Card sx={{ boxShadow: 3, height: "100%",
+                        <Card
+                            sx={{
+                                boxShadow: 6,
+                                borderRadius: 2,
+                                overflow: "hidden",
+                                height: "100%",
+                                "&:hover": {
+                                    transform: "scale(1.05)",
+                                    transition: "all 0.3s ease-in-out",
+                                },
                                 fontFamily: "'Patrick Hand', cursive",
-                                color: "#008000" }}>
+                                color: "#008000",
+                            }}
+                        >
                             <CardMedia
                                 component="img"
                                 alt="Quiénes Somos"
                                 height="200"
                                 image={imagen2}
-                                sx={{ borderRadius: "4px 4px 0 0"
-                                }}
+                                sx={{ objectFit: "cover" }}
                             />
                             <CardContent>
-                                <Typography variant="h5" component="div" gutterBottom
-                                sx={{height: "100%",
-                                    fontFamily: "'Patrick Hand', cursive",
-                                    color: "#008000" }}
-                                >    
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    gutterBottom
+                                    sx={{
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        color: "#008000",
+                                        fontWeight: "bold",
+                                    }}
+                                >
                                     Quiénes Somos
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary"
-                                sx={{height: "100%",
-                                    fontFamily: "'Patrick Hand', cursive",
-                                    color: "#000000" }}
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        color: "#000000",
+                                        lineHeight: 1.6,
+                                    }}
                                 >
-                                    
                                     Cada miembro de nuestro equipo comparte una profunda conexión con la cocina, y
                                     juntos trabajamos para preservar y reinventar las recetas tradicionales que han
                                     sido transmitidas de generación en generación. Creemos en la importancia de
@@ -108,29 +146,47 @@ const InformationUs = () => {
 
                     {/* Nuestro Objetivo */}
                     <Grid item xs={12} md={4}>
-                        <Card sx={{ boxShadow: 3, height: "100%",
+                        <Card
+                            sx={{
+                                boxShadow: 6,
+                                borderRadius: 2,
+                                overflow: "hidden",
+                                height: "100%",
+                                "&:hover": {
+                                    transform: "scale(1.05)",
+                                    transition: "all 0.3s ease-in-out",
+                                },
                                 fontFamily: "'Patrick Hand', cursive",
-                                color: "#008000" }}>
+                                color: "#008000",
+                            }}
+                        >
                             <CardMedia
                                 component="img"
                                 alt="Nuestro Objetivo"
                                 height="200"
                                 image={imagen3}
-                                sx={{ borderRadius: "4px 4px 0 0"
-                                }}
+                                sx={{ objectFit: "cover" }}
                             />
                             <CardContent>
-                                <Typography variant="h5" component="div" gutterBottom
-                                sx={{height: "100%",
-                                    fontFamily: "'Patrick Hand', cursive",
-                                    color: "#008000" }}
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    gutterBottom
+                                    sx={{
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        color: "#008000",
+                                        fontWeight: "bold",
+                                    }}
                                 >
                                     Nuestro Objetivo
                                 </Typography>
-                                <Typography variant="body2" 
-                                sx={{height: "100%",
-                                    fontFamily: "'Patrick Hand', cursive",
-                                    color: "#000000" }}
+                                <Typography
+                                    variant="body2"
+                                    sx={{
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        color: "#000000",
+                                        lineHeight: 1.6,
+                                    }}
                                 >
                                     Nuestro principal objetivo es crear un espacio acogedor donde puedas disfrutar de
                                     sabores auténticos, como los que siempre has amado. Desde un casado bien cargado
