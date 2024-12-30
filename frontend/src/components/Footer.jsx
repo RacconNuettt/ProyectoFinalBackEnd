@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, Container, Grid, Typography, Link, IconButton, Collapse } from "@mui/material";
+import {Grid2, Box, Container, Typography, Link, IconButton, Collapse, List, ListItem } from "@mui/material";
+
 import { FaWhatsapp, FaInstagram, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -8,221 +9,81 @@ const Footer = () => {
   const [toggleLinks, setToggleLinks] = useState(false);
   const [toggleSocial, setToggleSocial] = useState(false);
 
-  return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: "#212529",
-        color: "#fff",
-        py: 4,
-      }}
-    >
-      <Container>
-        <Grid container spacing={4}>
-          {/* Información */}
-          <Grid item xs={12} md={4}>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              onClick={() => setToggleInfo(!toggleInfo)}
-              sx={{ cursor: { xs: "pointer", md: "default" } }}
-            >
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{
-                  fontFamily: "'Patrick Hand', cursive",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                Información
-              </Typography>
-              <IconButton
-                size="small"
-                sx={{ display: { xs: "block", md: "none" }, color: "#fff" }}
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </Box>
-            <Collapse in={toggleInfo || window.innerWidth >= 960}>
-              <Typography variant="body2" sx={{ fontFamily: "'Patrick Hand', cursive" }}>
-                Si quieres saber más de nosotros, o de nuestros servicios, por favor comunícate por medio de nuestras redes sociales.
-              </Typography>
-            </Collapse>
-          </Grid>
+  const Section = ({ title, toggle, setToggle, children }) => (
+    <Grid2 item xs={12} md={4} sx={{ marginBottom: 4 }}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        onClick={() => setToggle(!toggle)}
+        sx={{ cursor: { xs: "pointer", md: "default" } }}
+      >
+        <Typography variant="h6" gutterBottom sx={{ fontFamily: "'Patrick Hand', cursive" }}>
+          {title}
+        </Typography>
+        <IconButton size="small" sx={{ display: { xs: "block", md: "none" }, color: "#fff" }}>
+          <ExpandMoreIcon />
+        </IconButton>
+      </Box>
+      <Collapse in={toggle || window.innerWidth >= 960}>{children}</Collapse>
+    </Grid2>
+  );
 
-          {/* Enlaces */}
-          <Grid item xs={12} md={4}>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              onClick={() => setToggleLinks(!toggleLinks)}
-              sx={{ cursor: { xs: "pointer", md: "default" } }}
-            >
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{
-                  fontFamily: "'Patrick Hand', cursive",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                Enlaces
-              </Typography>
-              <IconButton
-                size="small"
-                sx={{ display: { xs: "block", md: "none" }, color: "#fff" }}
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </Box>
-            <Collapse in={toggleLinks || window.innerWidth >= 960}>
-              <Box component="ul" sx={{ listStyleType: "none", padding: 0 }}>
-                <Box component="li">
-                  <Link
-                    href="/AboutUs"
-                    color="inherit"
-                    underline="hover"
-                    sx={{ fontFamily: "'Patrick Hand', cursive" }}
-                  >
-                    Sobre Nosotros
+  return (
+    <Box component="footer" sx={{ backgroundColor: "#212529", color: "#fff", py: 6 }}>
+      <Container>
+        <Grid2 container spacing={10}>
+          {/* Información */}
+          <Section title="Información" toggle={toggleInfo} setToggle={setToggleInfo}>
+            <List sx={{ padding: 0 }}>
+              <ListItem>
+                <Typography variant="body2" sx={{ fontFamily: "'Patrick Hand', cursive" }}>
+                  Si quieres saber más de nosotros, comunícate por nuestras redes sociales.
+                </Typography>
+              </ListItem>
+            </List>
+          </Section>
+
+          {/* Navegación */}
+          <Section title="Navegación" toggle={toggleLinks} setToggle={setToggleLinks}>
+            <List sx={{ padding: 0 }}>
+              {[
+                { text: "Sobre Nosotros", link: "/AboutUs" },
+                { text: "Contacto", link: "/Contacto" },
+                { text: "Menú", link: "/Menu" },
+                { text: "Cuenta", link: "/User" },
+              ].map((item, index) => (
+                <ListItem key={index} sx={{ paddingY: 0.5 }}>
+                  <Link href={item.link} color="inherit" underline="hover" sx={{ fontFamily: "'Patrick Hand', cursive" }}>
+                    {item.text}
                   </Link>
-                </Box>
-                <Box component="li">
-                  <Link
-                    href="#"
-                    color="inherit"
-                    underline="hover"
-                    sx={{ fontFamily: "'Patrick Hand', cursive" }}
-                  >
-                    Contacto
-                  </Link>
-                </Box>
-                <Box component="li">
-                  <Link
-                    href="#"
-                    color="inherit"
-                    underline="hover"
-                    sx={{ fontFamily: "'Patrick Hand', cursive" }}
-                  >
-                    Menú
-                  </Link>
-                </Box>
-              </Box>
-            </Collapse>
-          </Grid>
+                </ListItem>
+              ))}
+            </List>
+          </Section>
 
           {/* Redes Sociales */}
-          <Grid item xs={12} md={4}>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              onClick={() => setToggleSocial(!toggleSocial)}
-              sx={{ cursor: { xs: "pointer", md: "default" } }}
-            >
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{
-                  fontFamily: "'Patrick Hand', cursive",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                Redes Sociales
-              </Typography>
-              <IconButton
-                size="small"
-                sx={{ display: { xs: "block", md: "none" }, color: "#fff" }}
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </Box>
-            <Collapse in={toggleSocial || window.innerWidth >= 960}>
-              <Grid container spacing={2} justifyContent="center">
-                <Grid item>
-                  <Link
-                    href="https://wa.me/+50683399812"
-                    target="_blank"
-                    color="success"
-                    underline="none"
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      fontFamily: "'Nerko One', cursive",
-                    }}
-                  >
-                    <FaWhatsapp size={24} />
-                    <Typography variant="body2">WhatsApp</Typography>
+          <Section title="Conecta con nosotros" toggle={toggleSocial} setToggle={setToggleSocial}>
+            <List sx={{ padding: 0 }}>
+              {[
+                { icon: <FaWhatsapp size={20} color="#25D366" />, text: "WhatsApp", link: "https://wa.me/+50683399812" },
+                { icon: <FaInstagram size={20} color="#E4405F" />, text: "Instagram", link: "https://instagram.com/daniel_gonzalez_fuentes" },
+                { icon: <FaPhoneAlt size={20} color="#0077B5" />, text: "Teléfono", link: "tel:71816948" },
+                { icon: <FaMapMarkerAlt size={20} color="#EA4335" />, text: "Dirección", link: "https://www.google.com/maps" },
+              ].map((item, index) => (
+                <ListItem key={index} sx={{ paddingY: 0.5, display: 'flex', alignItems: 'center', gap: 1 }}>
+                  {item.icon}
+                  <Link href={item.link} target="_blank" color="inherit" underline="hover" sx={{ fontFamily: "'Nerko One', cursive" }}>
+                    {item.text}
                   </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    href="https://instagram.com/daniel_gonzalez_fuentes"
-                    target="_blank"
-                    color="warning"
-                    underline="none"
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      fontFamily: "'Nerko One', cursive",
-                    }}
-                  >
-                    <FaInstagram size={24} />
-                    <Typography variant="body2">Instagram</Typography>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    href="tel:71816948"
-                    color="primary"
-                    underline="none"
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      fontFamily: "'Nerko One', cursive",
-                    }}
-                  >
-                    <FaPhoneAlt size={24} />
-                    <Typography variant="body2">Teléfono</Typography>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    href="https://www.google.com/maps/@9.9948717,-84.6590483,16.76z?entry=ttu&g_ep=EgoyMDI0MDkxMS4wIKXMDSoASAFQAw%3D%3D"
-                    target="_blank"
-                    color="error"
-                    underline="none"
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      fontFamily: "'Nerko One', cursive",
-                    }}
-                  >
-                    <FaMapMarkerAlt size={24} />
-                    <Typography variant="body2">Dirección</Typography>
-                  </Link>
-                </Grid>
-              </Grid>
-            </Collapse>
-          </Grid>
-        </Grid>
+                </ListItem>
+              ))}
+            </List>
+          </Section>
+        </Grid2>
 
-        {/* Footer Bottom */}
-        <Box textAlign="center" mt={4}>
-          <Typography
-            variant="body2"
-            sx={{ fontFamily: "'Patrick Hand', cursive" }}
-          >
+        <Box textAlign="center" mt={6}>
+          <Typography variant="body2" sx={{ fontFamily: "'Patrick Hand', cursive" }}>
             &copy; {new Date().getFullYear()} Soda El Alamo. Todos los derechos reservados.
           </Typography>
         </Box>

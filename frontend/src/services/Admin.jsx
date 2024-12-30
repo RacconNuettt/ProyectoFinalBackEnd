@@ -17,7 +17,7 @@ const registerAdmin = async (adminData) => {
 
 const loginAdmin = async (loginData) => {
     try {
-        const response = await axios.post(`${URL}/admin/adminRegister`, loginData);  
+        const response = await axios.post(`${URL}/admin/adminLogin`, loginData);  
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al iniciar sesión" };
@@ -44,7 +44,7 @@ const getAdminById = async (id) => {
     }
 };
 
-const updateClient = async (id, updatedData) => {
+const updateAdmin = async (id, updatedData) => {
     try {
         const response = await axios.put(`${URL}/admin/${id}`, updatedData);
         return response.data;
@@ -53,13 +53,13 @@ const updateClient = async (id, updatedData) => {
     }
 };
 
-const deleteClient = async (id) => {
+const deleteAdmin = async (id) => {
     try {
-        const response = await axios.delete(`${URL}/client/${id}`); // Fixed URL
+        const response = await axios.delete(`${URL}/admin/${id}`); 
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al eliminar el cliente" };
     }
 };
 
-export { registerClient, loginClient, getClientById, getAllClients, updateClient, deleteClient };
+export { registerAdmin, loginAdmin, getAdminById, getAllAdmins, updateAdmin, deleteAdmin };
