@@ -30,7 +30,7 @@ const Footer = () => {
   );
 
   return (
-    <Box component="footer" sx={{ backgroundColor: "#212529", color: "#fff", py: 6 }}>
+    <Box component="footer" sx={{ backgroundColor: "#212529", color: "#fff", py: 1 }}>
       <Container>
         <Grid2 container spacing={10}>
           {/* Información */}
