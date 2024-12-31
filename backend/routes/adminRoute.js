@@ -8,8 +8,8 @@ const router = express.Router();
 router.post('/adminRegister', registerAdmin);
 router.post('/adminLogin', loginAdmin);
 
-router.get('/:id', authMiddleware, getAdmin);
-router.put('/:id', authMiddleware, updateAdmin);
+router.get('/:id', getAdmin);
+router.put('/:id',  updateAdmin);
 router.delete('/:id', authMiddleware, deleteAdmin);
 
 module.exports = router;

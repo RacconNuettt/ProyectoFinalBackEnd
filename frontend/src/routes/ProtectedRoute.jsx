@@ -1,18 +1,20 @@
-/* import React from 'react';
+// components/ProtectedRoute.js
+import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../components/context/authContext';
 
-const ProtectedRoute = ({ children }) => {
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-    const isAdmin = localStorage.getItem('isAdmin');
+const ProtectedRoute = ({ children, adminOnly }) => {
+    const { user, isAdmin } = useAuth();
 
-    if (!isAuthenticated) {
-        return <Navigate to="/Login" />;
-    }
-    if (isAuthenticated && isAdmin === 'true') {
-        return children;  
+    if (!user) {
+        return <Navigate to='/login' />;
     }
 
-    return <Navigate to="/Home" />;
+    if (adminOnly && !isAdmin) {
+        return <Navigate to='/home' />; 
+    }
+
+    return children;
 };
 
-export default ProtectedRoute; */
+export default ProtectedRoute;

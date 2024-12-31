@@ -12,6 +12,7 @@ import Almacen from "../components/Almacen";
 import Ordenes from "../components/Ordenes";
 import Clientes from "../components/Clientes";
 import Opciones from "../components/Opciones";
+import ProtectedRoute from "../routes/ProtectedRoute";
 
 const Routing = () => {
   return (
@@ -24,12 +25,18 @@ const Routing = () => {
         <Route path="/Contacto" element={<Contacto />} />
         <Route path="/Menu" element={<Menu />} />
         <Route path="/Order" element={<Order />} />
-        <Route path="/Admin" element={<Admin />}>
+        
+        <Route path="/Admin" element={
+          <ProtectedRoute adminOnly>
+            <Admin />
+          </ProtectedRoute>
+        }>
           <Route path="almacen" element={<Almacen />} />
           <Route path="ordenes" element={<Ordenes />} />
           <Route path="clientes" element={<Clientes />} />
           <Route path="opciones" element={<Opciones />} />
         </Route>
+        
         <Route path="/User" element={<User />} />
       </Routes>
     </Router>
