@@ -1,9 +1,17 @@
 import React from 'react';
 import { Container, Grid, Button, Typography, CssBaseline, GlobalStyles } from '@mui/material';
 import { FaHome, FaSignOutAlt, FaFileAlt, FaBell, FaUserAlt, FaList } from 'react-icons/fa';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    navigate('/login');
+  };
+
   return (
     <>
       <CssBaseline />
@@ -26,6 +34,7 @@ const AdminPage = () => {
         }}
       >
         <Grid container spacing={2}>
+          {/* Barra lateral */}
           <Grid
             item
             xs={12}
@@ -34,7 +43,7 @@ const AdminPage = () => {
             sx={{
               background: 'linear-gradient(180deg, #3f51b5, #1a237e)',
               color: 'white',
-              height: '100vh',
+              minHeight: '100vh',
               padding: 2,
               borderRadius: 2,
             }}
@@ -45,65 +54,89 @@ const AdminPage = () => {
             >
               Admin Panel
             </Typography>
+            
             <Button
               fullWidth
               startIcon={<FaHome />}
-              sx={{ color: 'white', mb: 2 }}
+              sx={{
+                color: location.pathname === '/admin' ? '#ffeb3b' : 'white',
+                mb: 2,
+              }}
               component={Link}
               to="/admin"
             >
               Inicio
             </Button>
+
             <Button
               fullWidth
               startIcon={<FaFileAlt />}
-              sx={{ color: 'white', mb: 2 }}
+              sx={{
+                color: location.pathname === '/admin/almacen' ? '#ffeb3b' : 'white',
+                mb: 2,
+              }}
               component={Link}
               to="/admin/almacen"
             >
               Almacén
             </Button>
+
             <Button
               fullWidth
               startIcon={<FaBell />}
-              sx={{ color: 'white', mb: 2 }}
+              sx={{
+                color: location.pathname === '/admin/ordenes' ? '#ffeb3b' : 'white',
+                mb: 2,
+              }}
               component={Link}
               to="/admin/ordenes"
             >
               Órdenes
             </Button>
+
             <Button
               fullWidth
               startIcon={<FaUserAlt />}
-              sx={{ color: 'white', mb: 2 }}
+              sx={{
+                color: location.pathname === '/admin/clientes' ? '#ffeb3b' : 'white',
+                mb: 2,
+              }}
               component={Link}
               to="/admin/clientes"
             >
               Clientes
             </Button>
+
             <Button
               fullWidth
               startIcon={<FaList />}
-              sx={{ color: 'white', mb: 2 }}
+              sx={{
+                color: location.pathname === '/admin/opciones' ? '#ffeb3b' : 'white',
+                mb: 2,
+              }}
               component={Link}
               to="/admin/opciones"
             >
               Opciones
             </Button>
+
             <Button
               fullWidth
               startIcon={<FaSignOutAlt />}
-              sx={{ color: 'white' }}
-              component={Link}
-              to="/login"
+              sx={{
+                color: 'white',
+                mt: 4,
+              }}
+              onClick={handleLogout}
             >
               Salir
             </Button>
           </Grid>
+
+          {/* Contenido dinámico */}
           <Grid item xs={12} sm={9} md={10} sx={{ padding: 2 }}>
-            <Outlet /> {/* Este es el lugar donde se renderizarán las rutas anidadas */}
+            <Outlet />
           </Grid>
-          
         </Grid>
       </Container>
     </>
