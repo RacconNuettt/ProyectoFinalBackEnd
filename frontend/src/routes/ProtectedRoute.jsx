@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, Navigate, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Button, Modal, Box, TextField, Typography, CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
 import { loginAdmin } from '../services/admin';
@@ -24,35 +24,25 @@ const ProtectedRoute = ({ allowedRole }) => {
                 sessionStorage.setItem('token', response.token);
                 setOpen(false);
                 toast.success('Acceso concedido', { position: 'top-center' });
-                navigate('/admin');
             } else {
-                toast.error('No tienes permisos de administrador', { position: 'top-center' });
+                toast.error('Credenciales incorrectas o no tienes permisos de administrador', { position: 'top-center' });
             }
         } catch (error) {
-            console.error('Error de validación:', error);
-            toast.error(error.message || 'Credenciales incorrectas', { position: 'top-center' });
+            toast.error(error.message || 'Error al validar', { position: 'top-center' });
         } finally {
             setLoading(false);
         }
     };
 
-    // Si el rol ya está permitido
-    if (userRole === allowedRole) {
-        return <Outlet />;
-    }
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
 
-    // Si no está autenticado o no tiene el rol adecuado, redirige
-    if (!token) {
-        toast.error('Acceso denegado, inicia sesión primero');
-        return <Navigate to="/login" replace />;
-    }
-
-    // Modal de validación
-    return (
-        <>
+    if (!token || userRole !== allowedRole) {
+        return (
             <Box sx={{ textAlign: 'center', mt: 10 }}>
                 <Typography variant="h5" color="primary" sx={{ mb: 3 }}>
-                    Para ingresar a esta página, valida tus credenciales de administrador
+                    Para ingresar a la página solicitada, valida tus credenciales de administrador
                 </Typography>
 
                 <motion.div
@@ -63,56 +53,77 @@ const ProtectedRoute = ({ allowedRole }) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => setOpen(true)}
+                        onClick={handleOpenModal}
+                        sx={{
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            borderRadius: '20px',
+                            padding: '10px 20px',
+                        }}
                     >
                         Validar
                     </Button>
                 </motion.div>
-            </Box>
 
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        p: 4,
-                        borderRadius: 2,
-                        boxShadow: 24,
-                    }}
-                >
-                    <Typography variant="h6">Validar Administrador</Typography>
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Correo"
-                        value={adminEmail}
-                        onChange={(e) => setAdminEmail(e.target.value)}
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Contraseña"
-                        type="password"
-                        value={adminPassword}
-                        onChange={(e) => setAdminPassword(e.target.value)}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleValidate}
-                        disabled={loading}
-                        sx={{ mt: 2 }}
+                <Modal open={open} onClose={() => setOpen(false)}>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            bgcolor: 'background.paper',
+                            boxShadow: 24,
+                            p: 4,
+                            borderRadius: 2,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
                     >
-                        {loading ? <CircularProgress size={24} /> : 'Validar'}
-                    </Button>
-                </Box>
-            </Modal>
-        </>
-    );
+                        <Typography variant="h6" sx={{ mb: 2 }}>Validar Administrador</Typography>
+
+                        <TextField
+                            fullWidth
+                            margin="normal"
+                            label="Correo"
+                            value={adminEmail}
+                            onChange={(e) => setAdminEmail(e.target.value)}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            fullWidth
+                            margin="normal"
+                            label="Contraseña"
+                            type="password"
+                            value={adminPassword}
+                            onChange={(e) => setAdminPassword(e.target.value)}
+                            sx={{ mb: 2 }}
+                        />
+
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            onClick={handleValidate}
+                            sx={{
+                                mt: 2,
+                                fontWeight: 'bold',
+                                borderRadius: '20px',
+                                padding: '12px',
+                            }}
+                            disabled={loading}
+                        >
+                            {loading ? <CircularProgress size={24} /> : 'Validar'}
+                        </Button>
+                    </Box>
+                </Modal>
+            </Box>
+        );
+    }
+
+    return <Outlet />;
 };
 
 export default ProtectedRoute;
