@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Grid, Button, Typography, CssBaseline, GlobalStyles } from '@mui/material';
 import { FaHome, FaSignOutAlt, FaFileAlt, FaBell, FaUserAlt, FaList } from 'react-icons/fa';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 const AdminPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [admin, setAdmin] = useState(null);
+
+  useEffect(() => {
+    const codedToken = sessionStorage.getItem('token');
+
+    if (!codedToken) {
+      console.error('No se encontró token en sessionStorage');
+      return;
+    }
+
+    try {
+      const decodedToken = jwtDecode(codedToken);
+      setAdmin(decodedToken);
+      sessionStorage.setItem('adminName', decodedToken.name);
+      toast.success(`Bienvenida, ${decodedToken.name || 'Administrador'}!`);
+    } catch (error) {
+      console.error('Error al desencriptar token:', error);
+    }
+  }, []);
 
   const handleLogout = () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('adminName');
     navigate('/login');
   };
 
@@ -34,7 +56,6 @@ const AdminPage = () => {
         }}
       >
         <Grid container spacing={2}>
-          {/* Barra lateral */}
           <Grid
             item
             xs={12}
@@ -54,7 +75,13 @@ const AdminPage = () => {
             >
               Admin Panel
             </Typography>
-            
+            <Typography
+              variant="body1"
+              sx={{ textAlign: 'center', mb: 3 }}
+            >
+              {admin ? `Bienvenido, ${admin.name}` : 'Bienvenido'}
+            </Typography>
+
             <Button
               fullWidth
               startIcon={<FaHome />}
@@ -133,7 +160,6 @@ const AdminPage = () => {
             </Button>
           </Grid>
 
-          {/* Contenido dinámico */}
           <Grid item xs={12} sm={9} md={10} sx={{ padding: 2 }}>
             <Outlet />
           </Grid>

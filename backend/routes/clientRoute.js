@@ -9,8 +9,9 @@ router.post('/register', registerClient);
 router.post('/login', loginClient);
 
 router.get('/', getAllClients);
-router.get('/:id', authMiddleware(['client']), getClient); 
-router.put('/:id', authMiddleware(['client']),updateClient); 
-router.delete('/:id', authMiddleware(['client']), deleteClient); 
+router.get('/:id', authMiddleware(['client', 'admin']), getClient); 
+router.put('/:id', authMiddleware(['client', 'admin']), updateClient); 
+router.delete('/:id', authMiddleware(['client', 'admin']), deleteClient);
+
 
 module.exports = router;

@@ -105,74 +105,50 @@ const getAllClients = async (req, res) => {
 
 const updateClient = async (req, res) => {
     try {
-        console.log("Request Body:", req.body); // Debug
         const { id } = req.params;
-        const { clientname, clientemail, clientpassword } = req.body;
-
-        if (!clientname && !clientemail && !clientpassword) {
-            return res.status(400).json({ message: "No se enviaron datos para actualizar" });
-        }
+        const { clientname, clientemail } = req.body;
 
         const client = await Client.findById(id);
         if (!client) {
             return res.status(404).json({ message: "Cliente no encontrado" });
         }
 
+        // Solo el cliente o el administrador pueden modificar
+        if (req.user.role !== 'admin' && req.user.id !== client._id.toString()) {
+            return res.status(403).json({ message: "No tienes permiso para modificar este cliente" });
+        }
+
         if (clientname) client.clientname = clientname;
         if (clientemail) client.clientemail = clientemail;
 
-        if (clientpassword) {
-            const hashedPassword = await bcrypt.hash(clientpassword, 10);
-            client.clientpassword = hashedPassword;
-        }
-
         await client.save();
-        res.json({ message: "Cliente actualizado", client });
+        res.json({ message: "Cliente actualizado correctamente", client });
+
     } catch (error) {
-        res.status(500).json({ message: "Error al actualizar el cliente", error: error.message });
+        res.status(500).json({ message: "Error al actualizar cliente", error: error.message });
     }
 };
-
-// const updateClient = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const { clientname, clientemail, clientpassword } = req.body;
-//         const client = await Client.findById(id);
-
-//         if (!client) {
-//             return res.status(404).json({ message: "Cliente no encontrado" });
-//         }
-//         if (clientname) client.clientname = clientname;
-//         if (clientemail) client.clientemail = clientemail;
-
-//         if (clientpassword) {
-//             const hashedPassword = await bcrypt.hash(clientpassword, 10);
-//             client.clientpassword = hashedPassword;
-//         }
-
-//         await client.save();
-//         res.json({ message: "Cliente actualizado", client });
-//     } catch (error) {
-//         res.status(500).json({ message: "Error al actualizar el cliente", error: error.message });
-//     }
-// };
-
 
 const deleteClient = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const client = await Client.findByIdAndDelete(id);
-
+        const client = await Client.findById(id);
         if (!client) {
-            return res.status(404).json({ message: "No se encontró al cliente" });
+            return res.status(404).json({ message: "Cliente no encontrado" });
         }
 
-        res.json({ message: "Cliente eliminado" });
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: "Solo un administrador puede eliminar clientes" });
+        }
+
+        await Client.findByIdAndDelete(id);
+        res.json({ message: "Cliente eliminado correctamente" });
     } catch (error) {
-        res.status(500).json({ message: "Error al eliminar el cliente", error: error.message });
+        res.status(500).json({ message: "Error al eliminar cliente", error: error.message });
     }
 };
+
 
 module.exports = {
     registerClient,

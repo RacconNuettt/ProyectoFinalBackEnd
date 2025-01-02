@@ -41,11 +41,24 @@ const loginAdmin = async (req, res) => {
             return res.status(400).json({ message: "Credenciales inválidas" });
         }
 
-        const token = jwt.sign({ id: admin._id, role: 'admin' }, process.env.JWT_SECRET_ADMINS, {
-            expiresIn: "2h",
-        });
+        // Firmar el token con JWT_SECRET_ADMINS
+        const token = jwt.sign(
+            {
+                id: admin._id,
+                name: admin.adminName,
+                role: 'admin',
+                email: admin.adminEmail
+            },
+            process.env.JWT_SECRET_ADMINS,
+            { expiresIn: '1h' }
+        );
 
-        res.json({ message: "Inicio de sesión exitoso", token });
+        res.json({
+            message: "Inicio de sesión exitoso",
+            token,
+            adminName: admin.adminName,
+            adminEmail: admin.adminEmail
+        });
     } catch (error) {
         res.status(500).json({ message: "Error al iniciar sesión", error: error.message });
     }
@@ -107,6 +120,7 @@ const deleteAdmin = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar al administrador", error: error.message })
     }
 }
+
 
 
 module.exports = {
