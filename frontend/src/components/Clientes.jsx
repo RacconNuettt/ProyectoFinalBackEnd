@@ -64,36 +64,67 @@ const Clientes = () => {
             throw error;
           }
       };
+  // const handleUpdate = async (clientData) => {
+  //   try {
+  //     if (!newClientName && !newClientEmail && !newClientPassword) {
+  //       toast.error("No hay cambios para guardar.");
+  //       return;
+  //     }
+  
+  //     const newData = {
+  //       clientname: newClientName,
+  //       clientemail: newClientEmail,
+  //       clientpassword: newClientPassword,
+  //     };
+  
+  //     const response = await updateClient(clientData._id, newData);
+  //     if (response) {
+  //       toast.success("Datos actualizados exitosamente.");
+  //       setClientes((prev) =>
+  //         prev.map((client) =>
+  //           client._id === clientData._id ? { ...client, ...newData } : client
+  //         )
+  //       );
+  //     } else {
+  //       toast.error("Respuesta inesperada del servidor.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error al actualizar datos:", error);
+  //     toast.error("Error al conectar con el servidor.");
+  //   }
+  // };
+  
   const handleUpdate = async (clientData) => {
     try {
-      if (!newClientName && !newClientEmail && !newClientPassword) {
-        toast.error("No hay cambios para guardar.");
-        return;
-      }
-  
-      const newData = {
-        clientname: newClientName,
-        clientemail: newClientEmail,
-        clientpassword: newClientPassword,
-      };
-  
-      const response = await updateClient(clientData._id, newData);
-      if (response) {
-        toast.success("Datos actualizados exitosamente.");
-        setClientes((prev) =>
-          prev.map((client) =>
-            client._id === clientData._id ? { ...client, ...newData } : client
-          )
-        );
-      } else {
-        toast.error("Respuesta inesperada del servidor.");
-      }
+        if (!newClientName && !newClientEmail && !newClientPassword) {
+            toast.error("No hay cambios para guardar.");
+            return;
+        }
+
+        const newData = {
+            clientname: newClientName,
+            clientemail: newClientEmail,
+            clientpassword: newClientPassword,
+        };
+
+        const response = await updateClient(clientData._id, newData);
+        if (response) {
+            toast.success("Datos actualizados exitosamente.");
+            setClientes((prev) =>
+                prev.map((client) =>
+                    client._id === clientData._id ? { ...client, ...newData } : client
+                )
+            );
+        } else {
+            toast.error("Respuesta inesperada del servidor.");
+        }
     } catch (error) {
-      console.error("Error al actualizar datos:", error);
-      toast.error("Error al conectar con el servidor.");
+        console.error("Error al actualizar datos:", error);
+        toast.error("Error al conectar con el servidor.");
     }
-  };
-  
+};
+
+
   const handleUpdateConfirm = async (e) => {
     e.preventDefault();
     if (selectedClient) {
@@ -118,32 +149,58 @@ const Clientes = () => {
       };
       
 
-      const handleDelete = async (cliente) => {
-        try {
-                      const codedToken = sessionStorage.getItem("token");
+    //   const handleDelete = async (cliente) => {
+    //     try {
+    //                   const codedToken = sessionStorage.getItem("token");
               
-                      if (!codedToken) {
-                          throw new Error("Token not found in sessionStorage");
-                      }
+    //                   if (!codedToken) {
+    //                       throw new Error("Token not found in sessionStorage");
+    //                   }
               
-                      const decodedToken = jwtDecode(codedToken);
-                      if (!decodedToken || !decodedToken.id) {
-                        throw new Error("Token inválido o no contiene un ID");
-                    }
+    //                   const decodedToken = jwtDecode(codedToken);
+    //                   if (!decodedToken || !decodedToken.id) {
+    //                     throw new Error("Token inválido o no contiene un ID");
+    //                 }
             
-            setLoading(true);
+    //         setLoading(true);
     
-            const response = await deleteClient(cliente._id);
-            console.log('Client deleted successfully:', response);
-            setClientes((prev) => prev.filter((c) => c._id !== cliente._id));
-        } catch (error) {
-            console.error('Error deleting the client:', error);
-            alert('Failed to delete the client. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
+    //         const response = await deleteClient(cliente._id);
+    //         console.log('Client deleted successfully:', response);
+    //         setClientes((prev) => prev.filter((c) => c._id !== cliente._id));
+    //     } catch (error) {
+    //         console.error('Error deleting the client:', error);
+    //         alert('Failed to delete the client. Please try again.');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
     
+    const handleDelete = async (cliente) => {
+      try {
+          const codedToken = sessionStorage.getItem("token");
+  
+          if (!codedToken) {
+              throw new Error("Token not found in sessionStorage");
+          }
+  
+          const decodedToken = jwtDecode(codedToken);
+          if (!decodedToken || !decodedToken.id) {
+              throw new Error("Token inválido o no contiene un ID");
+          }
+  
+          setLoading(true);
+  
+          const response = await deleteClient(cliente._id);
+          console.log('Client deleted successfully:', response);
+          setClientes((prev) => prev.filter((c) => c._id !== cliente._id));
+      } catch (error) {
+          console.error('Error deleting the client:', error);
+          alert('Failed to delete the client. Please try again.');
+      } finally {
+          setLoading(false);
+      }
+  };
+
     const handleDeleteConfirm = () => {
         handleDelete(selectedClient);
         handleClose();
@@ -172,7 +229,6 @@ const Clientes = () => {
         const response = await registerClient(newData);
         if (response) {
           toast.success("Cliente agregado exitosamente.");
-          // Recargar la lista de clientes
           const updatedClientes = await getAllClients();
           setClientes(updatedClientes);
           handleCloseAdd();

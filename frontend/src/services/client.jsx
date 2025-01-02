@@ -26,6 +26,8 @@ const loginClient = async (loginData) => {
 };
 
 
+
+
 const getAllClients = async () => {
     try {
         const response = await axios.get(`${URL}/client`);
@@ -72,7 +74,26 @@ export const getClientById = async (clientId) => {
 //         throw error.response?.data || { message: "Error al actualizar el cliente" };
 //     }
 // };
+// const updateClient = async (id, clientData) => {
+//     const token = sessionStorage.getItem("token");
+//     if (!token) {
+//         throw new Error("Token not found in sessionStorage");
+//     }
+    
+//     try {
+//         const response = await axios.put(`${URL}/client/${id}`, clientData, {
+//             headers: {
+//                 Authorization: `Bearer ${token}`, // Include token
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         return response.data; // Ensure this returns data
 
+//     } catch (error) {
+//         console.error("Error in updateClient:", error.response?.data || error);
+//         throw error.response?.data || error;
+//     }
+// };
 
 const updateClient = async (id, clientData) => {
     const token = sessionStorage.getItem("token");
@@ -95,13 +116,33 @@ const updateClient = async (id, clientData) => {
     }
 };
 
+// const deleteClient = async (id) => {
+//     try {
+//         const response = await axios.delete(`${URL}/client/${id}`); // Fixed URL
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data || { message: "Error al eliminar el cliente" };
+//     }
+// };
+
 const deleteClient = async (id) => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+        throw new Error("Token not found in sessionStorage");
+    }
+
     try {
-        const response = await axios.delete(`${URL}/client/${id}`); // Fixed URL
+        const response = await axios.delete(`${URL}/client/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Include token
+            },
+        });
         return response.data;
     } catch (error) {
-        throw error.response?.data || { message: "Error al eliminar el cliente" };
+        console.error("Error in deleteClient:", error.response?.data || error);
+        throw error.response?.data || error;
     }
 };
+
 
 export { registerClient, loginClient, getAllClients, updateClient, deleteClient };
