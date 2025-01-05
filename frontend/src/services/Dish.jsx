@@ -14,7 +14,7 @@ const postDish = async (dishData) => {
 const getDish = async () => {
     try {
         const response = await axios.get(`${URL}/dish`);
-        response.data;
+        return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al obtener platillos"};
     };
@@ -23,7 +23,7 @@ const getDish = async () => {
 const getDishById = async (id) => {
     try {
         const response = await axios.get(`${URL}/dish/${id}`);
-        response.data;
+        return response.data;
     } catch (error) {
         throw error.response?.data || { message: " Error al obtener platillo " }
     };
@@ -32,7 +32,7 @@ const getDishById = async (id) => {
 const updateDish = async (id) => {
     try {
         const response = await axios.put(`${URL}/dish/${id}`);
-        response.data;
+        return response.data;
     } catch (error) {
         throw error.response?.data || { message: " Error al actualizar el platillo "};
     };
@@ -41,7 +41,7 @@ const updateDish = async (id) => {
 const deleteDish = async (id) => {
     try {
         const response = await axios.delete(`${URL}/dish/${id}`);
-        response.data;
+        return response.data;
     } catch (error) {
         throw error.response?.data || { message: " Error al eliminar el platillo "};
     };

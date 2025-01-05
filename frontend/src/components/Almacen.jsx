@@ -20,7 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getDishCategory } from "../services/Dishcategory";
 import { getAllTypeDish } from "../services/typeDish";
-import { postDish, getDish } from "../services/Dish";
+import { postDish, getDish, updateDish, deleteDish } from "../services/Dish";
 
 const Almacen = () => {
   const [formData, setFormData] = useState({
@@ -34,6 +34,7 @@ const Almacen = () => {
   const [dishes, setDishes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [typeDishes, setTypeDishes] = useState([]);
+  const [editingDish, setEditingDish] = useState(null);  // Nuevo estado para editar
 
   useEffect(() => {
     fetchCategoryDish();
@@ -64,6 +65,7 @@ const Almacen = () => {
   const fetchDishes = async () => {
     try {
       const response = await getDish();
+      console.log("Platillos recuperados:", response); 
       setDishes(response || []);
     } catch (error) {
       toast.error("Error al cargar los platillos.");
@@ -128,9 +130,16 @@ const Almacen = () => {
     data.append("image", formData.image);
 
     try {
-      await postDish(data);
-      toast.success("Platillo agregado exitosamente.");
-      fetchDishes(); // Recargar los platillos después de agregar uno nuevo
+      if (editingDish) {
+        // Editar platillo existente
+        await updateDish(editingDish._id, data);
+        toast.success("Platillo actualizado exitosamente.");
+      } else {
+        // Crear nuevo platillo
+        await postDish(data);
+        toast.success("Platillo agregado exitosamente.");
+      }
+      fetchDishes(); // Recargar los platillos después de agregar o editar
       setFormData({
         dishName: "",
         dishDescription: "",
@@ -139,11 +148,38 @@ const Almacen = () => {
         dishCategory: "",
         typeDish: "",
       }); // Reiniciar el formulario
+      setEditingDish(null); // Limpiar estado de edición
     } catch (error) {
       toast.error(
-        error.response?.data?.message || "Error al agregar el platillo."
+        error.response?.data?.message || "Error al agregar o actualizar el platillo."
       );
-      console.error("Error al agregar el platillo:", error);
+      console.error("Error al agregar o actualizar el platillo:", error);
+    }
+  };
+
+  const handleEdit = (dish) => {
+    setEditingDish(dish);
+    setFormData({
+      dishName: dish.dishName,
+      dishDescription: dish.dishDescription,
+      dishPrice: dish.dishPrice,
+      image: null,  // Si no necesitas la imagen en el formulario de edición, lo puedes dejar vacío
+      dishCategory: dish.dishCategory?._id || "",
+      typeDish: dish.typeDish?._id || "",
+    });
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const confirmed = window.confirm("¿Estás seguro de que deseas eliminar este platillo?");
+      if (confirmed) {
+        await deleteDish(id);
+        toast.success("Platillo eliminado exitosamente.");
+        fetchDishes();  // Recargar platillos después de la eliminación
+      }
+    } catch (error) {
+      toast.error("Error al eliminar el platillo.");
+      console.error("Error al eliminar el platillo:", error);
     }
   };
 
@@ -152,7 +188,7 @@ const Almacen = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
         <Typography variant="h5" gutterBottom>
-          Agregar Platillos
+          {editingDish ? "Editar Platillo" : "Agregar Platillo"}
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -215,7 +251,7 @@ const Almacen = () => {
             style={{ marginBottom: "16px" }}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Agregar Platillo
+            {editingDish ? "Actualizar Platillo" : "Agregar Platillo"}
           </Button>
         </form>
         <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 2 }}>
@@ -235,9 +271,9 @@ const Almacen = () => {
               {dishes.length > 0 ? (
                 dishes.map((dish) => (
                   <TableRow key={dish._id}>
-                    <TableCell>{dish.name}</TableCell>
-                    <TableCell>{dish.description}</TableCell>
-                    <TableCell>{dish.price}</TableCell>
+                    <TableCell>{dish.dishName || "Nombre no disponible"}</TableCell>
+                    <TableCell>{dish.dishDescription || "Descripción no disponible"}</TableCell>
+                    <TableCell>{dish.dishPrice || "Precio no disponible"}</TableCell>
                     <TableCell>
                       {dish.dishCategory?.dishCategoryname || "Sin categoría"}
                     </TableCell>
@@ -246,8 +282,8 @@ const Almacen = () => {
                     </TableCell>
                     <TableCell>
                       <img
-                        src={dish.image}
-                        alt={dish.name}
+                        src={dish.image || "ruta_default_imagen"}
+                        alt={dish.dishName}
                         style={{
                           width: "50px",
                           height: "50px",
@@ -256,8 +292,8 @@ const Almacen = () => {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button color="primary">Editar</Button>
-                      <Button color="secondary">Eliminar</Button>
+                      <Button color="primary" onClick={() => handleEdit(dish)}>Editar</Button>
+                      <Button color="secondary" onClick={() => handleDelete(dish._id)}>Eliminar</Button>
                     </TableCell>
                   </TableRow>
                 ))
