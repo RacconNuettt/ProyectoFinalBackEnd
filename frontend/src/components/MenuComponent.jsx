@@ -1,9 +1,30 @@
-import React from 'react';
-import { Carousel, Button, Modal, Form } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Carousel } from 'react-bootstrap';
 import '../styles/MenuComponent.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+const URL = import.meta.env.VITE_API_URL;
 
 const MenuComponent = () => {
+    const [desayunoDishes, setDesayunoDishes] = useState([]);
+
+    useEffect(() => {
+        const fetchDishes = async () => {
+            try {
+                const response = await axios.get(`${URL}/dish`)
+                const menus = Array.isArray(response.data) ? response.data : [];
+                const desayunoDishes = menus
+                    .flatMap(menu => (menu.dishes ? menu.dishes : []))
+                    .filter(dish => dish.category === 'desayuno');
+                setDesayunoDishes(desayunoDishes);
+            } catch (error) {               
+                console.error('Error fetching dishes:', error);
+            }
+        };
+        
+        fetchDishes();
+    }, []);
+console.log(fetchDishes)
     return (
         <div className="menu-container letters-container">
             <h1 className="text-success">MENU</h1>
@@ -11,11 +32,20 @@ const MenuComponent = () => {
             <div className="menu-section">
                 <h2 className="text-success">Desayunos</h2>
                 <Carousel controls={true} indicators={false} interval={null}>
-                    <Carousel.Item>
-                        <div className="d-flex justify-content-around">
-                            {/* Aquí puedes añadir contenido de los desayunos */}
-                        </div>
-                    </Carousel.Item>
+                    {desayunoDishes.map(dish => (
+                        <Carousel.Item key={dish.id}>
+                            <div className="d-flex justify-content-around">
+                                <div className="card">
+                                    <img src={dish.image} className="card-img-top" alt={dish.name} />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{dish.name}</h5>
+                                        <p className="card-text">{dish.description}</p>
+                                        <p className="card-text">${dish.price.toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Carousel.Item>
+                    ))}
                 </Carousel>
             </div>
 
@@ -24,7 +54,7 @@ const MenuComponent = () => {
                 <Carousel controls={true} indicators={false} interval={null}>
                     <Carousel.Item>
                         <div className="d-flex justify-content-around">
-                            {/* Aquí puedes añadir contenido de los almuerzos */}
+                            {/* Add lunch content here */}
                         </div>
                     </Carousel.Item>
                 </Carousel>
@@ -35,7 +65,7 @@ const MenuComponent = () => {
                 <Carousel controls={true} indicators={false} interval={null}>
                     <Carousel.Item>
                         <div className="d-flex justify-content-around">
-                            {/* Aquí puedes añadir contenido de las cenas */}
+                            {/* Add dinner content here */}
                         </div>
                     </Carousel.Item>
                 </Carousel>
@@ -48,42 +78,6 @@ const MenuComponent = () => {
                     </Link>
                 </h2>
             </div>
-
-            {/* Modal */}
-            <Modal show={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Ordenar</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div style={{ flex: 1, marginRight: '10px' }}>
-                            <h4>Comida</h4>
-                            <p>Nombre de la comida</p>
-                        </div>
-                        <div style={{ flex: 1, marginRight: '10px' }}>
-                            <h4>Bebidas</h4>
-                            <Form.Control as="select">
-                                <option value="">Seleccione una bebida</option>
-                                <option value="Natural: Cas">Cas</option>
-                                <option value="Natural: Limón">Limón</option>
-                                <option value="Natural: Piña">Piña</option>
-                                <option value="Gaseosa: Fanta">Fanta</option>
-                                <option value="Gaseosa: Coca-Cola">Coca-Cola</option>
-                                <option value="Café: Con leche">Café con leche</option>
-                                <option value="Café: Negro">Café negro</option>
-                            </Form.Control>
-                        </div>
-                        <div style={{ flex: 1, textAlign: 'right' }}>
-                            <h4>Total</h4>
-                            <p>0 colones</p>
-                        </div>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary">Cerrar</Button>
-                    <Button variant="primary">Realizar pedido</Button>
-                </Modal.Footer>
-            </Modal>
         </div>
     );
 };
