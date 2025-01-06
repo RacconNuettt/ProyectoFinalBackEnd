@@ -1,5 +1,7 @@
 # ProyectoFinalBackEnd
 
+Dariel Cerdas y Jose Daniel
+
 # Dia 1
 
 Se discutieron las herramientas a utilizar, las cuales seran 
