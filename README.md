@@ -3295,60 +3295,6 @@ models
             module.exports = router;:
             Exports the router for use in the main server or application.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     .env
         This project relies on an .env file to store environment-specific variables. Below is a breakdown of the key variables used and their purposes:
 
@@ -3581,6 +3527,4643 @@ models
             a cornerstone of this project's security infrastructure.
 
         providerContext
+
+    menuPersonalizable
+        ordenPersonalizada
+
+            Font Code
+            import { useState } from "react"; 
+            // Import the `useState` hook to manage component state.
+
+            import { 
+                Button, 
+                ButtonGroup, 
+                FormControlLabel, 
+                Checkbox, 
+                Typography, 
+                Box, 
+                Container, 
+                List, 
+                ListItem, 
+                ListItemText 
+            } from "@mui/material"; 
+            // Import Material-UI components for styling and layout.
+
+            const OrdenPersonalizada = () => {
+                // Component definition for "Orden Personalizada".
+
+                const [selectedItems, setSelectedItems] = useState([]);
+                // State to keep track of selected items for the custom order.
+
+                const [currentCategory, setCurrentCategory] = useState("bebidas");
+                // State to manage the currently selected category (default is "bebidas").
+
+                const items = {
+                    bebidas: ["Cerveza", "Vino", "Refresco"],
+                    comida: ["Pizza", "Hamburguesa", "Pasta"],
+                    ensaladas: ["Cesar", "Fruta", "Mediterránea"],
+                };
+                // An object containing categories and their respective items.
+
+                const handleCheckboxChange = (item) => {
+                    // Function to handle checkbox selection and deselection.
+                    setSelectedItems((prevItems) =>
+                        prevItems.includes(item)
+                            ? prevItems.filter((i) => i !== item) // Remove the item if it's already selected.
+                            : [...prevItems, item] // Add the item if it's not selected.
+                    );
+                };
+
+                return (
+                    <Box sx={{ fontFamily: "'Patrick Hand', cursive", color: "#008000", padding: 2 }}>
+                        {/* Root container with custom font and green color styling. */}
+
+                        <Typography variant="h4" sx={{ textAlign: "center", marginBottom: 3 }}>
+                            Orden Personalizada
+                        </Typography>
+                        {/* Header for the component, centered and styled. */}
+
+                        <Container sx={{ textAlign: "center", marginBottom: 3 }}>
+                            <ButtonGroup variant="outlined">
+                                {/* Button group to switch between categories. */}
+
+                                <Button
+                                    onClick={() => setCurrentCategory("bebidas")}
+                                    sx={{
+                                        color: "#fff",
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        backgroundColor: "#008000",
+                                        "&:hover": { backgroundColor: "#014701" },
+                                    }}
+                                >
+                                    Bebidas
+                                </Button>
+                                {/* Button to set the category to "bebidas". */}
+
+                                <Button
+                                    onClick={() => setCurrentCategory("comida")}
+                                    sx={{
+                                        color: "#fff",
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        backgroundColor: "#008000",
+                                        "&:hover": { backgroundColor: "#014701" },
+                                    }}
+                                >
+                                    Comida
+                                </Button>
+                                {/* Button to set the category to "comida". */}
+
+                                <Button
+                                    onClick={() => setCurrentCategory("ensaladas")}
+                                    sx={{
+                                        color: "#fff",
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        backgroundColor: "#008000",
+                                        "&:hover": { backgroundColor: "#014701" },
+                                    }}
+                                >
+                                    Ensaladas
+                                </Button>
+                                {/* Button to set the category to "ensaladas". */}
+                            </ButtonGroup>
+                        </Container>
+
+                        <Box sx={{ marginBottom: 3, padding: 2 }}>
+                            {/* Display checkboxes for items in the current category. */}
+                            {items[currentCategory].map((item) => (
+                                <FormControlLabel
+                                    key={item}
+                                    control={
+                                        <Checkbox
+                                            sx={{
+                                                color: "#008000",
+                                                "&.Mui-checked": { color: "#014701" },
+                                            }}
+                                            onChange={() => handleCheckboxChange(item)}
+                                        />
+                                    }
+                                    label={
+                                        <Typography sx={{ fontFamily: "'Patrick Hand', cursive", color: "#008000" }}>
+                                            {item}
+                                        </Typography>
+                                    }
+                                />
+                            ))}
+                        </Box>
+
+                        <Container sx={{ textAlign: "center", marginTop: 3 }}>
+                            <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                                Tu Orden
+                            </Typography>
+                            {/* Section to display selected items. */}
+                            <List sx={{ border: "1px solid #008000", borderRadius: 2, padding: 1 }}>
+                                {selectedItems.length > 0 ? (
+                                    selectedItems.map((item, index) => (
+                                        <ListItem key={index}>
+                                            <ListItemText
+                                                primary={item}
+                                                sx={{ fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
+                                            />
+                                        </ListItem>
+                                    ))
+                                ) : (
+                                    <Typography variant="body1" sx={{ fontFamily: "'Patrick Hand', cursive", color: "#008000" }}>
+                                        No hay elementos seleccionados.
+                                    </Typography>
+                                )}
+                            </List>
+                        </Container>
+                    </Box>
+                );
+            };
+
+            export default OrdenPersonalizada;
+            // Export the component for use in other parts of the application.
+
+
+            The OrdenPersonalizada.js file defines a React functional component that allows users to customize their orders by selecting items from different categories (e.g., beverages, food, and salads). It uses Material-UI for styling and layout, ensuring a clean and user-friendly interface.
+
+            Purpose:
+            This component provides an interactive way for users to select items from predefined categories and view their personalized order in real time.
+
+            Features:
+            State Management:
+
+            selectedItems: Tracks the items selected by the user.
+            currentCategory: Keeps track of the currently active category.
+            Categories:
+
+            The available categories and their respective items are defined in the items object:
+            Bebidas: Cerveza, Vino, Refresco.
+            Comida: Pizza, Hamburguesa, Pasta.
+            Ensaladas: Cesar, Fruta, Mediterránea.
+            Dynamic Category Switching:
+
+            Users can toggle between categories (bebidas, comida, ensaladas) using buttons styled with Material-UI's ButtonGroup.
+            Item Selection:
+
+            Items within the selected category are displayed as checkboxes.
+            The handleCheckboxChange function dynamically updates the selected items list when a checkbox is toggled.
+            Order Summary:
+
+            Displays a list of selected items.
+            If no items are selected, it shows a friendly message: "No hay elementos seleccionados."
+            UI and Styling:
+            Uses Material-UI components like Button, Typography, Checkbox, and List for a polished interface.
+            Styling emphasizes:
+            A playful font: 'Patrick Hand', cursive.
+            Green color palette (#008000 and #014701) for a fresh and inviting feel.
+            Hover effects on category buttons for better interactivity.
+
+        AdminComponent
+
+            Font Code
+            import React, { useState, useEffect } from 'react'; 
+            // Import React and its hooks for managing state and lifecycle methods.
+
+            import { 
+                Container, 
+                Grid, 
+                Button, 
+                Typography, 
+                CssBaseline, 
+                GlobalStyles 
+            } from '@mui/material'; 
+            // Import Material-UI components for layout and styling.
+
+            import { 
+                FaHome, 
+                FaSignOutAlt, 
+                FaFileAlt, 
+                FaBell, 
+                FaUserAlt, 
+                FaList 
+            } from 'react-icons/fa'; 
+            // Import icons from the react-icons library for menu options.
+
+            import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'; 
+            // Import routing utilities from React Router.
+
+            import { jwtDecode } from 'jwt-decode'; 
+            // Import a JWT decoding utility to extract token information.
+
+            import { toast } from 'react-toastify'; 
+            // Import a library to display toast notifications.
+
+            const AdminPage = () => {
+            const location = useLocation(); 
+            // Hook to get the current route location.
+
+            const navigate = useNavigate(); 
+            // Hook to programmatically navigate between routes.
+
+            const [admin, setAdmin] = useState(null); 
+            // State to store admin information decoded from the token.
+
+            useEffect(() => {
+                const codedToken = sessionStorage.getItem('token'); 
+                // Retrieve the token from session storage.
+
+                if (!codedToken) {
+                // If the token is missing, log an error and exit the function.
+                console.error('No se encontró token en sessionStorage');
+                return;
+                }
+
+                try {
+                const decodedToken = jwtDecode(codedToken); 
+                // Decode the token to extract admin information.
+
+                setAdmin(decodedToken); 
+                // Store decoded token information in the admin state.
+
+                sessionStorage.setItem('adminName', decodedToken.name); 
+                // Store admin name in session storage for future use.
+
+                toast.success(`Bienvenida, ${decodedToken.name || 'Administrador'}!`); 
+                // Display a success toast notification welcoming the admin.
+                } catch (error) {
+                console.error('Error al desencriptar token:', error); 
+                // Log an error if decoding fails.
+                }
+            }, []); 
+            // Run this effect only once when the component is mounted.
+
+            const handleLogout = () => {
+                // Function to handle logout.
+                sessionStorage.removeItem('token'); 
+                // Remove the token from session storage.
+
+                sessionStorage.removeItem('adminName'); 
+                // Remove the admin name from session storage.
+
+                navigate('/login'); 
+                // Redirect the user to the login page.
+            };
+
+            return (
+                <>
+                <CssBaseline />
+                {/* Normalize browser styles for consistent design. */}
+
+                <GlobalStyles
+                    styles={{
+                    body: { fontFamily: "'Patrick Hand', cursive" },
+                    '*': { fontFamily: "'Patrick Hand', cursive" },
+                    }}
+                />
+                {/* Apply a global custom font style using Material-UI's GlobalStyles. */}
+
+                <Container
+                    maxWidth="xl"
+                    sx={{
+                    backgroundColor: '#fafafa',
+                    minHeight: '100vh',
+                    padding: 2,
+                    }}
+                >
+                    <Grid container spacing={2}>
+                    {/* Grid container for sidebar and content sections. */}
+
+                    <Grid
+                        item
+                        xs={12} sm={3} md={2}
+                        sx={{
+                        background: 'linear-gradient(180deg, #3f51b5, #1a237e)',
+                        color: 'white',
+                        minHeight: '100vh',
+                        padding: 2,
+                        borderRadius: 2,
+                        }}
+                    >
+                        {/* Sidebar for navigation menu with a vertical gradient background. */}
+
+                        <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold' }}>
+                        Admin Panel
+                        </Typography>
+                        {/* Sidebar title. */}
+
+                        <Typography variant="body1" sx={{ textAlign: 'center', mb: 3 }}>
+                        {admin ? `Bienvenido, ${admin.name}` : 'Bienvenido'}
+                        </Typography>
+                        {/* Display admin's name if available, otherwise show a default greeting. */}
+
+                        {/* Navigation buttons for different sections of the admin panel. */}
+                        <Button
+                        fullWidth
+                        startIcon={<FaHome />}
+                        sx={{
+                            color: location.pathname === '/admin' ? '#ffeb3b' : 'white',
+                            mb: 2,
+                        }}
+                        component={Link}
+                        to="/admin"
+                        >
+                        Inicio
+                        </Button>
+                        <Button
+                        fullWidth
+                        startIcon={<FaFileAlt />}
+                        sx={{
+                            color: location.pathname === '/admin/almacen' ? '#ffeb3b' : 'white',
+                            mb: 2,
+                        }}
+                        component={Link}
+                        to="/admin/almacen"
+                        >
+                        Almacén
+                        </Button>
+                        <Button
+                        fullWidth
+                        startIcon={<FaBell />}
+                        sx={{
+                            color: location.pathname === '/admin/ordenes' ? '#ffeb3b' : 'white',
+                            mb: 2,
+                        }}
+                        component={Link}
+                        to="/admin/ordenes"
+                        >
+                        Órdenes
+                        </Button>
+                        <Button
+                        fullWidth
+                        startIcon={<FaUserAlt />}
+                        sx={{
+                            color: location.pathname === '/admin/clientes' ? '#ffeb3b' : 'white',
+                            mb: 2,
+                        }}
+                        component={Link}
+                        to="/admin/clientes"
+                        >
+                        Clientes
+                        </Button>
+                        <Button
+                        fullWidth
+                        startIcon={<FaList />}
+                        sx={{
+                            color: location.pathname === '/admin/opciones' ? '#ffeb3b' : 'white',
+                            mb: 2,
+                        }}
+                        component={Link}
+                        to="/admin/opciones"
+                        >
+                        Opciones
+                        </Button>
+                        <Button
+                        fullWidth
+                        startIcon={<FaSignOutAlt />}
+                        sx={{
+                            color: 'white',
+                            mt: 4,
+                        }}
+                        onClick={handleLogout}
+                        >
+                        Salir
+                        </Button>
+                        {/* Logout button at the bottom of the sidebar. */}
+                    </Grid>
+
+                    <Grid
+                        item
+                        xs={12} sm={9} md={10}
+                        sx={{ padding: 2 }}
+                    >
+                        <Outlet />
+                        {/* Render nested routes here for admin panel sections. */}
+                    </Grid>
+                    </Grid>
+                </Container>
+                </>
+            );
+            };
+
+            export default AdminPage;
+            // Export the AdminPage component for use in the app.
+
+            The AdminPage.js file defines a React component that serves as the administrative panel for an application. It incorporates routing, authentication, and a responsive design using Material-UI and React Router. The component enables an admin user to navigate between various sections and manage the application efficiently.
+
+            Purpose
+            This file provides a structured admin interface for managing different sections, such as orders, clients, and inventory. It also includes functionality for user authentication and session management.
+
+            Features
+            State and Lifecycle Management:
+
+            admin: Stores decoded admin data from a JWT token.
+            useEffect: Retrieves and decodes the admin's JWT token upon component mount. Displays a welcome message if the token is valid.
+            Token Handling:
+
+            Retrieves the JWT token from sessionStorage.
+            Decodes the token using jwtDecode to fetch admin details.
+            Displays a toast notification welcoming the admin.
+            Routing and Navigation:
+
+            Uses react-router-dom for navigation.
+            Sidebar buttons allow navigation to sections like:
+            Home (/admin)
+            Inventory (/admin/almacen)
+            Orders (/admin/ordenes)
+            Clients (/admin/clientes)
+            Options (/admin/opciones)
+            Displays the currently active route using a visual indicator (highlighted in yellow).
+            Logout Functionality:
+
+            Removes the token and admin name from sessionStorage.
+            Redirects the admin to the login page.
+            Styling:
+
+            Material-UI components (Grid, Button, Typography, Container) ensure a modern and responsive layout.
+            Sidebar features a vertical gradient background with intuitive navigation icons (e.g., FaHome, FaSignOutAlt from react-icons).
+            Consistent typography using the playful 'Patrick Hand', cursive font.
+            Nested Routes:
+
+            Uses the Outlet component to dynamically render the content of the selected admin panel section.
+
+        almacen
+
+            Font Code
+            // Importing necessary components and libraries
+            import {
+            Select,
+            InputLabel,
+            FormControl,
+            Card,
+            Typography,
+            TextField,
+            Button,
+            TableContainer,
+            Paper,
+            Table,
+            TableHead,
+            TableRow,
+            TableCell,
+            TableBody,
+            MenuItem,
+            } from "@mui/material"; // Material-UI components for styling and layout
+            import React, { useState, useEffect } from "react"; // React library and hooks
+            import { ToastContainer, toast } from "react-toastify"; // Toast notifications for feedback
+            import "react-toastify/dist/ReactToastify.css"; // Toastify styles
+            import { getDishCategory } from "../services/Dishcategory"; // API function to get dish categories
+            import { getAllTypeDish } from "../services/typeDish"; // API function to get types of dishes
+            import { postDish, getDish } from "../services/Dish"; // API functions for dishes
+
+            // Component for managing dishes
+            const Almacen = () => {
+            // State for managing form inputs and data
+            const [formData, setFormData] = useState({
+                dishName: "",
+                dishDescription: "",
+                dishPrice: "",
+                image: null,
+                dishCategory: "",
+                typeDish: "",
+            });
+
+            const [dishes, setDishes] = useState([]); // List of dishes
+            const [categories, setCategories] = useState([]); // List of categories
+            const [typeDishes, setTypeDishes] = useState([]); // List of dish types
+
+            // Fetch initial data when the component is mounted
+            useEffect(() => {
+                fetchCategoryDish(); // Load dish categories
+                fetchTypeDishes(); // Load dish types
+                fetchDishes(); // Load existing dishes
+            }, []);
+
+            // Fetch dish categories from the API
+            const fetchCategoryDish = async () => {
+                try {
+                const dishCategories = await getDishCategory();
+                setCategories(dishCategories);
+                } catch (error) {
+                toast.error("Error al cargar las categorías.");
+                console.error("Error al cargar las categorías:", error);
+                }
+            };
+
+            // Fetch dish types from the API
+            const fetchTypeDishes = async () => {
+                try {
+                const response = await getAllTypeDish();
+                setTypeDishes(response);
+                } catch (error) {
+                toast.error("Error al cargar los tipos de platillos.");
+                console.error("Error al cargar los tipos de platillos:", error);
+                }
+            };
+
+            // Fetch existing dishes from the API
+            const fetchDishes = async () => {
+                try {
+                const response = await getDish();
+                setDishes(response || []);
+                } catch (error) {
+                toast.error("Error al cargar los platillos.");
+                console.error("Error al cargar los platillos:", error);
+                }
+            };
+
+            // Handle changes in form inputs
+            const handleInputChange = (e) => {
+                const { name, value } = e.target;
+                setFormData({ ...formData, [name]: value });
+            };
+
+            // Handle changes in file input
+            const handleFileChange = (e) => {
+                const file = e.target.files[0];
+                setFormData({ ...formData, image: file });
+            };
+
+            // Validate form before submission
+            const validateForm = () => {
+                const { dishName, dishDescription, dishPrice, dishCategory, typeDish, image } = formData;
+
+                if (!dishName) {
+                toast.error("El nombre del platillo es obligatorio.");
+                return false;
+                }
+                if (!dishDescription) {
+                toast.error("La descripción del platillo es obligatoria.");
+                return false;
+                }
+                if (!dishPrice || dishPrice <= 0) {
+                toast.error("El precio del platillo debe ser mayor a 0.");
+                return false;
+                }
+                if (!dishCategory) {
+                toast.error("Selecciona una categoría para el platillo.");
+                return false;
+                }
+                if (!typeDish) {
+                toast.error("Selecciona un tipo de platillo.");
+                return false;
+                }
+                if (!image) {
+                toast.error("Debes cargar una imagen para el platillo.");
+                return false;
+                }
+
+                return true; // All validations passed
+            };
+
+            // Handle form submission
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+
+                if (!validateForm()) {
+                return; // Stop if validation fails
+                }
+
+                const data = new FormData(); // Create a FormData object for file upload
+                data.append("dishName", formData.dishName);
+                data.append("dishDescription", formData.dishDescription);
+                data.append("dishPrice", formData.dishPrice);
+                data.append("dishCategory", formData.dishCategory);
+                data.append("typeDish", formData.typeDish);
+                data.append("image", formData.image);
+
+                try {
+                await postDish(data); // Send data to API
+                toast.success("Platillo agregado exitosamente.");
+                fetchDishes(); // Reload dishes after adding
+                // Reset form
+                setFormData({
+                    dishName: "",
+                    dishDescription: "",
+                    dishPrice: "",
+                    image: null,
+                    dishCategory: "",
+                    typeDish: "",
+                });
+                } catch (error) {
+                toast.error(
+                    error.response?.data?.message || "Error al agregar el platillo."
+                );
+                console.error("Error al agregar el platillo:", error);
+                }
+            };
+
+            // JSX rendering the UI
+            return (
+                <>
+                {/* Toast notification container */}
+                <ToastContainer position="top-right" autoClose={3000} />
+                
+                {/* Form card */}
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
+                    <Typography variant="h5" gutterBottom>
+                    Agregar Platillos
+                    </Typography>
+                    <form onSubmit={handleSubmit}>
+                    {/* Input fields for dish details */}
+                    <TextField
+                        fullWidth
+                        label="Nombre del Platillo"
+                        name="dishName"
+                        value={formData.dishName}
+                        onChange={handleInputChange}
+                        sx={{ mb: 2 }}
+                    />
+                    {/* ...other form controls */}
+                    </form>
+                    
+                    {/* Table to display dishes */}
+                    <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 2 }}>
+                    {/* ...table content */}
+                    </TableContainer>
+                </Card>
+                </>
+            );
+            };
+
+            export default Almacen;
+
+            The Almacen.js file defines a React component for managing dishes within an application. It provides an interface to add, display, and validate dish details, integrating with APIs for CRUD operations. The component leverages Material-UI for styling and layout, ensuring a professional and responsive design.
+
+            Purpose
+            The purpose of this file is to enable administrators or managers to interact with the dish inventory system. It supports creating new dishes, validating input data, and displaying existing dishes in a tabular format.
+
+            Features
+            Form Management:
+
+            Includes input fields for:
+            Dish name
+            Description
+            Price
+            Category
+            Type
+            Image
+            Uses useState to manage form data and reset fields after successful submissions.
+            Validates form inputs before sending them to the API.
+            API Integration:
+
+            Fetches:
+            Dish categories using getDishCategory.
+            Dish types using getAllTypeDish.
+            Existing dishes using getDish.
+            Posts new dishes to the API using postDish.
+            Handles API errors gracefully, displaying toast notifications for user feedback.
+            Data Presentation:
+
+            Displays existing dishes in a Material-UI table.
+            Includes columns for details such as name, description, price, category, and type.
+            Toast Notifications:
+
+            Utilizes react-toastify for user feedback on actions like successful submissions or errors.
+            Responsive Design:
+
+            Material-UI components (Card, Table, TextField, Button) ensure a modern and clean layout.
+            Styled using Material-UI's sx prop for custom spacing, shadows, and borders.
+            File Handling:
+
+            Supports image uploads using a file input.
+            Uses FormData for sending multipart/form-data requests to the API.
+            Stateful Management:
+
+            categories: Stores dish categories.
+            typeDishes: Stores dish types.
+            dishes: Stores the list of existing dishes.
+            Workflow
+            Fetching Initial Data:
+
+            On component mount, fetches dish categories, types, and existing dishes using useEffect.
+            Adding a Dish:
+
+            The user fills out the form and uploads an image.
+            On form submission:
+            Input data is validated.
+            Data is sent to the API using postDish.
+            Toast notifications provide feedback on success or errors.
+            Displaying Dishes:
+
+            Existing dishes are fetched and displayed in a table.
+            Each row shows detailed information for a dish.
+
+
+        CardHome
+
+            Font Code
+            import React from "react";
+            import {
+                Box, // MUI container component for layout with padding, margin, and other styles.
+                Typography, // MUI component for text styles like headings or paragraphs.
+                Grid, // MUI grid system for responsive layouts.
+                Card, // MUI component for creating a card layout.
+                CardContent, // Container for content inside a Card.
+                CardMedia, // Component for displaying media (e.g., images) in a Card.
+                Link as MuiLink, // MUI link component for stylized hyperlinks.
+            } from "@mui/material";
+            import { Link } from "react-router-dom"; // React Router's `Link` component for navigation.
+
+            import casado from "../assets/casado.jpeg"; // Importing image assets to display.
+            import pinto from "../assets/pinto.jpeg";
+            import gordonblue from "../assets/gordonblue.jpg";
+            import empanadas from "../assets/Empanadas.jpg";
+            import olladecarne from "../assets/olladecarne.jpg";
+            import tortillas from "../assets/tortillas.jpg";
+            import sopademariscos from "../assets/sopademariscos.jpg";
+            import tamales from "../assets/tamal.png";
+            import chicharrones from "../assets/chicharrones.jpg";
+
+            const CardHome = () => {
+                // Array of dish objects containing details like title, description, category, and image.
+                const dishes = [
+                    {
+                        title: "Casado",
+                        description: "Arroz, Frijoles, Bistec de cerdo, Platano frito, Ensalada",
+                        category: "Categoria: Almuerzo",
+                        imgSrc: casado, // Image source for the dish.
+                    },
+                    {
+                        title: "Pinto",
+                        description: "Delicioso Pinto, con platano frito, queso frito, huevo y natilla",
+                        category: "Categoria: Desayuno",
+                        imgSrc: pinto,
+                    },
+                    {
+                        title: "Gordon Blue de Pollo",
+                        description: "Pechugas de pollo o carne de cerdo, rellenas de jamón y queso",
+                        category: "Categoria: Cena",
+                        imgSrc: gordonblue,
+                    },
+                    {
+                        title: "Tortillas Palmeada",
+                        description: "Tortillas de mano caseras",
+                        category: "Desayuno",
+                        imgSrc: tortillas,
+                    },
+                    {
+                        title: "Sopa de Mariscos",
+                        description: "Camarones, mejillones, almejas, calamares y pescado, todo cocido en un caldo sabroso",
+                        category: "Almuerzo",
+                        imgSrc: sopademariscos,
+                    },
+                    {
+                        title: "Empanadas",
+                        description: "Carne, pollo, jamón y queso",
+                        category: "Desayuno",
+                        imgSrc: empanadas,
+                    },
+                    {
+                        title: "Olla de Carne",
+                        description: "Trozos de carne de res con zanahorias, chayote, yuca, papa, y maíz tierno.",
+                        category: "Almuerzo",
+                        imgSrc: olladecarne,
+                    },
+                    {
+                        title: "Tamales",
+                        description: "Tamales de cerdo, pollo, y entre otras variaciones",
+                        category: "3 Tiempos de comida",
+                        imgSrc: tamales,
+                    },
+                    {
+                        title: "Chicharrones",
+                        description: "Trozos de carne de cerdo fritos, crujientes por fuera y jugosos por dentro.",
+                        category: "Cena",
+                        imgSrc: chicharrones,
+                    },
+                ];
+
+                return (
+                    <Box sx={{ py: 4, backgroundColor: "#f8f9fa" }}> {/* Main container with padding and background color */}
+                        <Typography
+                            variant="h4"
+                            align="center"
+                            gutterBottom
+                            sx={{
+                                fontFamily: "'Nerko One', cursive", // Custom font style.
+                                color: "#008000", // Green text color.
+                                mb: 4, // Bottom margin.
+                            }}
+                        >
+                            Conoce nuestro{" "} {/* Header text with a link to the menu page. */}
+                            <MuiLink
+                                component={Link} // Uses React Router's `Link` for navigation.
+                                to="/Menu" // Navigates to the menu page.
+                                sx={{
+                                    color: "#007bff", // Blue link color.
+                                    textDecoration: "none",
+                                    "&:hover": { textDecoration: "underline" }, // Underline on hover.
+                                }}
+                            >
+                                menú
+                            </MuiLink>
+                        </Typography>
+                        <Grid container spacing={3} justifyContent="center"> {/* Responsive grid layout */}
+                            {dishes.map((dish, index) => ( // Loop through each dish object.
+                                <Grid item xs={12} sm={6} md={4} key={index}> {/* Adjust grid size based on screen width */}
+                                    <Card
+                                        sx={{
+                                            display: "flex", // Flex layout for Card.
+                                            alignItems: "center",
+                                            boxShadow: 3, // Box shadow effect.
+                                            "&:hover": { boxShadow: 6 }, // Highlight effect on hover.
+                                            p: 2, // Padding inside the card.
+                                        }}
+                                    >
+                                        <CardMedia
+                                            component="img"
+                                            image={dish.imgSrc} // Sets the image source.
+                                            alt={dish.title} // Alternate text for the image.
+                                            sx={{
+                                                width: 100, // Fixed width for the image.
+                                                height: 150, // Fixed height.
+                                                borderRadius: "5%", // Rounded corners.
+                                                objectFit: "cover", // Ensures the image fits within its dimensions.
+                                                mr: 2, // Margin-right for spacing.
+                                            }}
+                                        />
+                                        <CardContent> {/* Container for the text inside the card */}
+                                            <Typography
+                                                variant="h6"
+                                                sx={{
+                                                    fontFamily: "'Nerko One', cursive", // Custom font.
+                                                    color: "#008000", // Green text color.
+                                                }}
+                                            >
+                                                {dish.title} {/* Dish title */}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                sx={{
+                                                    color: "#333", // Dark gray text color.
+                                                }}
+                                            >
+                                                {dish.description} {/* Dish description */}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                sx={{
+                                                    fontStyle: "italic", // Italicized text.
+                                                    color: "#555", // Light gray color for category.
+                                                }}
+                                            >
+                                                {dish.category} {/* Dish category */}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Box>
+                );
+            };
+
+            export default CardHome; // Exporting the component for use in other parts of the app.
+
+            The CardHome.js file defines a React component designed to showcase a collection of dishes in a visually appealing card-based layout. It highlights key details such as the name, description, category, and image of each dish, providing users with an interactive preview of a restaurant's menu.
+
+            Purpose
+            The purpose of this component is to serve as a dynamic display for popular dishes, promoting engagement and guiding users to explore the full menu.
+
+            Features
+            Dynamic Content Display:
+
+            Each card dynamically renders dish data (title, description, category, and image) from an array of dish objects.
+            Interactive Design:
+
+            Cards feature hover effects for increased visual feedback.
+            The menu header includes a clickable link that directs users to the full menu page.
+            Responsiveness:
+
+            Uses a grid layout (Grid component) to ensure the cards adjust seamlessly across different screen sizes.
+            Material-UI Components:
+
+            Leverages Material-UI (Box, Typography, Card, CardContent, CardMedia, Grid) for a consistent and modern design aesthetic.
+            Styling:
+
+            Custom styles (sx prop) for:
+            Typography fonts and colors.
+            Card hover effects (elevated shadows).
+            Media elements with rounded corners and proportional scaling.
+            Navigation Integration:
+
+            Includes a link (MuiLink) that integrates with react-router-dom for seamless navigation to the menu page.
+            Themed Visuals:
+
+            Maintains a consistent theme with green highlights for dish titles and a blue hyperlink for the menu link, enhancing the visual appeal.
+            Component Breakdown
+            Dish Array:
+
+            An array of objects containing the following properties for each dish:
+            title: Name of the dish.
+            description: Short description of the dish.
+            category: Dish category (e.g., Breakfast, Lunch, Dinner).
+            imgSrc: Path to the image representing the dish.
+            Header Section:
+
+            A headline encouraging users to explore the full menu.
+            Styled with a playful font ('Nerko One') and clickable navigation.
+            Card Layout:
+
+            Each card includes:
+            An image (CardMedia) with a defined size and rounded corners.
+            Content (CardContent) showing the title, description, and category of the dish.
+            Grid System:
+
+            Arranges cards in a responsive grid with customizable spacing.
+            Workflow
+            Render Dish Cards:
+
+            Maps over the dishes array to generate a card for each dish.
+            Uses index as the unique key for each Grid item.
+            Navigate to Menu:
+
+            Provides a styled link for users to access the complete menu.
+
+        Carrusel
+
+            Font Code
+            import { useState } from 'react'; // Importing React's useState hook for managing component state.
+            import Carousel from 'react-bootstrap/Carousel'; // Importing the Carousel component from React-Bootstrap for slides.
+            import img1 from "../assets/casado.jpeg"; // Importing the image for the first slide.
+            import img2 from "../assets/arrozconcamarones.jpg"; // Importing the image for the second slide.
+            import img3 from "../assets/pinto.jpeg"; // Importing the image for the third slide.
+            import '../styles/carrusel.css'; // Importing custom CSS styles for the carousel.
+
+            function Carrusel() {
+                const [index, setIndex] = useState(0); // State to track the active slide's index. Default is 0.
+
+                // Function to handle slide selection changes.
+                const handleSelect = (selectedIndex) => {
+                    setIndex(selectedIndex); // Update the state with the new selected slide's index.
+                };
+
+                return (
+                    <>
+                        <div>
+                            <br /> {/* Adds vertical spacing */}
+                            <br />
+                        </div>
+                        <Carousel
+                            activeIndex={index} // Sets the currently active slide using the state.
+                            onSelect={handleSelect} // Triggered when a slide is selected.
+                            className="custom_carousel" // Applies a custom CSS class to the carousel for additional styling.
+                        >
+                            {/* First slide */}
+                            <Carousel.Item>
+                                <img 
+                                    className="d-block w-100" // Makes the image a block element and sets its width to 100%.
+                                    src={img1} // Source of the first image.
+                                    alt="Mitad" // Alternate text for accessibility.
+                                />
+                                <Carousel.Caption> {/* Caption displayed over the image */}
+                                    <h3>Casados</h3> {/* Title of the first slide */}
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            
+                            {/* Second slide */}
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src={img2} // Source of the second image.
+                                    alt="Camarones" // Alternate text for accessibility.
+                                />
+                                <Carousel.Caption>
+                                    <h3>Arroz con Camarones</h3> {/* Title of the second slide */}
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            
+                            {/* Third slide */}
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src={img3} // Source of the third image.
+                                    alt="Gallo Pinto" // Alternate text for accessibility.
+                                />
+                                <Carousel.Caption>
+                                    <h3>Gallo Pinto</h3> {/* Title of the third slide */}
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                        </Carousel>
+                    </>
+                );
+            }
+
+            export default Carrusel; // Exports the component for use in other parts of the app.
+
+
+            The Carrusel.js file implements a carousel component using the react-bootstrap library to create an interactive image slider. This component displays a series of food images with captions for each slide, showcasing dishes like "Casados," "Arroz con Camarones," and "Gallo Pinto."
+
+            Purpose
+            The primary purpose of this component is to provide a visually engaging way to display a series of food images, ideal for showcasing menu items or promotional images on a website.
+
+            Features
+            Carousel Implementation:
+
+            Uses the react-bootstrap/Carousel component to create a responsive and interactive image slider.
+            Image and Caption Display:
+
+            Each carousel item consists of an image (img) and a caption (Carousel.Caption) displaying the dish name.
+            Dynamic Image Import:
+
+            Imports image files (img1, img2, img3) from the project's assets, ensuring modular and scalable image handling.
+            Custom Styling:
+
+            Utilizes a custom CSS class (custom_carousel) for styling the carousel, as referenced from the carrusel.css file.
+            State Management:
+
+            Manages the active slide index (activeIndex) with the help of React's useState hook and updates it using handleSelect.
+            Component Breakdown
+            Images:
+
+            Three images (img1, img2, img3) represent different dishes displayed in the carousel.
+            Carousel Items:
+
+            Each Carousel.Item contains:
+            An image rendered using Carousel.Item with the class d-block w-100.
+            A caption displaying the dish name, styled with an h3 element.
+            State and Event Handling:
+
+            useState hook is used to keep track of the current active index (index), which is updated through the handleSelect function.
+            Custom Styling:
+
+            The custom_carousel CSS class, imported from carrusel.css, allows for custom design tweaks.
+            Workflow
+            Initialization:
+
+            useState(0) sets the initial index of the active slide to 0.
+            Handle Selection:
+
+            handleSelect is called whenever the user navigates to a different slide, updating the index state.
+            Rendering:
+
+            The Carousel component is rendered with the necessary activeIndex and onSelect props to manage the state and events.
+
+        Clientes
+
+            Font Code
+            import React, { useEffect, useState } from 'react'; // Importing necessary modules from React for managing state and side effects.
+            import { jwtDecode } from "jwt-decode"; // Importing jwtDecode for decoding JWT tokens.
+            import { 
+            Card, Typography, TableContainer, Paper, Table, TableHead, 
+            TableRow, TableCell, TableBody, Box, Button, TextField, Modal 
+            } from '@mui/material'; // Importing Material-UI components for UI elements.
+            import { 
+            getAllClients, getClientById, updateClient, deleteClient, registerClient 
+            } from '../services/client'; // Importing client-related service functions.
+            import { toast } from 'react-toastify'; // Importing Toast notifications.
+            import { Edit, Delete, Add } from '@mui/icons-material'; // Material UI icons.
+
+            const Clientes = () => {
+            const [clientes, setClientes] = useState([]); // State to manage list of clients.
+            const [loading, setLoading] = useState(true); // State to manage loading status.
+            const [error, setError] = useState(null); // State to manage error messages.
+            const [newClientName, setNewClientName] = useState(''); // Input state for new client name.
+            const [newClientEmail, setNewClientEmail] = useState(''); // Input state for new client email.
+            const [newClientPassword, setNewClientPassword] = useState(''); // Input state for new client password.
+            const [open, setOpen] = useState(false); // State for showing deletion confirmation modal.
+            const [selectedClient, setSelectedClient] = useState(null); // State for selected client in modals.
+            const [openEdit, setOpenEdit] = useState(false); // State for showing edit client modal.
+            const [openAdd, setOpenAdd] = useState(false); // State for showing add client modal.
+
+            // Fetching all clients when the component mounts.
+            useEffect(() => {
+                const fetchClientes = async () => {
+                try {
+                    setLoading(true); // Setting loading state to true.
+                    const data = await getAllClients(); // Fetching all clients.
+                    setClientes(data); // Updating state with fetched clients.
+                } catch (err) {
+                    setError(err.message || 'Error al cargar los clientes'); // Setting error if fetching fails.
+                } finally {
+                    setLoading(false); // Setting loading state to false after fetching.
+                }
+                };
+
+                fetchClientes();
+            }, []);
+
+            // Handling client update.
+            const handleUpdate = async (clientData) => {
+                try {
+                if (!newClientName && !newClientEmail && !newClientPassword) {
+                    toast.error("No hay cambios para guardar."); // Showing error if no data is provided.
+                    return;
+                }
+
+                const newData = { 
+                    clientname: newClientName,
+                    clientemail: newClientEmail,
+                    clientpassword: newClientPassword 
+                };
+
+                const response = await updateClient(clientData._id, newData); // Updating client data.
+                if (response) {
+                    toast.success("Datos actualizados exitosamente."); // Showing success notification.
+                    setClientes(prev => 
+                    prev.map(client => 
+                        client._id === clientData._id ? { ...client, ...newData } : client
+                    )
+                    ); // Updating the state with the modified client data.
+                } else {
+                    toast.error("Respuesta inesperada del servidor."); // Showing error if server response is unexpected.
+                }
+                } catch (error) {
+                console.error("Error al actualizar datos:", error);
+                toast.error("Error al conectar con el servidor."); // Showing error in case of connection issues.
+                }
+            };
+
+            // Handling client deletion.
+            const handleDelete = async (cliente) => {
+                try {
+                const codedToken = sessionStorage.getItem("token"); // Retrieving token from sessionStorage.
+
+                if (!codedToken) {
+                    throw new Error("Token not found in sessionStorage"); // Error if token is not found.
+                }
+
+                const decodedToken = jwtDecode(codedToken); // Decoding token.
+                if (!decodedToken || !decodedToken.id) {
+                    throw new Error("Token inválido o no contiene un ID"); // Error if token is invalid or does not contain an ID.
+                }
+
+                setLoading(true); // Setting loading state to true.
+                const response = await deleteClient(cliente._id); // Deleting client.
+                console.log('Client deleted successfully:', response);
+                setClientes(prev => prev.filter(c => c._id !== cliente._id)); // Updating the client list.
+                } catch (error) {
+                console.error('Error deleting the client:', error);
+                alert('Failed to delete the client. Please try again.'); // Alerting failure to delete client.
+                } finally {
+                setLoading(false); // Setting loading state to false after deletion.
+                }
+            };
+
+            // Handling new client registration.
+            const handleUpload = async () => {
+                try {
+                if (!newClientName || !newClientEmail || !newClientPassword) {
+                    toast.error("Por favor, completa todos los campos."); // Showing error if fields are incomplete.
+                    return;
+                }
+
+                const newData = {
+                    clientname: newClientName,
+                    clientemail: newClientEmail,
+                    clientpassword: newClientPassword,
+                };
+
+                const response = await registerClient(newData); // Registering new client.
+                if (response) {
+                    toast.success("Cliente agregado exitosamente."); // Showing success notification.
+                    const updatedClientes = await getAllClients(); // Fetching updated client list.
+                    setClientes(updatedClientes); // Updating state with new client data.
+                    handleClose();
+                } else {
+                    toast.error("Respuesta inesperada del servidor."); // Showing error if server response is unexpected.
+                }
+                } catch (error) {
+                console.error("Error al agregar el cliente:", error);
+                toast.error("Error al conectar con el servidor."); // Showing error in case of connection issues.
+                }
+            };
+
+            // Closing all modals and resetting form data.
+            const handleClose = () => {
+                setOpen(false);
+                setOpenEdit(false);
+                setOpenAdd(false);
+                setSelectedClient(null);
+                setNewClientName('');
+                setNewClientEmail('');
+                setNewClientPassword('');
+            };
+
+            // Handling opening of edit modal with client data.
+            const handleOpenEdit = (cliente) => {
+                setSelectedClient(cliente);
+                setNewClientName(cliente.clientname);
+                setNewClientEmail(cliente.clientemail);
+                setNewClientPassword('');
+                setOpenEdit(true);
+            };
+
+            // Handling opening of deletion confirmation modal.
+            const handleOpen = (cliente) => {
+                setSelectedClient(cliente);
+                setOpen(true);
+            };
+
+            // Handling opening of add client modal.
+            const handleOpenAdd = () => {
+                setOpenAdd(true);
+            };
+
+            return (
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
+                <Typography variant="h5" gutterBottom>
+                    Clientes
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Typography variant="h6">Lista de clientes registrados</Typography>
+                    <Button 
+                    variant="contained" 
+                    color="primary" 
+                    onClick={handleOpenAdd}
+                    startIcon={<Add />} // Adding "+" icon
+                    >
+                    Añadir Cliente
+                    </Button>
+                </Box>
+
+                {loading ? (
+                    <Typography sx={{ mt: 2 }}>Cargando...</Typography>
+                ) : error ? (
+                    <Typography sx={{ mt: 2, color: 'red' }}>Error: {error}</Typography>
+                ) : (
+                    <TableContainer component={Paper} sx={{ mt: 2, boxShadow: 2 }}>
+                    <Table>
+                        <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+                        <TableRow>
+                            <TableCell>Nombre</TableCell>
+                            <TableCell>Email</TableCell>
+                            <TableCell>Contraseña</TableCell>
+                            <TableCell>Acciones</TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {clientes.length > 0 ? (
+                            clientes.map((cliente) => (
+                            <TableRow key={cliente._id}>
+                                <TableCell>{cliente.clientname}</TableCell>
+                                <TableCell>{cliente.clientemail}</TableCell>
+                                <TableCell>*****</TableCell> {/* Masking password */}
+                                <TableCell>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    style={{ marginRight: '8px' }}
+                                    onClick={() => handleOpenEdit(cliente)}
+                                >
+                                    <Edit /> {/* Edit icon */}
+                                </Button>
+                                <Button 
+                                    variant="contained" 
+                                    color="secondary"
+                                    onClick={() => handleOpen(cliente)} 
+                                >
+                                    <Delete /> {/* Delete icon */}
+                                </Button>
+                                </TableCell>
+                            </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                            <TableCell colSpan={4} align="center">
+                                No hay clientes registrados.
+                            </TableCell>
+                            </TableRow>
+                        )}
+                        </TableBody>
+                    </Table>
+                    </TableContainer>
+                )}
+
+                {/* Deletion Confirmation Modal */}
+                <Modal open={open} onClose={handleClose}>
+                    <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+                    <Typography variant="h6">
+                        ¿Quieres eliminar este usuario?
+                    </Typography>
+                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+                        <Button variant="contained" color="secondary" onClick={() => handleDelete(selectedClient)}>
+                        Borrar
+                        </Button>
+                        <Button variant="contained" onClick={handleClose}>
+                        No
+                        </Button>
+                    </Box>
+                    </Box>
+                </Modal>
+
+                {/* Edit Client Modal */}
+                <Modal open={openEdit} onClose={handleClose}>
+                    <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+                    <Typography variant="h6">
+                        Editar Cliente
+                    </Typography>
+                    <Box component="form" onSubmit={(e) => { e.preventDefault(); handleUpdate(selectedClient); handleClose(); }} sx={{ mt: 2 }}>
+                        <TextField
+                        fullWidth
+                        label="Nombre"
+                        value={newClientName}
+                        onChange={(e) => setNewClientName(e.target.value)}
+                        margin="normal"
+                        />
+                        <TextField
+                        fullWidth
+                        label="Email"
+                        value={newClientEmail}
+                        onChange={(e) => setNewClientEmail(e.target.value)}
+                        margin="normal"
+                        />
+                        <TextField
+                        fullWidth
+                        label="Contraseña"
+                        type="password"
+                        value={newClientPassword}
+                        onChange={(e) => setNewClientPassword(e.target.value)}
+                        margin="normal"
+                        />
+                        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+                        <Button variant="contained" color="primary" type="submit">
+                            Editar
+                        </Button>
+                        <Button variant="contained" onClick={handleClose}>
+                            Cancelar
+                        </Button>
+                        </Box>
+                    </Box>
+                    </Box>
+                </Modal>
+
+                {/* Add Client Modal */}
+                <Modal open={openAdd} onClose={handleClose}>
+                    <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+                    <Typography variant="h6">
+                        Añadir Cliente
+                    </Typography>
+                    <Box component="form" sx={{ mt: 2 }}>
+                        <TextField
+                        fullWidth
+                        label="Nombre"
+                        value={newClientName}
+                        onChange={(e) => setNewClientName(e.target.value)}
+                        margin="normal"
+                        />
+                        <TextField
+                        fullWidth
+                        label="Email"
+                        value={newClientEmail}
+                        onChange={(e) => setNewClientEmail(e.target.value)}
+                        margin="normal"
+                        />
+                        <TextField
+                        fullWidth
+                        label="Contraseña"
+                        type="password"
+                        value={newClientPassword}
+                        onChange={(e) => setNewClientPassword(e.target.value)}
+                        margin="normal"
+                        />
+                        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+                        <Button variant="contained" color="primary" onClick={handleUpload}>
+                            Crear Cliente
+                        </Button>
+                        <Button variant="contained" onClick={handleClose}>
+                            Cancelar
+                        </Button>
+                        </Box>
+                    </Box>
+                    </Box>
+                </Modal>
+                </Card>
+            );
+            };
+
+            export default Clientes; // Exporting the Clientes component.
+
+            The Clientes.js file is a React component designed to manage and display a list of clients, allowing CRUD (Create, Read, Update, Delete) operations. It integrates Material UI components for a sleek and responsive user interface and manages client data through API services.
+
+            Purpose
+            The Clientes.js component provides a comprehensive solution for handling client data. It enables users to view, edit, delete, and add new clients, improving data management and user experience for applications involving client interactions.
+
+            Features
+            Client Management:
+
+            Displays a list of clients in a table format.
+            Supports CRUD operations (Create, Read, Update, Delete) for managing client data.
+            Dynamic Data Handling:
+
+            Uses API services (getAllClients, getClientById, updateClient, deleteClient, registerClient) for data retrieval and manipulation.
+            State Management:
+
+            Utilizes React's useState and useEffect hooks to manage client data, loading states, and modal visibility.
+            UI Components:
+
+            Employs Material UI components such as Card, Typography, Table, TextField, Button, and Modal to create a structured and interactive interface.
+            Modal Operations:
+
+            Provides modals for adding, editing, and deleting client information, with appropriate input fields for user interactions.
+            Error and Loading Handling:
+
+            Manages API call errors and loading states effectively to enhance the user experience with feedback through Toast notifications.
+            Component Breakdown
+            State and Data Management:
+
+            clientes: Array holding the list of clients.
+            loading: Boolean state indicating data loading status.
+            error: State to handle error messages during API calls.
+            Form Inputs:
+
+            newClientName, newClientEmail, newClientPassword: Controlled form fields for adding or editing client details.
+            CRUD Operations:
+
+            Create: Handles adding new clients via the registerClient function.
+            Read: Displays client data in a table.
+            Update: Manages editing client details through the handleUpdate function.
+            Delete: Handles client deletion via the handleDelete function.
+            Modal Management:
+
+            Uses modals for editing and deleting clients, with respective forms for entering and modifying client information.
+            Event Handling:
+
+            Functions like handleOpenEdit, handleDelete, and form submission for adding/editing clients manage user interactions.
+            Workflow
+            Fetching Data:
+
+            useEffect is used to fetch all clients from the API and update the state accordingly.
+            Operations:
+
+            CRUD operations are managed through API calls, updating the client list state and providing user feedback via Toast notifications.
+            Modals:
+
+            Modals are used for client actions, providing a clear and interactive UI for managing client data.
+
+        Footer
+
+            Font Code
+            import React, { useState } from "react"; // Importing React and useState hook for managing state.
+            import { Grid2, Box, Container, Typography, Link, IconButton, Collapse, List, ListItem } from "@mui/material"; // Importing Material-UI components for layout and styling.
+            import { FaWhatsapp, FaInstagram, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa"; // Importing social media icons.
+            import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; // Importing Material-UI ExpandMoreIcon for collapsible sections.
+
+            const Footer = () => {
+            const [toggleInfo, setToggleInfo] = useState(false); // State for toggling 'Información' section.
+            const [toggleLinks, setToggleLinks] = useState(false); // State for toggling 'Navegación' section.
+            const [toggleSocial, setToggleSocial] = useState(false); // State for toggling 'Redes Sociales' section.
+
+            // Section component for creating collapsible sections.
+            const Section = ({ title, toggle, setToggle, children }) => (
+                <Grid2 item xs={12} md={4} sx={{ marginBottom: 4 }}>
+                <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    onClick={() => setToggle(!toggle)} // Toggles the state when section title is clicked.
+                    sx={{ cursor: { xs: "pointer", md: "default" } }} // Adjusts cursor style based on screen size.
+                >
+                    <Typography variant="h6" gutterBottom sx={{ fontFamily: "'Patrick Hand', cursive" }}>
+                    {title} {/* Section title */}
+                    </Typography>
+                    <IconButton size="small" sx={{ display: { xs: "block", md: "none" }, color: "#fff" }}>
+                    <ExpandMoreIcon /> {/* Expand icon for mobile view */}
+                    </IconButton>
+                </Box>
+                <Collapse in={toggle || window.innerWidth >= 960}>{children}</Collapse> {/* Collapsible content */}
+                </Grid2>
+            );
+
+            return (
+                <Box component="footer" sx={{ backgroundColor: "#212529", color: "#fff", py: 1 }}>
+                <Container>
+                    <Grid2 container spacing={10}>
+                    {/* Información Section */}
+                    <Section title="Información" toggle={toggleInfo} setToggle={setToggleInfo}>
+                        <List sx={{ padding: 0 }}>
+                        <ListItem>
+                            <Typography variant="body2" sx={{ fontFamily: "'Patrick Hand', cursive" }}>
+                            Si quieres saber más de nosotros, comunícate por nuestras redes sociales.
+                            </Typography>
+                        </ListItem>
+                        </List>
+                    </Section>
+
+                    {/* Navegación Section */}
+                    <Section title="Navegación" toggle={toggleLinks} setToggle={setToggleLinks}>
+                        <List sx={{ padding: 0 }}>
+                        {[ // Navigation items
+                            { text: "Sobre Nosotros", link: "/AboutUs" },
+                            { text: "Contacto", link: "/Contacto" },
+                            { text: "Menú", link: "/Menu" },
+                            { text: "Cuenta", link: "/User" },
+                        ].map((item, index) => (
+                            <ListItem key={index} sx={{ paddingY: 0.5 }}>
+                            <Link href={item.link} color="inherit" underline="hover" sx={{ fontFamily: "'Patrick Hand', cursive" }}>
+                                {item.text} {/* Navigation link */}
+                            </Link>
+                            </ListItem>
+                        ))}
+                        </List>
+                    </Section>
+
+                    {/* Redes Sociales Section */}
+                    <Section title="Conecta con nosotros" toggle={toggleSocial} setToggle={setToggleSocial}>
+                        <List sx={{ padding: 0 }}>
+                        {[ // Social media items
+                            { icon: <FaWhatsapp size={20} color="#25D366" />, text: "WhatsApp", link: "https://wa.me/+50683399812" },
+                            { icon: <FaInstagram size={20} color="#E4405F" />, text: "Instagram", link: "https://instagram.com/daniel_gonzalez_fuentes" },
+                            { icon: <FaPhoneAlt size={20} color="#0077B5" />, text: "Teléfono", link: "tel:71816948" },
+                            { icon: <FaMapMarkerAlt size={20} color="#EA4335" />, text: "Dirección", link: "https://www.google.com/maps" },
+                        ].map((item, index) => (
+                            <ListItem key={index} sx={{ paddingY: 0.5, display: 'flex', alignItems: 'center', gap: 1 }}>
+                            {item.icon} {/* Social media icon */}
+                            <Link href={item.link} target="_blank" color="inherit" underline="hover" sx={{ fontFamily: "'Nerko One', cursive" }}>
+                                {item.text} {/* Social media text */}
+                            </Link>
+                            </ListItem>
+                        ))}
+                        </List>
+                    </Section>
+                    </Grid2>
+
+                    <Box textAlign="center" mt={6}>
+                    <Typography variant="body2" sx={{ fontFamily: "'Patrick Hand', cursive" }}>
+                        &copy; {new Date().getFullYear()} Soda El Alamo. Todos los derechos reservados.
+                    </Typography>
+                    </Box>
+                </Container>
+                </Box>
+            );
+            };
+
+            export default Footer; // Exporting the Footer component.
+
+            The Footer component is a responsive and interactive footer section for a web application, built using React and Material-UI components. It includes collapsible sections for Information, Navigation, and Social Media, along with icons and links to enhance user engagement.
+
+            Purpose
+            The Footer component provides a well-organized footer section that facilitates navigation, displays key information, and allows users to connect through social media links. It enhances the user experience by offering easy access to important sections of the site and contact options.
+
+            Features
+            Collapsible Sections:
+
+            Uses the Collapse component to create expandable sections for Information, Navigation, and Social Media.
+            Material-UI Components:
+
+            Leverages Material-UI (Grid2, Box, Typography, List, Link, IconButton, Collapse) to create a responsive and styled footer layout.
+            Responsive Design:
+
+            Adapts to different screen sizes by adjusting the layout, showing/hiding icons, and toggling sections based on screen width.
+            Social Media Integration:
+
+            Includes social media icons (e.g., WhatsApp, Instagram, Phone, Map) with corresponding links for easy navigation to external platforms.
+            Dynamic Section Creation:
+
+            The Section component is reusable and allows for the creation of custom collapsible sections with titles and content.
+            Date and Copyright:
+
+            Automatically displays the current year for the copyright notice at the bottom of the footer.
+            Component Breakdown
+            State Management:
+
+            useState hooks are used to manage the toggle state of each collapsible section (toggleInfo, toggleLinks, toggleSocial).
+            Section Component:
+
+            The Section component handles the creation of collapsible sections with titles and content. It takes in title, toggle, setToggle, and children as props.
+            Layout:
+
+            The layout is organized into three columns using Material-UI’s Grid2 with each column handling a different section (Information, Navigation, Social Media).
+            Content:
+
+            Each section contains lists of items:
+            Information: A simple text description.
+            Navigation: Links to different pages (e.g., About Us, Contact, Menu).
+            Social Media: Icons with links to social media platforms.
+            Icons and Links:
+
+            Icons from react-icons are used alongside Material-UI’s Link component to create interactive links with corresponding social media or contact platforms.
+
+        Header
+
+            Font Code
+            import React, { useState } from "react"; // Importing React and useState hook for managing state.
+            import { AppBar, Toolbar, Typography, Box, IconButton, Menu, MenuItem, TextField, Button, InputAdornment } from "@mui/material"; // Importing Material-UI components for layout and styling.
+            import MenuIcon from "@mui/icons-material/Menu"; // Importing Material-UI MenuIcon for mobile menu.
+            import SearchIcon from "@mui/icons-material/Search"; // Importing Material-UI SearchIcon for search input.
+            import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Importing Material-UI AccountCircleIcon for user profile icon.
+
+            const Header = () => {
+                const [anchorEl, setAnchorEl] = useState(null); // State for handling menu anchor element.
+                const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State for handling mobile menu visibility.
+
+                const handleMenuOpen = (event) => {
+                    setAnchorEl(event.currentTarget); // Opens menu and sets anchor element.
+                };
+
+                const handleMenuClose = () => {
+                    setAnchorEl(null); // Closes menu and resets anchor element.
+                };
+
+                const toggleMobileMenu = () => {
+                    setMobileMenuOpen(!mobileMenuOpen); // Toggles the state for mobile menu visibility.
+                };
+
+                return (
+                    <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#008000" }}>
+                        <Toolbar>
+                            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: "center" }}>
+                                {/* Navigation Links */}
+                                <Typography
+                                    variant="h6"
+                                    noWrap
+                                    component="div"
+                                    sx={{ cursor: "pointer", mr: 2, fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
+                                    onClick={() => (window.location.href = "/home")} // Redirect to /home
+                                >
+                                    Inicio
+                                </Typography>
+                                <Typography
+                                    variant="h6"
+                                    noWrap
+                                    component="div"
+                                    sx={{ cursor: "pointer", mr: 2, fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
+                                    onClick={() => (window.location.href = "/AboutUs")} // Redirect to /AboutUs
+                                >
+                                    Quienes Somos
+                                </Typography>
+                                <Typography
+                                    variant="h6"
+                                    noWrap
+                                    component="div"
+                                    sx={{ cursor: "pointer", mr: 2, fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
+                                    onClick={() => (window.location.href = "/Contacto")} // Redirect to /Contacto
+                                >
+                                    Contáctenos
+                                </Typography>
+                                <Typography
+                                    variant="h6"
+                                    noWrap
+                                    component="div"
+                                    sx={{ cursor: "pointer", mr: 2, fontFamily: "'Patrick Hand', cursive", color: "#008000" }}
+                                    onClick={() => (window.location.href = "/Menu")} // Redirect to /Menu
+                                >
+                                    Menú
+                                </Typography>
+                            </Box>
+
+                            <Box sx={{ display: "flex", alignItems: "center", flexGrow: { xs: 1, md: 0 } }}>
+                                {/* User Profile Icon and Search Field */}
+                                <IconButton
+                                    onClick={() => (window.location.href = "/User")} // Redirect to User profile
+                                    sx={{ color: "#008000", mr: 2 }}
+                                >
+                                    <AccountCircleIcon /> {/* Profile icon */}
+                                </IconButton>
+                                <TextField
+                                    variant="outlined"
+                                    placeholder="Search"
+                                    size="small"
+                                    sx={{
+                                        backgroundColor: "#fff",
+                                        borderRadius: 1,
+                                        mr: 2,
+                                        width: { xs: "100px", sm: "200px" },
+                                    }}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon /> {/* Search icon in input */}
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        color: "#fff",
+                                        fontFamily: "'Patrick Hand', cursive",
+                                        backgroundColor: "#008000",
+                                        "&:hover": { backgroundColor: "#014701" },
+                                    }}
+                                >
+                                    Search {/* Search button */}
+                                </Button>
+                            </Box>
+
+                            <IconButton
+                                edge="end"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={toggleMobileMenu} // Toggles mobile menu visibility
+                                sx={{ display: { md: "none" }, ml: 2, color: "#008000" }}
+                            >
+                                <MenuIcon /> {/* Menu icon for mobile view */}
+                            </IconButton>
+                        </Toolbar>
+
+                        {/* Mobile Menu */}
+                        {mobileMenuOpen && (
+                            <Box
+                                sx={{
+                                    display: { xs: "flex", md: "none" },
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    backgroundColor: "#fff",
+                                    borderTop: "1px solid #ddd",
+                                }}
+                            >
+                                <MenuItem onClick={() => (window.location.href = "/home")}>Inicio</MenuItem>
+                                <MenuItem onClick={() => (window.location.href = "/AboutUs")}>Quienes Somos</MenuItem>
+                                <MenuItem onClick={() => (window.location.href = "/Contacto")}>Contáctenos</MenuItem>
+                                <MenuItem onClick={() => (window.location.href = "/Menu")}>Menú</MenuItem>
+                                <MenuItem onClick={() => (window.location.href = "/User")}>
+                                    <AccountCircleIcon sx={{ mr: 1 }} /> Perfil
+                                </MenuItem>
+                            </Box>
+                        )}
+                    </AppBar>
+                );
+            };
+
+            export default Header; // Exporting the Header component.
+
+            The Header component is a responsive navigation bar built using React and Material-UI components. It includes a variety of features such as navigation links, a user profile icon, a search field, and a mobile-friendly menu. This component is designed to enhance user experience by providing easy access to key sections of a website or web application.
+
+            Purpose
+            The Header component serves as the top navigation bar for a web application, offering a clean, functional, and visually appealing interface for users to navigate between different sections. It supports both desktop and mobile views, ensuring a seamless experience across devices.
+
+            Features
+            Responsive Design:
+
+            Utilizes Material-UI’s AppBar, Toolbar, and conditional rendering based on screen size to adapt to different device sizes.
+            Navigation Links:
+
+            Provides a set of links to key pages (e.g., Home, About Us, Contact, Menu) with redirection functionality using window.location.href.
+            Mobile Menu:
+
+            Includes a collapsible mobile menu that appears when the screen size is below the md breakpoint. This menu allows users to navigate to different sections in a compact form.
+            User Profile Icon and Search Field:
+
+            Features an icon button for user profile access and a search field with a button for searching content.
+            Search Functionality:
+
+            A search input integrated with Material-UI’s TextField and a button to trigger search actions.
+            Material-UI Components:
+
+            Leverages components such as IconButton, TextField, Button, Menu, MenuItem for creating interactive elements and layout.
+            State Management:
+
+            Uses useState hooks to manage the visibility of the mobile menu and handle menu anchor elements for desktop.
+            Component Breakdown
+            Desktop View:
+
+            Displays navigation links in a horizontal layout with user actions (profile icon and search field) aligned to the right.
+            Mobile View:
+
+            Shows a condensed menu with collapsible MenuItems and user profile access, activated by the Menu icon.
+            User Interaction:
+
+            Each navigation link and user action redirects to the appropriate route or performs an action when clicked (e.g., redirect to a profile page, initiate a search).
+            Styling and Responsiveness:
+
+            The header adjusts the layout and styling based on screen size using Material-UI’s responsive design capabilities.
+
+
+        HomePage
+
+            Font Code
+            import { useEffect, useState } from "react"; // Importing React hooks for state management and side effects.
+            import { jwtDecode } from "jwt-decode"; // Importing jwt-decode library to decode JWT tokens.
+            import { Box, Typography, Button, Grid, Paper, Stack } from "@mui/material"; // Importing Material-UI components for layout and design.
+            import { ToastContainer, toast } from 'react-toastify'; // Importing react-toastify for toast notifications.
+            import 'react-toastify/dist/ReactToastify.css'; // Importing CSS for react-toastify.
+            import logo from "../assets/logo.png"; // Importing the logo image.
+
+            const HomePage = () => {
+                const [user, setUser] = useState(null); // State to manage the authenticated user's information.
+
+                useEffect(() => {
+                    const codedToken = sessionStorage.getItem("token"); // Retrieving the JWT token from sessionStorage.
+
+                    if (!codedToken) {
+                        console.error("No se encontró token en la sessionStorage"); // Handling the case when no token is found.
+                        return;
+                    }
+                    try {
+                        const decodedToken = jwtDecode(codedToken); // Decoding the JWT token.
+                        setUser(decodedToken); // Setting the user state with the decoded token data.
+                        toast.success(`Bienvenido, ${decodedToken.name || 'Usuario'}!`); // Displaying a success toast with the user's name.
+                    } catch (error) {
+                        console.error("Error al desencriptar token:", error); // Handling errors during token decoding.
+                    }
+                }, []);
+
+                return (
+                    <Box
+                        sx={{
+                            color: "#333",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            minHeight: "100vh",
+                            backgroundColor: "#f0f8ff",
+                            padding: 4,
+                        }}
+                    >
+                        <Grid container spacing={4} alignItems="center" justifyContent="center">
+                            {/* Left Side (Title and Logo) */}
+                            <Grid item xs={12} sm={6} container direction="column" alignItems="center">
+                                <Typography
+                                    variant="h2"
+                                    sx={{
+                                        fontSize: { xs: "2.5rem", sm: "4rem" },
+                                        fontWeight: "bold",
+                                        marginBottom: 3,
+                                        color: "#008000",
+                                        textAlign: "center",
+                                        fontFamily: "'Patrick Hand', cursive",
+                                    }}
+                                >
+                                    BIENVENID@S
+                                </Typography>
+                                <Box
+                                    sx={{
+                                        width: 220,
+                                        height: 220,
+                                        borderRadius: "50%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        marginBottom: 3,
+                                        boxShadow: 3,
+                                    }}
+                                >
+                                    <img
+                                        src={logo}
+                                        alt="El Alamo Logo"
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                            borderRadius: "50%",
+                                        }}
+                                    />
+                                </Box>
+                            </Grid>
+
+                            {/* Right Side (User Greeting, Promotions, and Schedule) */}
+                            <Grid item xs={12} sm={6}>
+                                <Box sx={{ textAlign: "left" }}>
+                                    {user && (
+                                        <Typography 
+                                            variant="h5" 
+                                            sx={{ 
+                                                marginBottom: 2, 
+                                                fontFamily: "'Patrick Hand', cursive" 
+                                            }}
+                                        >
+                                            Hola, {user.name}!
+                                        </Typography>
+                                    )}
+
+                                    <Typography 
+                                        variant="body1" 
+                                        sx={{ 
+                                            marginBottom: 4, 
+                                            maxWidth: "600px", 
+                                            fontFamily: "'Patrick Hand', cursive" 
+                                        }}
+                                    >
+                                        Disfruta de nuestras promociones y menús exclusivos. Explora, pide y relájate con lo mejor de nuestra cocina.
+                                    </Typography>
+
+                                    <Stack spacing={3}>
+                                        <Paper elevation={3} sx={{ padding: 3 }}>
+                                            <Typography 
+                                                variant="h6" 
+                                                gutterBottom
+                                                sx={{ fontFamily: "'Patrick Hand', cursive" }}
+                                            >
+                                                Promociones del Día
+                                            </Typography>
+                                            <Typography 
+                                                variant="body1"
+                                                sx={{ fontFamily: "'Patrick Hand', cursive" }}
+                                            >
+                                                - 2x1 en bebidas después de las 5 PM
+                                            </Typography>
+                                            <Typography 
+                                                variant="body1"
+                                                sx={{ fontFamily: "'Patrick Hand', cursive" }}
+                                            >
+                                                - Descuento del 10% para estudiantes
+                                            </Typography>
+                                        </Paper>
+
+                                        <Paper elevation={3} sx={{ padding: 3 }}>
+                                            <Typography 
+                                                variant="h6" 
+                                                gutterBottom
+                                                sx={{ fontFamily: "'Patrick Hand', cursive" }}
+                                            >
+                                                Horarios
+                                            </Typography>
+                                            <Typography 
+                                                variant="body1"
+                                                sx={{ fontFamily: "'Patrick Hand', cursive" }}
+                                            >
+                                                Lunes a Viernes: 8 AM - 9 PM
+                                            </Typography>
+                                            <Typography 
+                                                variant="body1"
+                                                sx={{ fontFamily: "'Patrick Hand', cursive" }}
+                                            >
+                                                Sábado y Domingo: 10 AM - 11 PM
+                                            </Typography>
+                                        </Paper>
+                                    </Stack>
+
+                                    <Button
+                                        variant="contained"
+                                        color="success"
+                                        sx={{ 
+                                            marginTop: 4, 
+                                            fontFamily: "'Patrick Hand', cursive" 
+                                        }}
+                                        href="/Menu"
+                                    >
+                                        Ver Menú
+                                    </Button>
+                                </Box>
+                            </Grid>
+                        </Grid>
+
+                        <ToastContainer /> {/* Toast notification container */}
+                    </Box>
+                );
+            };
+
+            export default HomePage; // Exporting the HomePage component.
+
+            The HomePage component is a welcoming interface designed to greet users and provide them with essential information such as promotions, schedules, and the ability to view a menu. The component utilizes JWT decoding to retrieve user information and displays personalized content accordingly.
+
+            Purpose
+            The HomePage component is the primary landing page for users after they log in. It focuses on providing a user-friendly experience by displaying user-specific data and additional relevant information. The component is designed to be visually appealing and responsive, featuring interactive components like toast notifications and dynamic user content.
+
+            Features
+            JWT Decoding:
+
+            Uses the jwtDecode library to decode a JWT token stored in sessionStorage and retrieve user data (e.g., name, user ID).
+            User Greeting:
+
+            Displays a personalized greeting message with the user's name once they are authenticated.
+            Promotions and Schedule:
+
+            Showcases promotional offers and business hours within separate sections using Material-UI's Paper components.
+            Responsive Layout:
+
+            Adapts to different screen sizes using Material-UI's Grid system and responsive typography for a consistent look and feel.
+            Toast Notifications:
+
+            Utilizes the react-toastify library to display success messages when the user is welcomed with their name.
+            Visual Elements:
+
+            Includes a logo display, promotional banners, and a button to view the full menu.
+            Dynamic Content:
+
+            Content such as promotions and schedule is dynamically rendered based on the user's session state and token data.
+            Component Breakdown
+            User Authentication and Decoding:
+
+            The useEffect hook fetches and decodes the JWT token, setting the user data state if the token exists.
+            Responsive UI:
+
+            The layout is split into two columns for a balanced view, with the left side containing the logo and title, and the right side containing user information, promotions, and schedule.
+            Promotions and Schedule Sections:
+
+            Each section includes a Paper component for visual distinction and a consistent layout.
+            Toast Notifications:
+
+            The ToastContainer is used to display real-time notifications for user actions and system updates.
+            Navigation:
+
+            A button labeled "Ver Menú" redirects the user to the Menu page, enhancing navigation within the app.
+
+
+        LoginForm
+
+            Font Code
+            import React, { useState } from 'react'; // Importing React and useState hook for managing form inputs.
+            import { TextField, Button, Typography, Container, Box, Divider, useMediaQuery } from '@mui/material'; // Importing Material-UI components for layout and styling.
+            import { Link, useNavigate } from "react-router-dom"; // Importing React Router components for navigation.
+            import { ToastContainer, toast } from 'react-toastify'; // Importing react-toastify for toast notifications.
+            import 'react-toastify/dist/ReactToastify.css'; // Importing CSS for react-toastify.
+            import { ThemeProvider, createTheme } from '@mui/material/styles'; // Importing ThemeProvider and createTheme for custom themes.
+            import plantaloginyregister from '../assets/plantaloginyregister.png'; // Importing the background image for the login form.
+            import { loginClient } from '../services/client'; // Importing the loginClient function for handling login logic.
+
+            const theme = createTheme({ // Creating a custom theme for styling the login form.
+                palette: {
+                    primary: {
+                        main: '#28a745', // Custom primary color for buttons.
+                    },
+                    background: {
+                        default: '#f8f9fa', // Default background color.
+                        paper: '#008000bb', // Paper background color.
+                    },
+                },
+                typography: {
+                    fontFamily: "'Patrick Hand', cursive", // Setting a custom font family for typography.
+                },
+            });
+
+            const LoginForm = () => {
+                const [clientemail, setEmail] = useState(''); // State for email input.
+                const [clientpassword, setPassword] = useState(''); // State for password input.
+                const navigate = useNavigate(); // Hook for programmatic navigation.
+
+                const handleSubmit = async (e) => { // Function to handle form submission.
+                    e.preventDefault(); // Prevent default form submission behavior.
+
+                    if (!clientemail || !clientpassword) { // Checking if all fields are filled.
+                        toast.error("Por favor completa todos los campos"); // Displaying error toast if fields are empty.
+                        return;
+                    }
+
+                    const loginData = { clientemail, clientpassword }; // Creating an object with email and password.
+
+                    try {
+                        const response = await loginClient(loginData); // Sending login data to the backend through loginClient function.
+
+                        if (response && response.token) { // If response contains a token, set session storage items.
+                            sessionStorage.setItem('token', response.token); // Storing the token.
+                            sessionStorage.setItem('clientName', response.clientName); // Storing the client name.
+                            navigate('/home'); // Navigating to the home page on successful login.
+                        } else {
+                            toast.error("Usuario o contraseña incorrectos"); // Displaying error toast if login fails.
+                        }
+                    } catch (error) {
+                        console.error("Error al conectar con el servidor:", error); // Logging server connection errors.
+                        toast.error("Error al conectar con el servidor"); // Displaying a general server error toast.
+                    }
+                };
+
+                return (
+                    <ThemeProvider theme={theme}> {/* Applying the custom theme to the form */}
+                        <Container
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                minHeight: '100vh',
+                                backgroundColor: 'background.default',
+                                px: 2, // Padding for smaller screens
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    width: { xs: '100%', sm: '80%', md: '50%', lg: '30%' }, // Responsive width for the form
+                                    bgcolor: 'background.paper',
+                                    textAlign: 'center',
+                                    color: 'text.primary',
+                                    p: { xs: 2, sm: 3, md: 4 }, // Padding based on screen size
+                                    borderRadius: 2,
+                                    backgroundImage: `url(${plantaloginyregister})`, // Background image for the form
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: 'center bottom',
+                                }}
+                            >
+                                <Typography
+                                    variant="h4"
+                                    gutterBottom
+                                    sx={{
+                                        fontSize: { xs: '1.8rem', md: '2.2rem' },
+                                        color: '#ffffff'
+                                    }}
+                                >
+                                    Inicio de Sesión
+                                </Typography>
+                                <Divider sx={{ backgroundColor: 'text.primary', mb: 2 }} /> {/* Divider between title and form fields */}
+                                <form onSubmit={handleSubmit}>
+                                    <TextField
+                                        placeholder="Email"
+                                        id="clientemail"
+                                        value={clientemail}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        fullWidth
+                                        sx={{
+                                            mb: 2,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 1,
+                                            '& input': { fontFamily: 'Patrick Hand, cursive' },
+                                            '& fieldset': { borderColor: 'white' },
+                                            '&:hover fieldset': { borderColor: 'primary.main' },
+                                            color: '#000000',
+                                        }}
+                                    />
+                                    <TextField
+                                        placeholder="Contraseña"
+                                        id="clientpassword"
+                                        type="password"
+                                        value={clientpassword}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        fullWidth
+                                        sx={{
+                                            mb: 2,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 1,
+                                            '& input': { fontFamily: 'Patrick Hand, cursive' },
+                                            '& fieldset': { borderColor: 'white' },
+                                            '&:hover fieldset': { borderColor: 'primary.main' },
+                                            color: '#000000',
+                                        }}
+                                    />
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        sx={{
+                                            backgroundColor: '#fff',
+                                            color: 'primary.main',
+                                            fontFamily: "'Patrick Hand', cursive",
+                                            border: '1px solid',
+                                            borderColor: 'primary.main',
+                                            mt: 2,
+                                            '&:hover': {
+                                                backgroundColor: 'primary.main',
+                                                color: '#fff',
+                                            },
+                                        }}
+                                    >
+                                        Ingresar
+                                    </Button>
+                                </form>
+                                <Typography
+                                    variant="body2"
+                                    mt={2}
+                                    sx={{
+                                        color: '#ffffff',
+                                        mt: 2,
+                                        fontSize: { xs: '0.8rem', sm: '1rem' },
+                                    }}
+                                >
+                                    No tienes cuenta?{" "}
+                                    <Link
+                                        to="/"
+                                        style={{
+                                            color: 'white',
+                                            textDecoration: 'underline',
+                                        }}
+                                    >
+                                        Regístrate
+                                    </Link>
+                                </Typography>
+                            </Box>
+                        </Container>
+                        <ToastContainer /> {/* Toast notifications container */}
+                    </ThemeProvider>
+                );
+            };
+
+            export default LoginForm; // Exporting the LoginForm component.
+
+            The LoginForm component provides a user-friendly interface for clients to log in to the application. It integrates Material-UI components with custom styling and utilizes React Router for navigation. Additionally, it handles form submission, input management, and displays toast notifications for user feedback.
+
+            Purpose
+            The LoginForm component is designed to provide a secure, visually appealing, and accessible login experience. Users can enter their email and password, submit the form, and receive real-time feedback through toast notifications, ensuring a seamless login process.
+
+            Features
+            Custom Theme:
+
+            Utilizes a custom theme created using Material-UI's createTheme to apply consistent styling throughout the form.
+            Form Handling:
+
+            Manages input states for clientemail and clientpassword using the useState hook.
+            Handles form submission asynchronously using the loginClient function, which sends the login data to the backend.
+            Responsive Design:
+
+            Adapts to various screen sizes with a responsive layout using Material-UI's Container, Box, and Grid components.
+            Custom width and padding ensure a consistent and visually balanced form.
+            Validation and Error Handling:
+
+            Validates user inputs and provides toast notifications for errors such as missing fields or incorrect login credentials.
+            Visual Elements:
+
+            Includes a background image for the login form (plantaloginyregister.png).
+            Uses Material-UI components for text fields, buttons, typography, and dividers.
+            Toast Notifications:
+
+            Displays success or error messages using react-toastify to provide real-time feedback to users.
+            Navigation:
+
+            Provides a navigation link to the registration page if the user does not have an account.
+            Component Breakdown
+            Form Fields:
+
+            TextField components are used for email and password inputs, styled with custom MUI properties for a smooth user experience.
+            Submit Handling:
+
+            On form submission, the handleSubmit function validates inputs and sends them to the backend through the loginClient service.
+            Styling:
+
+            Custom styles are applied using Material-UI theme properties, including colors, typography, and hover effects.
+            Toast Notifications:
+
+            Notifications are rendered via the ToastContainer, providing instant user feedback on successful logins or errors.
+            Responsiveness:
+
+            Ensures that the form layout adjusts smoothly for different screen sizes, providing a consistent user experience.
+
+
+
+
+        MenuComponent
+
+            Font Code
+            import React, { useEffect, useState } from 'react'; // Importing React and hooks for state and side effects.
+            import { Carousel } from 'react-bootstrap'; // Importing Bootstrap Carousel for creating image sliders.
+            import '../styles/MenuComponent.css'; // Importing CSS styles for the component.
+            import { Link } from 'react-router-dom'; // Importing Link component for navigation.
+            import axios from 'axios'; // Importing axios for making HTTP requests.
+            const URL = import.meta.env.VITE_API_URL; // API URL stored in environment variable.
+
+            const MenuComponent = () => {
+                const [desayunoDishes, setDesayunoDishes] = useState([]); // State for storing desayuno dishes.
+
+                // useEffect hook to fetch dishes when component mounts.
+                useEffect(() => {
+                    const fetchDishes = async () => {
+                        try {
+                            const response = await axios.get(`${URL}/dish`); // Fetching dishes from the API.
+                            const menus = Array.isArray(response.data) ? response.data : []; // Ensuring response data is an array.
+                            const desayunoDishes = menus
+                                .flatMap(menu => (menu.dishes ? menu.dishes : [])) // Flattening dishes array from menus.
+                                .filter(dish => dish.category === 'desayuno'); // Filtering dishes for the 'desayuno' category.
+                            setDesayunoDishes(desayunoDishes); // Updating state with filtered desayuno dishes.
+                        } catch (error) {               
+                            console.error('Error fetching dishes:', error); // Logging error if the fetch fails.
+                        }
+                    };
+
+                    fetchDishes();
+                }, []); // Empty dependency array to run useEffect only once after mounting.
+
+                return (
+                    <div className="menu-container letters-container"> 
+                        <h1 className="text-success">MENU</h1>
+
+                        {/* Desayunos Section */}
+                        <div className="menu-section">
+                            <h2 className="text-success">Desayunos</h2>
+                            <Carousel controls={true} indicators={false} interval={null}>
+                                {desayunoDishes.map(dish => ( // Mapping over desayunoDishes to create Carousel items.
+                                    <Carousel.Item key={dish.id}>
+                                        <div className="d-flex justify-content-around">
+                                            <div className="card">
+                                                <img src={dish.image} className="card-img-top" alt={dish.name} />
+                                                <div className="card-body">
+                                                    <h5 className="card-title">{dish.name}</h5>
+                                                    <p className="card-text">{dish.description}</p>
+                                                    <p className="card-text">${dish.price.toFixed(2)}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Carousel.Item>
+                                ))}
+                            </Carousel>
+                        </div>
+
+                        {/* Almuerzos Section */}
+                        <div className="menu-section">
+                            <h2 className="text-success">Almuerzos</h2>
+                            <Carousel controls={true} indicators={false} interval={null}>
+                                <Carousel.Item>
+                                    <div className="d-flex justify-content-around">
+                                        {/* Placeholder for Almuerzos dishes */}
+                                    </div>
+                                </Carousel.Item>
+                            </Carousel>
+                        </div>
+
+                        {/* Cenas Section */}
+                        <div className="menu-section">
+                            <h2 className="text-success">Cenas</h2>
+                            <Carousel controls={true} indicators={false} interval={null}>
+                                <Carousel.Item>
+                                    <div className="d-flex justify-content-around">
+                                        {/* Placeholder for Cenas dishes */}
+                                    </div>
+                                </Carousel.Item>
+                            </Carousel>
+                        </div>
+
+                        {/* Link to customize orders */}
+                        <div className="menu-section">
+                            <h2>
+                                <Link to={'/Order'} style={{ textDecoration: 'none' }}>
+                                    También puedes personalizar tu pedido
+                                </Link>
+                            </h2>
+                        </div>
+                    </div>
+                );
+            };
+
+            export default MenuComponent; // Exporting the MenuComponent.
+
+            The MenuComponent is a dynamic and interactive component designed to display restaurant menu items categorized into breakfast, lunch, and dinner sections. It utilizes the Bootstrap Carousel for creating a visually engaging image slider for each category, integrates with an API to fetch dish data, and includes navigation links for further customization.
+
+            Purpose
+            The MenuComponent serves to showcase restaurant menu items in a structured and visually appealing manner. By leveraging a responsive carousel for each category, it provides users with a seamless browsing experience for various meal options. Additionally, it allows easy navigation to customize orders.
+
+            Features
+            Dynamic Dish Fetching:
+
+            Uses axios to make API requests to fetch dishes from the backend (VITE_API_URL).
+            Filters dishes based on their categories (e.g., "desayuno," "almuerzos," "cenas") and updates the state accordingly.
+            Bootstrap Carousel:
+
+            Integrates Bootstrap’s Carousel component to display menu items as sliders for each category.
+            Supports navigation controls, indicators, and custom intervals.
+            Responsive Design:
+
+            Adapts to different screen sizes with a responsive layout ensuring a consistent viewing experience.
+            Utilizes Material-UI classes for styling consistency across devices.
+            Error Handling:
+
+            Employs a try-catch block to handle errors gracefully when fetching dishes, logging errors if the request fails.
+            Navigation:
+
+            Provides a navigation link to the order customization page using react-router-dom's Link component, allowing users to personalize their orders.
+            Styling:
+
+            Utilizes custom CSS for layout and component styling, ensuring a clean and visually pleasing presentation of dishes.
+            Dynamic Content:
+
+            Dynamically generates carousel items for each category, displaying relevant dish details (image, name, description, and price).
+            Component Breakdown
+            Fetching Dishes:
+
+            useEffect hook fetches data from the API when the component mounts.
+            Dishes are filtered by category (desayuno, almuerzos, and cenas) and stored in respective state variables.
+            Carousel Display:
+
+            Each category (e.g., Desayunos, Almuerzos, Cenas) is represented using a carousel that maps over the dishes array and creates carousel items.
+            Styling and Responsiveness:
+
+            Uses Material-UI components and custom CSS to style the menus and ensure responsiveness on various devices.
+            Navigation and Customization:
+
+            Provides a seamless navigation experience through categories and links to customize orders via a designated route.
+
+        Opciones
+
+            Font Code
+            import React, { useState, useEffect } from 'react'; // Importing React and hooks for managing state and side effects.
+            import { 
+            Card, Typography, Tabs, Tab, Box, TextField, Button, 
+            TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, 
+            MenuItem, Select, FormControl, InputLabel 
+            } from '@mui/material'; // Importing Material-UI components for UI design.
+            import { ToastContainer, toast } from 'react-toastify'; // Importing Toast for displaying notifications.
+            import 'react-toastify/dist/ReactToastify.css'; // Importing CSS for Toast notifications.
+            import { 
+            postDishCategory, getDishCategory, deleteDishCategory, 
+            postDrinkCategory, getDrinkCategory, deleteDrinkCategory, 
+            postDrink, getDrink, putDrink, deleteDrink 
+            } from '../services'; // Importing API service functions for CRUD operations.
+
+            const Opciones = () => {
+            const [tab, setTab] = useState(0); // State for managing tab selection.
+            const [newCategory, setNewCategory] = useState(''); // State for new category input.
+            const [categories, setCategories] = useState({ platillos: [], bebidas: [] }); // State for storing dish and drink categories.
+            const [categoryType, setCategoryType] = useState('Platillo'); // State for selecting category type (Platillo or Bebida).
+            const [selectedCategory, setSelectedCategory] = useState(''); // State for selecting a drink category.
+            const [newDrinkName, setNewDrinkName] = useState(''); // State for new drink name input.
+            const [newDrinkPrice, setNewDrinkPrice] = useState(''); // State for new drink price input.
+            const [drinks, setDrinks] = useState([]); // State for storing drinks.
+
+            // useEffect to fetch categories and drinks data when component mounts.
+            useEffect(() => {
+                fetchCategories();
+                fetchDrinks();
+            }, []);
+
+            // Function to fetch dish and drink categories.
+            const fetchCategories = async () => {
+                try {
+                const dishCategories = await getDishCategory(); // Fetch dish categories.
+                const drinkCategories = await getDrinkCategory(); // Fetch drink categories.
+                setCategories({ platillos: dishCategories, bebidas: drinkCategories }); // Setting categories state.
+                } catch (error) {
+                console.error('Error fetching categories:', error);
+                toast.error('Error al obtener categorías.'); // Display error if fetching categories fails.
+                }
+            };
+
+            // Function to fetch drinks.
+            const fetchDrinks = async () => {
+                try {
+                const drinks = await getDrink(); // Fetch drinks.
+                setDrinks(drinks); // Setting drinks state.
+                } catch (error) {
+                console.error('Error fetching drinks:', error);
+                toast.error('Error al obtener bebidas.'); // Display error if fetching drinks fails.
+                }
+            };
+
+            // Function to handle creation of new category.
+            const handleCreateCategory = async () => {
+                if (newCategory.trim()) {
+                try {
+                    if (categoryType === 'Platillo') {
+                    await postDishCategory({ dishCategoryname: newCategory }); // Creating dish category.
+                    } else {
+                    await postDrinkCategory({ drinkCategoryname: newCategory }); // Creating drink category.
+                    }
+                    setNewCategory(''); // Resetting input field.
+                    toast.success('Categoría creada correctamente.'); // Display success notification.
+                    fetchCategories(); // Refreshing categories data.
+                } catch (error) {
+                    console.error('Error creating category:', error);
+                    toast.error('Error al crear la categoría.'); // Display error if creation fails.
+                }
+                }
+            };
+
+            // Function to handle deletion of category.
+            const handleDeleteCategory = async (id) => {
+                try {
+                if (categoryType === 'Platillo') {
+                    await deleteDishCategory(id); // Deleting dish category.
+                } else {
+                    await deleteDrinkCategory(id); // Deleting drink category.
+                }
+                toast.success('Categoría eliminada correctamente.'); // Display success notification.
+                fetchCategories(); // Refreshing categories data.
+                } catch (error) {
+                console.error('Error deleting category:', error);
+                toast.error('Error al eliminar la categoría.'); // Display error if deletion fails.
+                }
+            };
+
+            // Function to handle creation of new drink.
+            const handleCreateDrink = async () => {
+                if (newDrinkName.trim() && newDrinkPrice > 0 && selectedCategory) {
+                try {
+                    const drinkData = {
+                    drinkName: newDrinkName,
+                    drinkPrice: newDrinkPrice,
+                    drinkCategory: selectedCategory,
+                    };
+                    await postDrink(drinkData); // Creating new drink.
+                    toast.success('Bebida creada correctamente.'); // Display success notification.
+                    setNewDrinkName(''); // Resetting drink name input.
+                    setNewDrinkPrice(''); // Resetting drink price input.
+                    setSelectedCategory(''); // Resetting selected category.
+                    fetchDrinks(); // Refreshing drinks data.
+                } catch (error) {
+                    console.error('Error creating drink:', error);
+                    toast.error('Error al crear la bebida.'); // Display error if creation fails.
+                }
+                } else {
+                toast.error('Por favor complete todos los campos.'); // Display error if fields are not complete.
+                }
+            };
+
+            // Function to handle deletion of drink.
+            const handleDeleteDrink = async (id) => {
+                try {
+                await deleteDrink(id); // Deleting drink.
+                toast.success('Bebida eliminada correctamente.'); // Display success notification.
+                fetchDrinks(); // Refreshing drinks data.
+                } catch (error) {
+                console.error('Error deleting drink:', error);
+                toast.error('Error al eliminar la bebida.'); // Display error if deletion fails.
+                }
+            };
+
+            // Function to handle editing of drink.
+            const handleEditDrink = async (id) => {
+                try {
+                await putDrink(id); // Updating drink details.
+                toast.success('Bebida actualizada correctamente.'); // Display success notification.
+                fetchDrinks(); // Refreshing drinks data.
+                } catch (error) {
+                console.error('Error updating drink:', error);
+                toast.error('Error al actualizar la bebida.'); // Display error if update fails.
+                }
+            };
+
+            return (
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
+                <Typography variant="h5" gutterBottom>
+                    Opciones
+                </Typography>
+                <Tabs value={tab} onChange={(e, newValue) => setTab(newValue)} sx={{ mb: 2 }}>
+                    <Tab label="General" />
+                    <Tab label="Categorías" />
+                    <Tab label="Bebidas" />
+                </Tabs>
+                <Box sx={{ p: 3 }}>
+                    {tab === 0 && (
+                    <>
+                        {/* Display categories and actions for Platillos and Bebidas */}
+                    </>
+                    )}
+                    {tab === 1 && (
+                    <>
+                        {/* Create and manage categories for Platillos and Bebidas */}
+                    </>
+                    )}
+                    {tab === 2 && (
+                    <>
+                        {/* Create and manage drinks */}
+                    </>
+                    )}
+                </Box>
+                <ToastContainer />
+                </Card>
+            );
+            };
+
+            export default Opciones; // Exporting the Opciones component.
+
+            The Opciones component is a comprehensive interface for managing categories and drinks in a restaurant or similar application. It utilizes Material-UI components for a structured and visually appealing design, integrates Toast notifications for feedback, and provides CRUD (Create, Read, Update, Delete) functionality for both dish and drink management.
+
+            Purpose
+            The Opciones component facilitates the creation, management, and deletion of dish categories and drinks. It supports a tabbed interface to seamlessly switch between different functionalities, ensuring an intuitive user experience for managing restaurant options.
+
+            Features
+            Tabbed Interface:
+
+            Provides a tabbed view to organize functionalities into "General," "Categorías," and "Bebidas."
+            Users can easily navigate through these tabs to perform actions related to categories and drinks.
+            CRUD Operations:
+
+            postDishCategory, getDishCategory, deleteDishCategory, and other service functions are used for dish category management.
+            postDrinkCategory, getDrinkCategory, deleteDrinkCategory, etc., are used for managing drink categories.
+            postDrink, getDrink, putDrink, and deleteDrink functions handle CRUD operations for drinks.
+            Material-UI Components:
+
+            Utilizes Material-UI components such as Card, Typography, Tabs, Tab, Box, TextField, Button, TableContainer, Table, etc., for building a responsive and interactive UI.
+            Forms and tables are utilized to manage data efficiently.
+            State Management:
+
+            Maintains multiple states including tab, newCategory, categories, categoryType, selectedCategory, newDrinkName, newDrinkPrice, and drinks to manage dynamic content.
+            useEffect hook fetches data on component mount to populate the initial state.
+            Notification System:
+
+            Integrates react-toastify for displaying success, error, and informational messages throughout various operations.
+            Error Handling:
+
+            Employs error handling mechanisms within each CRUD operation to provide immediate feedback and improve the user experience.
+            Dynamic Content:
+
+            Generates dynamic content based on the selected tab and state variables to display, create, and manage dish categories and drinks.
+            Component Breakdown
+            Tabs for Functionality:
+
+            General: Displays an overview of current categories and drinks.
+            Categorías: Allows management of dish and drink categories.
+            Bebidas: Facilitates creation, updating, and deletion of drinks.
+            Form Handling:
+
+            Handles input fields for new categories (newCategory) and new drinks (newDrinkName, newDrinkPrice), with controls for managing selected categories for drinks.
+            Table and Form Integration:
+
+            Uses Material-UI’s table component to display categories and drinks in a structured tabular format.
+            Forms are integrated for creating and updating drink and dish categories.
+            Service Integration:
+
+            Service functions for API calls ensure data is managed smoothly between the frontend and backend.
+
+        Ordenes
+
+            Font Code
+            import React from 'react'; // Importing React for functional component.
+            import { 
+            Card, Typography, TableContainer, Paper, Table, 
+            TableHead, TableRow, TableCell, TableBody 
+            } from '@mui/material'; // Importing Material-UI components for UI design.
+
+            const Ordenes = () => {
+            return (
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
+                <Typography variant="h5" gutterBottom>
+                    Historial de Órdenes
+                </Typography>
+                <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 2 }}>
+                    <Table>
+                    <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+                        <TableRow>
+                        <TableCell>ID Orden</TableCell>        {/* Column for Order ID */}
+                        <TableCell>Cliente</TableCell>          {/* Column for Customer Name */}
+                        <TableCell>Total</TableCell>            {/* Column for Total Amount */}
+                        <TableCell>Estado</TableCell>           {/* Column for Order Status */}
+                        <TableCell>Acciones</TableCell>         {/* Column for Actions */}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                        <TableCell>#001</TableCell>            {/* Sample Order ID */}
+                        <TableCell>Juan Pérez</TableCell>      {/* Sample Customer Name */}
+                        <TableCell>$250</TableCell>            {/* Sample Total Amount */}
+                        <TableCell>Pendiente</TableCell>       {/* Sample Order Status */}
+                        <TableCell>Ver Detalles</TableCell>    {/* Sample Action - View Details */}
+                        </TableRow>
+                    </TableBody>
+                    </Table>
+                </TableContainer>
+                </Card>
+            );
+            };
+
+            export default Ordenes; // Exporting the Ordenes component.
+
+            The Ordenes component provides a structured interface for displaying a history of orders. Utilizing Material-UI components, it organizes order data in a clean and user-friendly way, allowing easy navigation and management of past orders.
+
+            Purpose
+            The Ordenes component is designed to display a table of historical orders, enabling users to view and manage previous transactions. It serves as an administrative tool for managing customer orders and tracking their statuses and details.
+
+            Features
+            Material-UI Components:
+
+            Utilizes Material-UI’s Card, Typography, TableContainer, Table, TableHead, TableRow, TableCell, and TableBody components to create a responsive and well-styled table.
+            Table Structure:
+
+            The table displays columns for:
+            Order ID: Unique identifier for each order.
+            Cliente: Name of the customer associated with the order.
+            Total: Total amount for the order.
+            Estado: Current status of the order (e.g., pending, completed, cancelled).
+            Acciones: Actions such as viewing details or performing other management tasks.
+            Sample Data:
+
+            The component includes a sample row displaying static data such as:
+            #001 for Order ID
+            Juan Pérez for Customer Name
+            $250 for Total Amount
+            Pendiente for Order Status
+            Ver Detalles for Action (View Details).
+            Responsiveness and Styling:
+
+            The component uses Material-UI’s styling (sx prop) to adjust padding, shadows, and borders, ensuring a visually appealing and interactive table.
+            Export Functionality:
+
+            The component is exported for use in other parts of the application where order history is required.
+
+        RegisterForm
+
+            Font Code
+            import React, { useState } from 'react'; // Importing React and useState hook
+            import {
+                TextField,             // Material-UI TextField component
+                Button,                // Material-UI Button component
+                Typography,            // Material-UI Typography component
+                Container,             // Material-UI Container component
+                Box,                   // Material-UI Box component
+                Divider,               // Material-UI Divider component
+                useMediaQuery,         // Material-UI useMediaQuery hook
+            } from '@mui/material'; // Importing Material-UI components
+
+            import { Link, useNavigate } from "react-router-dom"; // Importing Link and useNavigate from react-router-dom
+            import { ToastContainer, toast } from 'react-toastify'; // Importing ToastContainer and toast from react-toastify
+            import 'react-toastify/dist/ReactToastify.css'; // Importing CSS for Toast notifications
+
+            import { ThemeProvider, createTheme } from '@mui/material/styles'; // Importing ThemeProvider and createTheme
+            import plantaloginyregister from '../assets/plantaloginyregister.png'; // Importing the image
+
+            import { registerClient } from '../services/client'; // Importing the registerClient service
+
+            const theme = createTheme({
+                palette: {
+                    primary: {
+                        main: '#28a745', // Button green
+                    },
+                    background: {
+                        default: '#f8f9fa', // General background
+                        paper: '#008000bb', // Form background
+                    },
+                },
+                typography: {
+                    fontFamily: "'Patrick Hand', cursive", // Setting custom font
+                },
+            });
+
+            const RegisterForm = () => {
+                const [formData, setFormData] = useState({
+                    clientname: '',
+                    clientemail: '',
+                    clientpassword: '',
+                });
+
+                const [loading, setLoading] = useState(false);
+                const navigate = useNavigate(); // Using navigate hook
+
+                // Handling input changes
+                const handleChange = (e) => {
+                    setFormData({ ...formData, [e.target.id]: e.target.value });
+                };
+
+                // Validating the form
+                const validateForm = () => {
+                    const { clientname, clientemail, clientpassword } = formData;
+
+                    if (!clientname || !clientemail || !clientpassword) {
+                        toast.error("Todos los campos son obligatorios");
+                        return false;
+                    }
+
+                    if (clientpassword.length < 8) {
+                        toast.error("La contraseña debe tener al menos 8 caracteres");
+                        return false;
+                    }
+
+                    const hasUpperCase = /[A-Z]/.test(clientpassword);
+                    const hasLowerCase = /[a-z]/.test(clientpassword);
+                    const hasNumber = /\d/.test(clientpassword);
+
+                    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+                        toast.error("La contraseña debe contener al menos una mayúscula, una minúscula y un número");
+                        return false;
+                    }
+
+                    return true;
+                };
+
+                const handleSubmit = async (e) => {
+                    e.preventDefault();
+                
+                    if (validateForm()) {
+                        setLoading(true);
+                        try {
+                            const response = await registerClient(formData);
+                            toast.success("Usuario registrado exitosamente");
+                            setFormData({
+                                clientname: '',
+                                clientemail: '',
+                                clientpassword: '',
+                            });
+                            setTimeout(() => navigate('/login'), 2000);
+                        } catch (error) {
+                            const errorMsg = error.response?.data?.message || "Hubo un error al registrar el usuario";
+                            toast.error(errorMsg);
+                        } finally {
+                            setLoading(false);
+                        }
+                    }
+                };
+
+                return (
+                    <ThemeProvider theme={theme}>
+                        <Container
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                minHeight: '100vh',
+                                backgroundColor: 'background.default',
+                                px: 2,
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    width: { xs: '100%', sm: '80%', md: '50%', lg: '30%' },
+                                    bgcolor: 'background.paper',
+                                    textAlign: 'center',
+                                    color: 'text.primary',
+                                    p: { xs: 2, sm: 3, md: 4 },
+                                    borderRadius: 2,
+                                    backgroundImage: `url(${plantaloginyregister})`, // Adding image to background
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: 'center bottom',
+                                }}
+                            >
+                                <Typography
+                                    variant="h4"
+                                    gutterBottom
+                                    sx={{
+                                        color: '#fff',
+                                        fontSize: { xs: '1.8rem', md: '2.2rem' }
+                                    }}
+                                >
+                                    Regístrate
+                                </Typography>
+                                <Divider sx={{ backgroundColor: 'text.primary', mb: 2 }} />
+                                <form onSubmit={handleSubmit}>
+                                    <TextField
+                                        placeholder="Nombre"
+                                        id="clientname"
+                                        value={formData.clientname}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        sx={{
+                                            color: '#ffffff',
+                                            mb: 2,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 1,
+                                            '& label': { color: 'text.secondary' },
+                                            '& input': { fontFamily: 'Patrick Hand, cursive' },
+                                            '& fieldset': { borderColor: 'white' },
+                                            '&:hover fieldset': { borderColor: 'primary.main' },
+                                        }}
+                                    />
+                                    <TextField
+                                        placeholder="Email"
+                                        id="clientemail"
+                                        value={formData.clientemail}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        sx={{
+                                            mb: 2,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 1,
+                                            '& label': { color: 'text.secondary' },
+                                            '& input': { fontFamily: 'Patrick Hand, cursive' },
+                                            '& fieldset': { borderColor: 'white' },
+                                            '&:hover fieldset': { borderColor: 'primary.main' },
+                                        }}
+                                    />
+                                    <TextField
+                                        placeholder="Contraseña"
+                                        id="clientpassword"
+                                        type="password"
+                                        value={formData.clientpassword}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        sx={{
+                                            mb: 2,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 1,
+                                            '& label': { color: 'text.secondary' },
+                                            '& input': { fontFamily: 'Patrick Hand, cursive' },
+                                            '& fieldset': { borderColor: 'white' },
+                                            '&:hover fieldset': { borderColor: 'primary.main' },
+                                        }}
+                                    />
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        sx={{
+                                            backgroundColor: '#fff',
+                                            color: 'primary.main',
+                                            fontFamily: "'Patrick Hand', cursive",
+                                            border: '1px solid',
+                                            borderColor: 'primary.main',
+                                            mt: 2,
+                                            '&:hover': {
+                                                backgroundColor: 'primary.main',
+                                                color: '#fff',
+                                            },
+                                        }}
+                                        disabled={loading}
+                                    >
+                                        {loading ? 'Registrando...' : 'Registrar'}
+                                    </Button>
+                                </form>
+                                <Typography
+                                    variant="body2"
+                                    mt={2}
+                                    sx={{
+                                        mt: 2,
+                                        fontSize: { xs: '0.8rem', sm: '1rem' },
+                                        color:'#ffffff',
+                                    }}
+                                >
+                                    Ya tienes una cuenta?{" "}
+                                    <Link
+                                        to="/login"
+                                        style={{
+                                            color: 'white',
+                                            textDecoration: 'underline',
+                                        }}
+                                    >
+                                        Inicia Sesión
+                                    </Link>
+                                </Typography>
+                            </Box>
+                            <ToastContainer />
+                        </Container>
+                    </ThemeProvider>
+                );
+            };
+
+            export default RegisterForm; // Exporting the RegisterForm component
+
+            The RegisterForm component provides a user-friendly interface for registering new clients. It integrates Material-UI components, custom theming, form validation, and notification functionality using React Toastify.
+
+            Purpose
+            The RegisterForm component is designed to allow users to create new accounts by providing necessary details like name, email, and password. It offers real-time feedback and a seamless registration experience with a visually appealing and accessible form.
+
+            Features
+            Material-UI Integration:
+
+            Utilizes Material-UI components like TextField, Button, Typography, Container, Box, and Divider for a cohesive and responsive UI.
+            Theming:
+
+            A custom theme is applied to the component using createTheme and ThemeProvider. This includes primary color for buttons and distinct background and text colors for form elements.
+            Responsive Design:
+
+            The layout adapts based on screen size using Material-UI's useMediaQuery hook to ensure a consistent experience across devices.
+            Form Handling:
+
+            Form fields (clientname, clientemail, and clientpassword) are managed using the useState hook.
+            Real-time validation ensures that the required fields are filled correctly, with specific rules for password strength.
+            Toast Notifications:
+
+            react-toastify is used for real-time feedback, displaying success and error messages based on form submission outcomes.
+            Background Image:
+
+            The form container incorporates a background image (plantaloginyregister.png) for visual enhancement and a unique appearance.
+            Navigation:
+
+            On successful form submission, users are redirected to the login page after a short delay using useNavigate.
+            Custom Styling:
+
+            Customized styling is applied to inputs, buttons, and text elements to provide a polished user experience.
+
+
+        UserComponent
+
+        Font Code
+
+            import React, { useState, useEffect } from 'react'; // Import necessary hooks and libraries
+            import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+            import { jwtDecode } from "jwt-decode"; // Import jwt-decode for decoding JWT tokens
+            import { toast } from 'react-toastify'; // Import toast notifications
+            import { 
+                Container, Grid, Button, Typography, 
+                Card, CssBaseline, GlobalStyles, TextField, 
+                Dialog, DialogTitle, DialogContent, DialogActions 
+            } from '@mui/material'; // Import MUI components
+            import { 
+                updateClient, getAllClients, getClientById 
+            } from '../services/client'; // Import client services
+            import { FaHome, FaClipboardList, FaUserAlt, FaSignOutAlt } from 'react-icons/fa'; // Import icons
+            import axios from 'axios'; // Import Axios for HTTP requests
+
+            const UserPage = () => {
+                // State variables for managing user data and modal visibility
+                const [menu, setMenu] = useState('Información de Usuario');
+                const [showModal, setShowModal] = useState(false);
+                const [clientInfo, setClientInfo] = useState({ name: '', email: '' });
+                const [newClientName, setNewClientName] = useState('');
+                const [newClientEmail, setNewClientEmail] = useState('');
+                const [newClientPassword, setNewClientPassword] = useState('');
+                const [placeholderName, setPlaceholderName] = useState('');
+                const [placeholderEmail, setPlaceholderEmail] = useState('');
+                const [renderClientName, setRenderClientName] = useState('');
+                const [renderClientEmail, setRenderClientEmail] = useState('');
+                const [loading, setLoading] = useState(true);
+                const navigate = useNavigate();
+
+                useEffect(() => {
+                    // Decode token and fetch client info
+                    const codedToken = sessionStorage.getItem("token");
+                    const decodedToken = jwtDecode(codedToken);
+                    const clientId = decodedToken.id;
+                    renderClientInfo(); // Fetch and render client info
+
+                    if (!codedToken) {
+                        console.error("No se encontró token en la sessionStorage");
+                        return;
+                    }
+
+                    try {
+                        const { id, name, email } = decodedToken;
+                        setClientInfo({ id, name, email });
+                        toast.success(`Bienvenido, ${name}!`);
+                    } catch (error) {
+                        console.error("Error al desencriptar token:", error);
+                    }
+                },[]);
+
+                // Function to fetch client ID using the token
+                const fetchClientId = async () => {
+                    try {
+                        const codedToken = sessionStorage.getItem("token");
+
+                        if (!codedToken) {
+                            throw new Error("Token not found in sessionStorage");
+                        }
+
+                        const decodedToken = jwtDecode(codedToken);
+                        const clientId = decodedToken.id;
+
+                        const clientData = await getClientById(clientId); // Automatically sends token
+                        return clientData;
+                    } catch (error) {
+                        console.error('Error fetching the client id:', error);
+                        throw error;
+                    }
+                };
+
+                // Function to handle client data update
+                const handleUpdate = async (e) => {
+                    e.preventDefault();
+
+                    if (!newClientName && !newClientEmail && !newClientPassword) {
+                        toast.error("No hay cambios para guardar.");
+                        return;
+                    }
+
+                    try {
+                        const token = sessionStorage.getItem("token");
+                        if (!token) throw new Error("No se encontró el token.");
+
+                        const { id } = jwtDecode(token);
+                        const newData = {
+                            clientname: newClientName || placeholderName,
+                            clientemail: newClientEmail || placeholderEmail,
+                            clientpassword: newClientPassword,
+                        };
+
+                        const response = await updateClient(id, newData);
+                        if (response) {
+                            toast.success("Datos actualizados exitosamente.");
+                            setShowModal(false);
+                            renderClientInfo(); // Update rendered client data
+                        } else {
+                            toast.error("Respuesta inesperada del servidor.");
+                        }
+                    } catch (error) {
+                        console.error("Error al actualizar datos:", error);
+                        toast.error("Error al conectar con el servidor.");
+                    }
+                };
+
+                // Function to render client information
+                const renderClientInfo = async () => {
+                    try {
+                        const codedToken = sessionStorage.getItem("token");
+
+                        if (!codedToken) {
+                            throw new Error("No se encontró token en la sessionStorage");
+                        }
+
+                        const decodedToken = jwtDecode(codedToken);
+
+                        if (!decodedToken || !decodedToken.id) {
+                            throw new Error("Token inválido o no contiene un ID");
+                        }
+
+                        const clientId = decodedToken.id;
+
+                        const clientData = await getClientById(clientId); // Call API with client ID
+
+                        if (!clientData || !clientData.clientname || !clientData.clientemail) {
+                            throw new Error("Datos del cliente incompletos o incorrectos");
+                        }
+
+                        // Update state with fetched data
+                        setRenderClientName(clientData.clientname);
+                        setRenderClientEmail(clientData.clientemail);
+
+                        // Finish loading
+                        setLoading(false);
+                    } catch (error) {
+                        console.error("Error al obtener datos del cliente:", error);
+                        toast.error("Error al cargar los datos del cliente.");
+                        setLoading(false); // Ensure loading state is cleared
+                    }
+                };
+
+                // Component to display client profile
+                const clientProfile = () => (
+                    <Card sx={{ p: 3, boxShadow: 3, borderRadius: 3, mt: 2 }}>
+                        {loading ? (
+                            <Typography>Cargando información del cliente...</Typography>
+                        ) : (
+                            <>
+                                <Typography variant="h5" gutterBottom>
+                                    Información de Usuario
+                                </Typography>
+                                <Typography>
+                                    <strong>Nombre:</strong> {renderClientName || "No disponible"}
+                                </Typography>
+                                <Typography>
+                                    <strong>Correo Electrónico:</strong> {renderClientEmail || "No disponible"}
+                                </Typography>
+                                <Button
+                                    variant="outlined"
+                                    onClick={async () => {
+                                        try {
+                                            const clientData = await fetchClientId();
+                                            setShowModal(true); // Open modal
+                                            setPlaceholderName(renderClientName); // Set name for placeholder
+                                            setPlaceholderEmail(renderClientEmail); // Set email for placeholder
+                                        } catch (error) {
+                                            console.error("Error fetching client data:", error);
+                                            toast.error("Error al obtener los datos del cliente");
+                                        }
+                                    }}
+                                    sx={{
+                                        marginTop: 2,
+                                        backgroundColor: "#008000",
+                                        color: "#fff",
+                                        "&:hover": { backgroundColor: "#007000" },
+                                    }}
+                                >
+                                    Actualizar Datos
+                                </Button>
+                            </>
+                        )}
+                    </Card>
+                );
+
+                // Component for data update modal
+                const dataUpdateModal = () => (
+                    <Dialog open={showModal} onClose={() => setShowModal(false)} maxWidth="sm" fullWidth>
+                        <DialogTitle>Actualizar Datos</DialogTitle>
+                        <form onSubmit={handleUpdate}>
+                            <DialogContent>
+                                <TextField
+                                    fullWidth
+                                    label="Nombre"
+                                    value={newClientName}
+                                    onChange={(e) => setNewClientName(e.target.value)}
+                                    placeholder={placeholderName} // Set placeholder
+                                    sx={{ mb: 2 }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Correo Electrónico"
+                                    value={newClientEmail}
+                                    onChange={(e) => setNewClientEmail(e.target.value)}
+                                    placeholder={placeholderEmail} // Set placeholder
+                                    sx={{ mb: 2 }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Nueva Contraseña"
+                                    type="password"
+                                    value={newClientPassword}
+                                    onChange={(e) => setNewClientPassword(e.target.value)}
+                                    placeholder="Ingrese nueva contraseña"
+                                    sx={{ mb: 2 }}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{
+                                        backgroundColor: '#008000',
+                                        color: '#fff',
+                                        "&:hover": { backgroundColor: "#007000" },
+                                    }}
+                                >
+                                    Guardar Cambios
+                                </Button>
+                                <Button onClick={() => setShowModal(false)} sx={{ color: "#008000" }}>
+                                    Cancelar
+                                </Button>
+                            </DialogActions>
+                        </form>
+                    </Dialog>
+                );
+
+                // Content rendering based on selected menu
+                const content = () => {
+                    switch (menu) {
+                        case 'Historial de Órdenes':
+                            return <div>Historial de Órdenes</div>;
+                        case 'Información de Usuario':
+                            return clientProfile();
+                        case 'Salir':
+                            navigate('/Login');
+                            return null;
+                        default:
+                            return (
+                                <Typography variant="h5" gutterBottom>
+                                    {menu}
+                                </Typography>
+                            );
+                    }
+                };
+
+                return (
+                    <>
+                        <CssBaseline />
+                        <GlobalStyles styles={{ body: { fontFamily: "'Patrick Hand', cursive" } }} />
+                        <Container maxWidth="xl" sx={{ backgroundColor: '#fafafa ', minHeight: '100vh', padding: 2 }}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={3} md={2} sx={{ backgroundColor: '#008000', color: 'white', padding: 2 }}>
+                                    <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 2 }}>
+                                        Panel de Usuario
+                                    </Typography>
+                                    <Button
+                                        fullWidth
+                                        startIcon={<FaHome />}
+                                        sx={{ color: 'white', mb: 2 }}
+                                        onClick={() => navigate('/Home')}
+                                    >
+                                        Inicio
+                                    </Button>
+                                    <Button
+                                        fullWidth
+                                        startIcon={<FaUserAlt />}
+                                        sx={{ color: 'white', mb: 2 }}
+                                        onClick={() => setMenu('Información de Usuario')}
+                                    >
+                                        Información de Usuario
+                                    </Button>
+                                    <Button
+                                        fullWidth
+                                        startIcon={<FaClipboardList />}
+                                        sx={{ color: 'white', mb: 2 }}
+                                        onClick={() => setMenu('Historial de Órdenes')}
+                                    >
+                                        Historial de Órdenes
+                                    </Button>
+                                    <Button
+                                        fullWidth
+                                        startIcon={<FaSignOutAlt />}
+                                        sx={{ color: 'white' }}
+                                        onClick={() => setMenu('Salir')}
+                                    >
+                                        Salir
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} sm={9} md={10}>
+                                    {content()}
+                                    {dataUpdateModal()}
+                                </Grid>
+                            </Grid>
+                        </Container>
+                    </>
+                );
+            };
+
+            export default UserPage;
+
+
+            The UserPage component is a comprehensive interface for managing user-related data, providing functionalities such as viewing and updating user information, navigating between different sections (like order history), and handling user authentication through JWT decoding and session management.
+
+            Purpose
+            The UserPage component serves as a centralized dashboard for users to manage their profile, including updating personal information and accessing different functionalities such as order history or logging out.
+
+            Features
+            JWT Decoding and Session Management:
+
+            Uses jwtDecode to decode JWT tokens stored in sessionStorage.
+            Fetches user data securely using decoded token data to identify the client.
+            User Profile Management:
+
+            Displays client information (name and email), which can be updated through a modal dialog.
+            Handles updates to user details (name, email, and password).
+            Data Fetching and Updates:
+
+            Fetches client data using getClientById and updates it when needed.
+            Error handling is implemented for unsuccessful API requests.
+            Modal Dialog for Updates:
+
+            A dialog is used for updating user data, offering fields for new values and a confirmation button to apply changes.
+            Provides a user-friendly interface for modifying personal information.
+            Navigation and Menu Handling:
+
+            Provides a sidebar menu with options like "Home", "User Information", "Order History", and "Logout".
+            Navigates between pages using React Router’s useNavigate.
+            Responsive and Themed Design:
+
+            Utilizes Material-UI for a responsive design with custom theming, ensuring a consistent appearance across devices.
+            Icons and Buttons:
+
+            Uses icons (FaHome, FaUserAlt, FaClipboardList, FaSignOutAlt) for a visually intuitive interface.
+            Loading State:
+
+            A loading state is used to display feedback while data is being fetched or updated.
+
+    routes
+        ProtectedRoutes
+            Font Code
+            import React, { useState } from 'react'; // Import React and useState hook for managing state.
+            import { Outlet, useNavigate } from 'react-router-dom'; // Import Outlet for nested routes and useNavigate for navigation.
+            import { Button, Modal, Box, TextField, Typography, CircularProgress } from '@mui/material'; // Import Material UI components.
+            import { toast } from 'react-toastify'; // Import react-toastify for notifications.
+            import { loginAdmin } from '../services/admin'; // Import the loginAdmin service for authentication.
+            import { jwtDecode } from "jwt-decode"; // Import jwt-decode for decoding JWT tokens.
+            import { motion } from 'framer-motion'; // Import motion for animations.
+
+            const ProtectedRoute = ({ allowedRole }) => {
+                const navigate = useNavigate(); // Hook for navigation.
+                const token = sessionStorage.getItem('token'); // Retrieve token from sessionStorage.
+                const userRole = token ? jwtDecode(token).role : null; // Decode token to get the user's role.
+                const [open, setOpen] = useState(false); // State to manage the modal's visibility.
+                const [adminEmail, setAdminEmail] = useState(''); // State to manage admin email input.
+                const [adminPassword, setAdminPassword] = useState(''); // State to manage admin password input.
+                const [loading, setLoading] = useState(false); // State to manage loading spinner during validation.
+
+                const handleValidate = async () => {
+                    // Function to validate admin credentials.
+                    setLoading(true); // Show loading spinner.
+                    try {
+                        const response = await loginAdmin({ adminEmail, adminPassword }); // Call login service.
+
+                        if (response && response.token) {
+                            // If login successful, store the token and close the modal.
+                            sessionStorage.setItem('token', response.token);
+                            setOpen(false); // Close modal.
+                            toast.success('Acceso concedido', { position: 'top-center' }); // Show success toast.
+                        } else {
+                            // Show error toast if credentials are incorrect or access is denied.
+                            toast.error('Credenciales incorrectas o no tienes permisos de administrador', { position: 'top-center' });
+                        }
+                    } catch (error) {
+                        // Handle and display errors.
+                        toast.error(error.message || 'Error al validar', { position: 'top-center' });
+                    } finally {
+                        // Hide loading spinner.
+                        setLoading(false);
+                    }
+                };
+
+                const handleOpenModal = () => {
+                    // Function to open the modal.
+                    setOpen(true);
+                };
+
+                if (!token || userRole !== allowedRole) {
+                    // If no token exists or user role is not allowed, show a validation prompt.
+                    return (
+                        <Box sx={{ textAlign: 'center', mt: 10 }}>
+                            <Typography variant="h5" color="primary" sx={{ mb: 3 }}>
+                                Para ingresar a la página solicitada, valida tus credenciales de administrador
+                            </Typography>
+
+                            {/* Animated button using Framer Motion */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1 }}
+                            >
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleOpenModal}
+                                    sx={{
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                        borderRadius: '20px',
+                                        padding: '10px 20px',
+                                    }}
+                                >
+                                    Validar
+                                </Button>
+                            </motion.div>
+
+                            {/* Modal for admin validation */}
+                            <Modal open={open} onClose={() => setOpen(false)}>
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        width: 400,
+                                        bgcolor: 'background.paper',
+                                        boxShadow: 24,
+                                        p: 4,
+                                        borderRadius: 2,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Typography variant="h6" sx={{ mb: 2 }}>Validar Administrador</Typography>
+
+                                    {/* Email input field */}
+                                    <TextField
+                                        fullWidth
+                                        margin="normal"
+                                        label="Correo"
+                                        value={adminEmail}
+                                        onChange={(e) => setAdminEmail(e.target.value)}
+                                        sx={{ mb: 2 }}
+                                    />
+
+                                    {/* Password input field */}
+                                    <TextField
+                                        fullWidth
+                                        margin="normal"
+                                        label="Contraseña"
+                                        type="password"
+                                        value={adminPassword}
+                                        onChange={(e) => setAdminPassword(e.target.value)}
+                                        sx={{ mb: 2 }}
+                                    />
+
+                                    {/* Validation button */}
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        onClick={handleValidate}
+                                        sx={{
+                                            mt: 2,
+                                            fontWeight: 'bold',
+                                            borderRadius: '20px',
+                                            padding: '12px',
+                                        }}
+                                        disabled={loading} // Disable button while loading.
+                                    >
+                                        {loading ? <CircularProgress size={24} /> : 'Validar'} {/* Show spinner or button text. */}
+                                    </Button>
+                                </Box>
+                            </Modal>
+                        </Box>
+                    );
+                }
+
+                // If user is authorized, render the requested route.
+                return <Outlet />;
+            };
+
+            export default ProtectedRoute; // Export the component for use in other parts of the application.
+
+            The ProtectedRoute component provides a secure way to restrict access to certain parts of a React application based on user roles and authentication. It is particularly useful for ensuring that only authorized administrators can access sensitive sections of an app.
+
+            Purpose
+            The ProtectedRoute component is designed to:
+
+            Authenticate Users: Validate user credentials and ensure a valid JWT token is present.
+            Authorize Based on Roles: Restrict access based on user roles, such as allowing only administrators to access certain routes.
+            Handle Unauthorized Access: Redirect unauthorized users to a validation prompt or deny access.
+            Features
+            Role-Based Access Control:
+
+            Decodes JWT tokens stored in sessionStorage to retrieve user roles.
+            Compares the user's role with the allowedRole prop to determine access eligibility.
+            Admin Credential Validation:
+
+            Displays a modal dialog for administrators to validate their credentials.
+            Uses the loginAdmin service to verify email and password.
+            Error Handling and Feedback:
+
+            Provides clear feedback with react-toastify notifications for successful or failed validation attempts.
+            Handles server errors gracefully.
+            Loading State:
+
+            Displays a loading spinner during authentication requests to indicate processing.
+            Animations:
+
+            Integrates framer-motion for smooth transitions, enhancing the user experience with animations.
+            Material-UI for Styling:
+
+            Uses Material-UI components (Modal, TextField, Button, Typography) for a polished and responsive design.
+            Nested Routing Support:
+
+            Uses React Router's Outlet to render child components for protected routes seamlessly.
+
+
+        Routing
+
+            Font Code
+            import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
+            // Import React Router components: Router for wrapping the app, Routes for defining route structure, and Route for individual routes.
+
+            import Login from "../pages/Login"; // Import the Login page component.
+            import Register from "../pages/Register"; // Import the Register page component.
+            import Home from "../pages/Home"; // Import the Home page component.
+            import AboutUs from "../pages/AboutUs"; // Import the About Us page component.
+            import Contacto from "../pages/Contacto"; // Import the Contacto page component.
+            import Menu from "../pages/Menu"; // Import the Menu page component.
+            import Order from "../pages/Order"; // Import the Order page component.
+            import User from "../pages/User"; // Import the User page component.
+            import Almacen from "../components/Almacen"; // Import the Almacen component (Admin subpage).
+            import Ordenes from "../components/Ordenes"; // Import the Ordenes component (Admin subpage).
+            import Clientes from "../components/Clientes"; // Import the Clientes component (Admin subpage).
+            import Opciones from "../components/Opciones"; // Import the Opciones component (Admin subpage).
+            import ProtectedRoute from "../routes/ProtectedRoute"; 
+            // Import ProtectedRoute to secure specific routes based on user roles.
+            import AdminPage from "../pages/Admin"; 
+            // Import the AdminPage component as a base page for admin subroutes.
+
+            const Routing = () => {
+            return (
+                <Router>
+                {/* Define the structure of routes for the application */}
+                <Routes>
+                    {/* Public routes */}
+                    <Route path="/" element={<Register />} /> 
+                    {/* Root route renders the Register page */}
+                    <Route path="/Login" element={<Login />} /> 
+                    {/* Login route renders the Login page */}
+                    <Route path="/Home" element={<Home />} /> 
+                    {/* Home route renders the Home page */}
+                    <Route path="/AboutUs" element={<AboutUs />} /> 
+                    {/* AboutUs route renders the About Us page */}
+                    <Route path="/Contacto" element={<Contacto />} /> 
+                    {/* Contacto route renders the Contacto page */}
+                    <Route path="/Menu" element={<Menu />} /> 
+                    {/* Menu route renders the Menu page */}
+                    <Route path="/Order" element={<Order />} /> 
+                    {/* Order route renders the Order page */}
+
+                    {/* Protected route for admin-specific pages */}
+                    <Route 
+                    path="/admin" 
+                    element={<ProtectedRoute allowedRole="admin" />} 
+                    >
+                    {/* Nested routes for the Admin section */}
+                    <Route path="" element={<AdminPage />}>
+                        {/* AdminPage is the base page */}
+                        <Route path="almacen" element={<Almacen />} /> 
+                        {/* Almacen subpage */}
+                        <Route path="ordenes" element={<Ordenes />} /> 
+                        {/* Ordenes subpage */}
+                        <Route path="clientes" element={<Clientes />} /> 
+                        {/* Clientes subpage */}
+                        <Route path="opciones" element={<Opciones />} /> 
+                        {/* Opciones subpage */}
+                    </Route>
+                    </Route>
+                    
+                    {/* Public route for users */}
+                    <Route path="/User" element={<User />} /> 
+                    {/* User route renders the User page */}
+                </Routes>
+                </Router>
+            );
+            };
+
+            export default Routing; 
+            // Export the Routing component to be used in the application.
+
+
+            The Routing component sets up the navigation structure for the application using React Router. It defines public and protected routes, ensuring users have access to appropriate pages based on their roles and authentication status.
+
+            Purpose
+            The Routing component is responsible for:
+
+            Defining Application Routes: Organizing and mapping paths to specific page components.
+            Managing Public and Protected Access: Distinguishing between routes accessible to all users and those restricted to administrators.
+            Providing Nested Routing: Supporting subpages for sections like the admin panel.
+            Features
+            Public Routes:
+
+            Open to all users, no authentication required.
+            Includes pages such as:
+            Register ("/")
+            Login ("/Login")
+            Home ("/Home")
+            About Us ("/AboutUs")
+            Contacto ("/Contacto")
+            Menu ("/Menu")
+            Order ("/Order")
+            User ("/User")
+            Protected Admin Routes:
+
+            Secured using the ProtectedRoute component.
+            Restricted to users with the admin role.
+            Includes:
+            Admin Base Page ("/admin")
+            Subpages:
+            Almacen ("/admin/almacen")
+            Ordenes ("/admin/ordenes")
+            Clientes ("/admin/clientes")
+            Opciones ("/admin/opciones")
+            Nested Routing:
+
+            Admin-specific routes are nested under the /admin path.
+            The AdminPage acts as a parent component for subpages like Almacen, Ordenes, Clientes, and Opciones.
+            Dynamic Role-Based Security:
+
+            Uses ProtectedRoute to verify user roles and restrict access accordingly.
+
+
+
+    Services
+
+        Admin
+
+            Font Code
+            import axios from 'axios'; 
+            // Import the Axios library for making HTTP requests.
+
+            const URL = import.meta.env.VITE_API_URL; 
+            // Fetch the API base URL from environment variables, allowing for dynamic configuration.
+
+            const registerAdmin = async (adminData) => {
+                console.log('Sending client data:', adminData);  
+                // Log the admin data being sent for debugging purposes.
+
+                try {
+                    const response = await axios.post(`${URL}/admin/adminRegister`, adminData);
+                    // Send a POST request to register a new admin with the provided admin data.
+                    return response.data; 
+                    // Return the response data to the caller.
+                } catch (error) {
+                    console.error("Error response:", error.response);  
+                    // Log the error response for debugging.
+                    throw error.response?.data || { message: "Error al registrar el cliente" }; 
+                    // Throw the error message returned by the API or a default error message.
+                }
+            };
+
+            const loginAdmin = async (loginData) => {
+                try {
+                    const response = await axios.post(`${URL}/admin/adminLogin`, loginData);  
+                    // Send a POST request for admin login with the provided login credentials.
+                    return response.data; 
+                    // Return the response data (e.g., token, user details) to the caller.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al iniciar sesión" }; 
+                    // Throw the error message returned by the API or a default error message.
+                }
+            };
+
+            const getAllAdmins = async () => {
+                try {
+                    const response = await axios.get(`${URL}/admin`); 
+                    // Send a GET request to retrieve all registered admins.
+                    return response.data; 
+                    // Return the response data (list of admins) to the caller.
+                } catch (error) {
+                    console.error("Error al obtener los clientes:", error.response || error); 
+                    // Log the error response or full error object for debugging.
+                    throw error.response?.data || { message: "Error al obtener los clientes" }; 
+                    // Throw the error message returned by the API or a default error message.
+                }
+            };
+
+            const getAdminById = async (id) => {
+                try {
+                    const response = await axios.get(`${URL}/admin/${id}`); 
+                    // Send a GET request to retrieve a specific admin by their ID.
+                    return response.data; 
+                    // Return the response data (admin details) to the caller.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener el cliente" }; 
+                    // Throw the error message returned by the API or a default error message.
+                }
+            };
+
+            const updateAdmin = async (id, updatedData) => {
+                try {
+                    const response = await axios.put(`${URL}/admin/${id}`, updatedData); 
+                    // Send a PUT request to update an admin's data based on their ID.
+                    return response.data; 
+                    // Return the updated admin data to the caller.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al actualizar el cliente" }; 
+                    // Throw the error message returned by the API or a default error message.
+                }
+            };
+
+            const deleteAdmin = async (id) => {
+                try {
+                    const response = await axios.delete(`${URL}/admin/${id}`); 
+                    // Send a DELETE request to remove an admin by their ID.
+                    return response.data; 
+                    // Return the deletion confirmation or result to the caller.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al eliminar el cliente" }; 
+                    // Throw the error message returned by the API or a default error message.
+                }
+            };
+
+            // Export all the functions for use in other parts of the application.
+            export { registerAdmin, loginAdmin, getAdminById, getAllAdmins, updateAdmin, deleteAdmin };
+
+            Dynamic API Configuration:
+
+            The base URL for API requests is dynamically fetched from environment variables (VITE_API_URL), allowing flexibility for different environments (e.g., development, production).
+            Admin Operations:
+
+            Register Admin (registerAdmin): Sends a POST request to create a new admin.
+            Login Admin (loginAdmin): Sends a POST request to authenticate an admin and retrieve a token or session data.
+            Get All Admins (getAllAdmins): Sends a GET request to retrieve a list of all registered admins.
+            Get Admin by ID (getAdminById): Sends a GET request to retrieve detailed information about a specific admin by their ID.
+            Update Admin (updateAdmin): Sends a PUT request to update an admin's details based on their ID.
+            Delete Admin (deleteAdmin): Sends a DELETE request to remove an admin by their ID.
+            Error Handling:
+
+            Comprehensive error handling is implemented to log and throw API responses or fallback messages. This ensures that meaningful error information is available for debugging or display.
+            Reusable Code:
+
+            Each function is self-contained and reusable across different components of the application.
+            Usage
+            Importing Functions: You can import and use the required functions in your React components or other services.
+
+            import { registerAdmin, loginAdmin, getAdminById, getAllAdmins, updateAdmin, deleteAdmin } from '../services/admin';
+            Example: Registering a New Admin:
+
+            const handleRegister = async (adminData) => {
+                try {
+                    const response = await registerAdmin(adminData);
+                    console.log('Admin registered successfully:', response);
+                } catch (error) {
+                    console.error('Error registering admin:', error.message);
+                }
+            };
+            Example: Logging in an Admin:
+
+            const handleLogin = async (loginData) => {
+                try {
+                    const response = await loginAdmin(loginData);
+                    console.log('Login successful, token:', response.token);
+                } catch (error) {
+                    console.error('Error logging in:', error.message);
+                }
+            };
+            Advantages
+            Centralized API Interaction:
+
+            Keeps API request logic separate from UI components, promoting clean architecture and maintainability.
+            Dynamic Environment Adaptation:
+
+            Uses environment variables to adapt to different deployment scenarios without code changes.
+            Comprehensive Error Handling:
+
+            Logs errors for debugging and provides fallback messages for robust application behavior.
+            Reusability:
+
+            Encapsulated functions reduce code duplication and simplify future updates or refactoring.
+
+
+        Client
+
+            Font Code
+            import axios from 'axios'; 
+            // Import Axios for making HTTP requests.
+
+            const URL = import.meta.env.VITE_API_URL; 
+            // Base API URL is fetched from environment variables, ensuring flexibility across environments.
+
+            const registerClient = async (clientData) => {
+                console.log('Sending client data:', clientData); 
+                // Log the client data being sent for debugging purposes.
+
+                try {
+                    const response = await axios.post(`${URL}/client/register`, clientData);
+                    // Send a POST request to register a new client with the provided data.
+                    return response.data; 
+                    // Return the response data to the caller.
+                } catch (error) {
+                    console.error("Error response:", error.response); 
+                    // Log the error response for debugging.
+                    throw error.response?.data || { message: "Error al registrar el cliente" }; 
+                    // Throw the API error or a default error message.
+                }
+            };
+
+            const loginClient = async (loginData) => {
+                try {
+                    const response = await axios.post(`${URL}/client/login`, loginData); 
+                    // Send a POST request to log in a client with the provided credentials.
+                    sessionStorage.setItem('clientName', response.data.clientName); 
+                    // Save the client's name to `sessionStorage` for use across the session.
+                    return response.data; 
+                    // Return the response data (e.g., token, user info) to the caller.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al iniciar sesión" }; 
+                    // Throw the API error or a default error message.
+                }
+            };
+
+            const getAllClients = async () => {
+                try {
+                    const response = await axios.get(`${URL}/client`); 
+                    // Send a GET request to fetch all clients.
+                    return response.data; 
+                    // Return the list of clients.
+                } catch (error) {
+                    console.error("Error al obtener los clientes:", error.response || error); 
+                    // Log the error response or the entire error object.
+                    throw error.response?.data || { message: "Error al obtener los clientes" }; 
+                    // Throw the API error or a default error message.
+                }
+            };
+
+            export const getClientById = async (clientId) => {
+                const codedToken = sessionStorage.getItem("token"); 
+                // Retrieve the authentication token from `sessionStorage`.
+
+                if (!codedToken) {
+                    throw new Error("Token not found in sessionStorage"); 
+                    // Throw an error if the token is not found.
+                }
+
+                try {
+                    const response = await axios.get(`${URL}/client/${clientId}`, {
+                        headers: {
+                            Authorization: `Bearer ${codedToken}`, 
+                            // Include the token in the Authorization header for authenticated requests.
+                        },
+                    });
+                    return response.data; 
+                    // Return the client data for the given ID.
+                } catch (error) {
+                    console.error("Error in getClientById:", error.response?.data || error); 
+                    // Log the error for debugging purposes.
+                    throw error.response?.data || error; 
+                    // Throw the API error or the entire error object.
+                }
+            };
+
+            const updateClient = async (id, clientData) => {
+                const token = sessionStorage.getItem("token"); 
+                // Retrieve the authentication token from `sessionStorage`.
+
+                if (!token) {
+                    throw new Error("Token not found in sessionStorage"); 
+                    // Throw an error if the token is not found.
+                }
+                
+                try {
+                    const response = await axios.put(`${URL}/client/${id}`, clientData, {
+                        headers: {
+                            Authorization: `Bearer ${token}`, 
+                            // Include the token in the Authorization header for authenticated requests.
+                            "Content-Type": "application/json", 
+                            // Specify the content type for the request.
+                        },
+                    });
+                    return response.data; 
+                    // Return the updated client data.
+                } catch (error) {
+                    console.error("Error in updateClient:", error.response?.data || error); 
+                    // Log the error for debugging purposes.
+                    throw error.response?.data || error; 
+                    // Throw the API error or the entire error object.
+                }
+            };
+
+            const deleteClient = async (id) => {
+                const token = sessionStorage.getItem("token"); 
+                // Retrieve the authentication token from `sessionStorage`.
+
+                if (!token) {
+                    throw new Error("Token not found in sessionStorage"); 
+                    // Throw an error if the token is not found.
+                }
+
+                try {
+                    const response = await axios.delete(`${URL}/client/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`, 
+                            // Include the token in the Authorization header for authenticated requests.
+                        },
+                    });
+                    return response.data; 
+                    // Return the deletion confirmation or result.
+                } catch (error) {
+                    console.error("Error in deleteClient:", error.response?.data || error); 
+                    // Log the error for debugging purposes.
+                    throw error.response?.data || error; 
+                    // Throw the API error or the entire error object.
+                }
+            };
+
+            // Export all client-related functions for use in other parts of the application.
+            export { registerClient, loginClient, getAllClients, updateClient, deleteClient };
+
+            The Client Services module is designed to handle all API interactions related to client operations within the application. Using Axios, it performs HTTP requests for tasks such as client registration, authentication, data retrieval, updates, and deletions.
+
+            Purpose
+            This module centralizes client-specific API functionality, ensuring consistent and reusable interaction with the backend while maintaining a clean separation of concerns.
+
+            Features
+            Dynamic Configuration:
+
+            The base API URL is sourced from environment variables (VITE_API_URL), enabling seamless adaptation to different environments (e.g., development, staging, production).
+            Client Operations:
+
+            Register Client (registerClient): Sends a POST request to create a new client account.
+            Login Client (loginClient): Authenticates a client via POST, returning session data such as tokens and client information.
+            Get All Clients (getAllClients): Fetches a list of all registered clients via GET.
+            Get Client by ID (getClientById): Retrieves specific client details using their ID, with token-based authentication.
+            Update Client (updateClient): Updates a client's information using their ID, secured by token-based authentication.
+            Delete Client (deleteClient): Removes a client record using their ID, with token-based authentication.
+            Session Management:
+
+            Uses sessionStorage to securely store and retrieve tokens and session data for authenticated requests.
+            Comprehensive Error Handling:
+
+            Logs errors for debugging purposes and throws meaningful error messages for better user feedback and debugging.
+            Reusability:
+
+            Encapsulated functions make the code modular and maintainable, enabling their use across multiple components.
+            Usage
+            Importing Functions: Import the required functions into your React components or services to manage client-related operations.
+
+
+            import { registerClient, loginClient, getAllClients, getClientById, updateClient, deleteClient } from '../services/client';
+            Examples:
+
+            Register a New Client:
+
+            const handleRegister = async (clientData) => {
+                try {
+                    const response = await registerClient(clientData);
+                    console.log('Client registered successfully:', response);
+                } catch (error) {
+                    console.error('Error registering client:', error.message);
+                }
+            };
+            Login a Client:
+
+            const handleLogin = async (loginData) => {
+                try {
+                    const response = await loginClient(loginData);
+                    console.log('Login successful:', response);
+                } catch (error) {
+                    console.error('Error logging in:', error.message);
+                }
+            };
+            Retrieve Client Data by ID:
+
+            const fetchClient = async (clientId) => {
+                try {
+                    const client = await getClientById(clientId);
+                    console.log('Client data:', client);
+                } catch (error) {
+                    console.error('Error fetching client data:', error.message);
+                }
+            };
+            Security Considerations
+            Token Authentication:
+
+            API requests for fetching, updating, or deleting client data require a valid token stored in sessionStorage.
+            Error Messaging:
+
+            Detailed error logs and custom error messages provide clarity during development and runtime.
+            Environment Variable Usage:
+
+            The base URL is dynamically set via environment variables, reducing the risk of exposing sensitive information in the codebase.
+            Advantages
+            Centralized Logic:
+
+            Consolidates all client-related API calls, improving maintainability and scalability.
+            Dynamic Environment Adaptation:
+
+            Environment variable configuration enables seamless deployment across different stages.
+            Reusability:
+
+            Modular design ensures functions can be reused and updated independently.
+            Error Resilience:
+
+            Comprehensive error handling minimizes runtime disruptions and aids in debugging.
+
+        Dish
+
+            Font Code
+
+            import axios from 'axios'; 
+            // Import axios for making HTTP requests.
+
+            const URL = import.meta.env.VITE_API_URL; 
+            // API base URL retrieved from environment variables.
+
+            const postDish = async (dishData) => {
+                try {
+                    const response = await axios.post(`${URL}/dish`, dishData); 
+                    // Send a POST request to create a new dish with the provided dish data.
+                    return response.data; 
+                    // Return the data from the API response.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al crear el platillo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const getDish = async () => {
+                try {
+                    const response = await axios.get(`${URL}/dish`); 
+                    // Send a GET request to fetch all dishes.
+                    return response.data; 
+                    // Return the data from the API response.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener platillos" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const getDishById = async (id) => {
+                try {
+                    const response = await axios.get(`${URL}/dish/${id}`); 
+                    // Send a GET request to fetch a specific dish by its ID.
+                    return response.data; 
+                    // Return the data from the API response.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener platillo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const updateDish = async (id) => {
+                try {
+                    const response = await axios.put(`${URL}/dish/${id}`); 
+                    // Send a PUT request to update a specific dish by its ID.
+                    return response.data; 
+                    // Return the data from the API response.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al actualizar el platillo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const deleteDish = async (id) => {
+                try {
+                    const response = await axios.delete(`${URL}/dish/${id}`); 
+                    // Send a DELETE request to remove a specific dish by its ID.
+                    return response.data; 
+                    // Return the data from the API response.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al eliminar el platillo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            export { postDish, getDishById, getDish, updateDish, deleteDish }; 
+            // Export all dish-related functions for use in other parts of the application.
+
+
+            The Dish Services module is designed to handle all API interactions related to managing dishes within the application. It provides functions to create, retrieve, update, and delete dishes by leveraging Axios for HTTP requests.
+
+            Purpose
+            This module centralizes the logic for interacting with the dish-related endpoints of the backend API, ensuring consistent and reusable functionality across the application.
+
+            Features
+            Dynamic Configuration:
+
+            The base API URL is sourced from environment variables (VITE_API_URL), allowing seamless adaptation to different environments such as development, staging, or production.
+            Dish Management Operations:
+
+            Create a Dish (postDish): Sends a POST request to add a new dish with the specified data.
+            Retrieve All Dishes (getDish): Fetches all available dishes via a GET request.
+            Retrieve a Dish by ID (getDishById): Fetches details of a specific dish using its unique ID via a GET request.
+            Update a Dish (updateDish): Sends a PUT request to modify a dish’s details using its ID.
+            Delete a Dish (deleteDish): Sends a DELETE request to remove a dish by its ID.
+            Error Handling:
+
+            Catches and logs API errors, ensuring clear feedback for debugging and user notification.
+            Provides default error messages when API responses are unavailable.
+            Reusability:
+
+            Encapsulated functions make the module maintainable and reusable across multiple components.
+            Usage
+            Importing Functions: Import the required functions into your components or services to handle dish-related operations.
+
+            import { postDish, getDish, getDishById, updateDish, deleteDish } from '../services/dish';
+            Examples:
+
+            Create a New Dish:
+
+            const handleCreateDish = async (dishData) => {
+                try {
+                    const response = await postDish(dishData);
+                    console.log('Dish created successfully:', response);
+                } catch (error) {
+                    console.error('Error creating dish:', error.message);
+                }
+            };
+            Retrieve All Dishes:
+
+            const fetchDishes = async () => {
+                try {
+                    const dishes = await getDish();
+                    console.log('All dishes:', dishes);
+                } catch (error) {
+                    console.error('Error fetching dishes:', error.message);
+                }
+            };
+            Retrieve a Dish by ID:
+
+            const fetchDishById = async (dishId) => {
+                try {
+                    const dish = await getDishById(dishId);
+                    console.log('Dish details:', dish);
+                } catch (error) {
+                    console.error('Error fetching dish:', error.message);
+                }
+            };
+            Update a Dish:
+
+            const handleUpdateDish = async (dishId, updatedData) => {
+                try {
+                    const updatedDish = await updateDish(dishId, updatedData);
+                    console.log('Dish updated successfully:', updatedDish);
+                } catch (error) {
+                    console.error('Error updating dish:', error.message);
+                }
+            };
+            Delete a Dish:
+
+            const handleDeleteDish = async (dishId) => {
+                try {
+                    const result = await deleteDish(dishId);
+                    console.log('Dish deleted successfully:', result);
+                } catch (error) {
+                    console.error('Error deleting dish:', error.message);
+                }
+            };
+            Security Considerations
+            Environment Variables:
+
+            Uses a dynamic API URL for flexibility and security, avoiding hardcoding sensitive data in the codebase.
+            Error Logging:
+
+            Ensures comprehensive logging of API errors to streamline debugging without exposing sensitive information to end-users.
+            Advantages
+            Centralized API Logic:
+
+            Encapsulates all dish-related API calls, making the application more organized and maintainable.
+            Dynamic and Reusable:
+
+            Easily adaptable to future API changes and reusable across different components.
+            Error Resilience:
+
+            Robust error handling ensures stability and clear feedback during development and production.
+
+
+        DishCategory
+
+            Font Code
+            import axios from 'axios'; 
+            // Import axios for making HTTP requests.
+
+            const URL = import.meta.env.VITE_API_URL; 
+            // API base URL retrieved from environment variables.
+
+            const postDishCategory = async (dishCategoryData) => {
+                try {
+                    const response = await axios.post(`${URL}/dishC`, dishCategoryData); 
+                    // Send a POST request to create a new dish category with the provided data.
+                    return response.data; 
+                    // Return the created dish category data.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al crear categoria" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const getDishCategory = async () => {
+                try {
+                    const response = await axios.get(`${URL}/dishC`); 
+                    // Send a GET request to fetch all dish categories.
+                    return response.data; 
+                    // Return the list of dish categories.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener categoria" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const deleteDishCategory = async (id) => {
+                try {
+                    const response = await axios.delete(`${URL}/dishC/${id}`); 
+                    // Send a DELETE request to remove a specific dish category by its ID.
+                    return response.data; 
+                    // Return the deletion result.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al eliminar categoria" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            export { postDishCategory, getDishCategory, deleteDishCategory }; 
+            // Export functions for handling dish category operations.
+
+
+            The Dish Category Services module provides functionality for managing dish categories by interacting with the backend API. This includes creating, retrieving, and deleting dish categories through HTTP requests.
+
+            Purpose
+            This module centralizes the logic for dish category-related API interactions, allowing for a consistent and reusable way to manage dish categories in the application.
+
+            Features
+            Dynamic API URL:
+
+            The base API URL is dynamically retrieved from environment variables (VITE_API_URL) to allow for easy configuration in different environments.
+            Dish Category Operations:
+
+            Create Dish Category (postDishCategory): Sends a POST request to add a new dish category.
+            Retrieve All Dish Categories (getDishCategory): Fetches all available dish categories via a GET request.
+            Delete Dish Category (deleteDishCategory): Sends a DELETE request to remove a dish category by its ID.
+            Error Handling:
+
+            Catches and logs API errors to ensure clear feedback for debugging.
+            Provides default error messages when API responses are unavailable or incomplete.
+            Reusability:
+
+            Encapsulated functions ensure modularity and reusability across different components.
+            Usage
+            Importing Functions: Import the necessary functions into your components or services for handling dish category operations.
+
+            import { postDishCategory, getDishCategory, deleteDishCategory } from '../services/dishCategory';
+            Examples:
+
+            Create Dish Category:
+
+            const createDishCategory = async (categoryData) => {
+                try {
+                    const result = await postDishCategory(categoryData);
+                    console.log('Dish category created successfully:', result);
+                } catch (error) {
+                    console.error('Error creating dish category:', error.message);
+                }
+            };
+            Retrieve All Dish Categories:
+
+            const fetchDishCategories = async () => {
+                try {
+                    const categories = await getDishCategory();
+                    console.log('All dish categories:', categories);
+                } catch (error) {
+                    console.error('Error fetching dish categories:', error.message);
+                }
+            };
+            Delete Dish Category:
+
+            const removeDishCategory = async (id) => {
+                try {
+                    const result = await deleteDishCategory(id);
+                    console.log('Dish category deleted successfully:', result);
+                } catch (error) {
+                    console.error('Error deleting dish category:', error.message);
+                }
+            };
+            Security Considerations
+            Environment Variables:
+
+            The use of dynamic API URLs enhances security by avoiding hardcoding sensitive data directly in the application.
+            Error Handling:
+
+            Comprehensive error handling ensures that errors are managed properly, and potential sensitive information is not exposed.
+            Advantages
+            Centralized Dish Category Logic:
+
+            Provides a centralized, consistent way to manage dish categories, making the application more maintainable and scalable.
+            Ease of Use:
+
+            Simple, straightforward functions that handle all necessary API operations for dish categories.
+            Error Resilience:
+
+            Robust error handling allows for smooth operation even when the backend API experiences issues.
+
+
+        Drink
+
+            Font Code
+            import axios from 'axios'; 
+            // Import axios for making HTTP requests.
+
+            const URL = import.meta.env.VITE_API_URL; 
+            // API base URL retrieved from environment variables.
+
+            const postDrink = async (drinkData) => {
+                try {
+                    const response = await axios.post(`${URL}/drink`, drinkData); 
+                    // Send a POST request to create a new drink with the provided data.
+                    return response.data; 
+                    // Return the created drink data.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al crear bebida" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const getDrink = async () => {
+                try {
+                    const response = await axios.get(`${URL}/drink`); 
+                    // Send a GET request to fetch all drinks.
+                    return response.data; 
+                    // Return the list of drinks.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener bebidas" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const putDrink = async (id, datos) => {
+                try {
+                    const response = await axios.put(`${URL}/drink/${id}`, datos); 
+                    // Send a PUT request to update a specific drink using its ID and updated data.
+                    return response.data; 
+                    // Return the updated drink data.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al editar bebida" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const deleteDrink = async (id) => {
+                try {
+                    const response = await axios.delete(`${URL}/drink/${id}`); 
+                    // Send a DELETE request to remove a specific drink by its ID.
+                    return response.data; 
+                    // Return the deletion result.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al eliminar bebida" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            export { postDrink, getDrink, putDrink, deleteDrink }; 
+            // Export functions for handling drink operations.
+
+
+            The Drink Management Service module provides CRUD (Create, Read, Update, Delete) operations for managing drink data through API requests. It includes functions for creating, retrieving, updating, and deleting drinks in the application.
+
+            Features
+            Dynamic API URL:
+
+            The base API URL is dynamically retrieved from environment variables (VITE_API_URL) to allow for flexibility across different environments.
+            Drink Operations:
+
+            Create Drink (postDrink): Sends a POST request to create a new drink with the provided data.
+            Retrieve All Drinks (getDrink): Fetches all available drinks via a GET request.
+            Update Drink (putDrink): Sends a PUT request to update a specific drink using its unique ID and updated data.
+            Delete Drink (deleteDrink): Sends a DELETE request to remove a drink by its unique ID.
+            Error Handling:
+
+            Handles errors gracefully by logging them and providing default error messages when API responses are unavailable.
+            Functions
+            postDrink:
+
+            Creates a new drink by sending a POST request.
+            Returns the created drink data.
+            getDrink:
+
+            Retrieves all drinks by sending a GET request.
+            Returns a list of drinks.
+            putDrink:
+
+            Updates a specific drink by sending a PUT request with updated data.
+            Returns the updated drink data.
+            deleteDrink:
+
+            Deletes a drink by its ID using a DELETE request.
+            Returns the deletion result.
+            Usage
+            Importing Functions: Import the necessary functions into your components or services for handling drink operations.
+
+            import { postDrink, getDrink, putDrink, deleteDrink } from '../services/drinkManagement';
+            Examples:
+
+            Create Drink:
+
+            const createDrink = async (drinkData) => {
+                try {
+                    const result = await postDrink(drinkData);
+                    console.log('Drink created successfully:', result);
+                } catch (error) {
+                    console.error('Error creating drink:', error.message);
+                }
+            };
+            Retrieve All Drinks:
+
+            const fetchDrinks = async () => {
+                try {
+                    const drinks = await getDrink();
+                    console.log('All drinks:', drinks);
+                } catch (error) {
+                    console.error('Error fetching drinks:', error.message);
+                }
+            };
+            Update Drink:
+
+            const updateDrink = async (id, updatedData) => {
+                try {
+                    const result = await putDrink(id, updatedData);
+                    console.log('Drink updated successfully:', result);
+                } catch (error) {
+                    console.error('Error updating drink:', error.message);
+                }
+            };
+            Delete Drink:
+
+            const removeDrink = async (id) => {
+                try {
+                    const result = await deleteDrink(id);
+                    console.log('Drink deleted successfully:', result);
+                } catch (error) {
+                    console.error('Error deleting drink:', error.message);
+                }
+            };
+            Security Considerations
+            Environment Variables:
+
+            Using dynamic API URLs enhances security by preventing the hardcoding of sensitive information.
+            Error Handling:
+
+            Comprehensive error handling ensures sensitive data is not exposed, and developers are alerted to potential issues in API interactions.
+            Advantages
+            Centralized Drink Operations:
+
+            The module encapsulates all necessary operations for managing drinks, promoting a clean and modular approach.
+            Ease of Integration:
+
+            Simple, reusable functions streamline the integration of drink management into various parts of the application.
+            Error Resilience:
+
+            Robust error management handles potential issues, providing a smooth experience for users and developers.
+
+
+
+        Drink
+
+            Font Code
+            import axios from 'axios'; 
+            // Import axios for making HTTP requests.
+
+            const URL = import.meta.env.VITE_API_URL; 
+            // API base URL retrieved from environment variables.
+
+            const postDrink = async (drinkData) => {
+                try {
+                    const response = await axios.post(`${URL}/drink`, drinkData); 
+                    // Send a POST request to create a new drink with the provided data.
+                    return response.data; 
+                    // Return the created drink data.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al crear bebida" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const getDrink = async () => {
+                try {
+                    const response = await axios.get(`${URL}/drink`); 
+                    // Send a GET request to fetch all drinks.
+                    return response.data; 
+                    // Return the list of drinks.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener bebidas" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const putDrink = async (id, datos) => {
+                try {
+                    const response = await axios.put(`${URL}/drink/${id}`, datos); 
+                    // Send a PUT request to update a specific drink using its ID and updated data.
+                    return response.data; 
+                    // Return the updated drink data.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al editar bebida" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const deleteDrink = async (id) => {
+                try {
+                    const response = await axios.delete(`${URL}/drink/${id}`); 
+                    // Send a DELETE request to remove a specific drink by its ID.
+                    return response.data; 
+                    // Return the deletion result.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al eliminar bebida" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            export { postDrink, getDrink, putDrink, deleteDrink }; 
+            // Export functions for handling drink operations.
+
+
+            The Drink Management Module provides essential functions for creating, retrieving, updating, and deleting drinks via API requests. This module is designed to handle interactions with the backend API efficiently and securely.
+
+            Features
+            Dynamic API URL:
+
+            The base URL for API requests is dynamically loaded from environment variables (VITE_API_URL), allowing for flexibility across different development, testing, and production environments.
+            CRUD Operations:
+
+            The module supports the full CRUD (Create, Read, Update, Delete) functionality for managing drinks.
+            Error Handling:
+
+            Comprehensive error handling is implemented to gracefully handle API failures and provide meaningful error messages.
+            Functions
+            postDrink:
+
+            Creates a new drink by sending a POST request with the provided drink data.
+            Returns the created drink data.
+            getDrink:
+
+            Retrieves all drinks by sending a GET request.
+            Returns the list of drinks.
+            putDrink:
+
+            Updates a specific drink by its unique ID with the provided updated data via a PUT request.
+            Returns the updated drink data.
+            deleteDrink:
+
+            Deletes a drink using its unique ID with a DELETE request.
+            Returns the deletion confirmation or result.
+            Error Handling
+            Each function in the module handles errors by logging them and providing either the error response data or a default error message:
+
+            postDrink: throw error.response?.data || { message: "Error al crear bebida" };
+            getDrink: throw error.response?.data || { message: "Error al obtener bebidas" };
+            putDrink: throw error.response?.data || { message: "Error al editar bebida" };
+            deleteDrink: throw error.response?.data || { message: "Error al eliminar bebida" };
+            These mechanisms ensure that failures are caught, and appropriate feedback is given to the user or developer.
+
+
+        TypeDish
+
+        Font Code
+
+            import axios from 'axios'; 
+            // Import axios for making HTTP requests.
+
+            const URL = import.meta.env.VITE_API_URL; 
+            // API base URL retrieved from environment variables.
+
+            const createTypeDish = async (typeDishData) => {
+                try {
+                    const response = await axios.post(`${URL}/typeDish`, typeDishData); 
+                    // Send a POST request to create a new type of dish.
+                    return response.data; 
+                    // Return the created type of dish.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al crear tipo de platillo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const getTypeDish = async (id) => {
+                try {
+                    const response = await axios.get(`${URL}/typeDish/${id}`); 
+                    // Send a GET request to fetch a specific type of dish by its ID.
+                    return response.data; 
+                    // Return the type of dish data.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener tipo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const getAllTypeDish = async () => {
+                try {
+                    const response = await axios.get(`${URL}/typeDish`); 
+                    // Send a GET request to fetch all types of dishes.
+                    return response.data; 
+                    // Return the list of types of dishes.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al obtener tipos de platillos" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const putTypeDish = async (id) => {
+                try {
+                    const response = await axios.put(`${URL}/typeDish/${id}`); 
+                    // Send a PUT request to update a specific type of dish by its ID.
+                    return response.data; 
+                    // Return the updated type of dish data.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al actualizar el tipo de platillo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            const deleteTypeDish = async (id) => {
+                try {
+                    const response = await axios.delete(`${URL}/typeDish/${id}`); 
+                    // Send a DELETE request to remove a specific type of dish by its ID.
+                    return response.data; 
+                    // Return the result of the deletion.
+                } catch (error) {
+                    throw error.response?.data || { message: "Error al eliminar tipo de platillo" }; 
+                    // Handle errors by throwing the error response data or a default message.
+                }
+            };
+
+            export { createTypeDish, getTypeDish, getAllTypeDish, putTypeDish, deleteTypeDish }; 
+            // Export functions for handling type dish operations.
+
+
+            The Type Dish Management Module provides a set of functions for managing different types of dishes through API requests. This module supports creating, retrieving, updating, and deleting types of dishes, ensuring efficient and seamless interactions with the backend.
+
+            Features
+            Dynamic API URL:
+
+            The base API URL is dynamically loaded from environment variables (VITE_API_URL), providing flexibility across different environments.
+            CRUD Operations:
+
+            The module handles the full lifecycle of type dish management, including creation, retrieval, updating, and deletion.
+            Error Handling:
+
+            Each function implements robust error handling to gracefully manage API failures and return appropriate error messages.
+            Functions
+            createTypeDish:
+
+            Sends a POST request to create a new type of dish with the provided data.
+            Returns the created type dish data.
+            getTypeDish:
+
+            Fetches a single type of dish by its unique ID using a GET request.
+            Returns the type dish data.
+            getAllTypeDish:
+
+            Retrieves all types of dishes by sending a GET request.
+            Returns the list of all type dishes.
+            putTypeDish:
+
+            Updates a specific type of dish by its unique ID with the provided data via a PUT request.
+            Returns the updated type dish data.
+            deleteTypeDish:
+
+            Removes a type of dish using its unique ID with a DELETE request.
+            Returns the deletion confirmation or result.
+            Error Handling
+            Each function in the module handles errors by logging them and providing either the error response data or a default error message:
+
+            createTypeDish: throw error.response?.data || { message: "Error al crear tipo de platillo" };
+            getTypeDish: throw error.response?.data || { message: "Error al obtener tipo" };
+            getAllTypeDish: throw error.response?.data || { message: "Error al obtener tipos de platillos" };
+            putTypeDish: throw error.response?.data || { message: "Error al actualizar el tipo de" };
+            deleteTypeDish: throw error.response?.data || { message: "Error al eliminar tipo de platillo" };
+            These mechanisms ensure that any errors are appropriately managed and that the user or developer receives meaningful feedback.
+
+
+
 
 
 
