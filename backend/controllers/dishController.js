@@ -4,25 +4,28 @@ const TypeDish = require('../models/typeDishModel');
 const multer = require('multer');
 const path = require('path');
 
+// Configuración de Multer para subir archivos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); 
+    cb(null, 'uploads/'); // Carpeta para guardar las imágenes
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + path.extname(file.originalname)); // Nombre único para cada archivo
   },
 });
 
 const upload = multer({ storage });
 
+// Crear platillo
 const createDish = async (req, res) => {
   try {
     console.log("Datos recibidos en el backend:", req.body);
     console.log("Archivo recibido:", req.file);
 
     const { dishName, dishDescription, dishCategory, dishPrice, typeDish } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL de la imagen
 
+    // Validación de categoría y tipo de plato
     const categoryExists = await DishCategory.findById(dishCategory);
     if (!categoryExists) {
       console.log("La categoría no existe");
@@ -35,13 +38,14 @@ const createDish = async (req, res) => {
       return res.status(404).json({ message: "El tipo de plato no existe" });
     }
 
+    // Crear el nuevo platillo
     const newDish = new Dish({
       dishName,
       dishDescription,
       dishPrice,
       dishCategory,
       typeDish,
-      imageUrl,
+      imageUrl, // Guardar la URL de la imagen
     });
 
     await newDish.save();
@@ -53,6 +57,7 @@ const createDish = async (req, res) => {
   }
 };
 
+// Obtener todos los platos
 const getDishes = async (req, res) => {
   try {
     const dishes = await Dish.find()
@@ -64,6 +69,7 @@ const getDishes = async (req, res) => {
   }
 };
 
+// Obtener plato por ID
 const getDishById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -81,6 +87,7 @@ const getDishById = async (req, res) => {
   }
 };
 
+// Actualizar plato
 const updateDish = async (req, res) => {
   try {
     const { id } = req.params;
@@ -119,6 +126,7 @@ const updateDish = async (req, res) => {
   }
 };
 
+// Eliminar plato
 const deleteDish = async (req, res) => {
   try {
     const { id } = req.params;
