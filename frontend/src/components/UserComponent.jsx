@@ -43,25 +43,6 @@ const UserPage = () => {
         }
     },[]);
 
-    // const fetchClientId = async () => {
-    //     try {
-    //         const codedToken = sessionStorage.getItem("token");
-    
-    //         if (!codedToken) {
-    //             throw new Error("Token not found in sessionStorage");
-    //         }
-    
-    //         const decodedToken = jwtDecode(codedToken);
-    //         const clientId = decodedToken.id;
-    
-    //         const idForm = await getClientById(clientId);
-    
-    //         return idForm;
-    //     } catch (error) {
-    //         console.error('Error fetching the client id:', error);
-    //         throw error;
-    //     }
-    // };
 
     const fetchClientId = async () => {
         try {
@@ -171,28 +152,42 @@ const UserPage = () => {
                         <strong>Correo Electrónico:</strong> {renderClientEmail || "No disponible"}
                     </Typography>
                                 <Button
-    variant="outlined"
-    onClick={async () => {
-        try {
-            const clientData = await fetchClientId();
-            setShowModal(true); // Open modal
-            setPlaceholderName(renderClientName); // Set name for placeholder
-            setPlaceholderEmail(renderClientEmail); // Set email for placeholder
-            
-        } catch (error) {
-            console.error("Error fetching client data:", error);
-            toast.error("Error al obtener los datos del cliente");
-        }
-    }}
-    sx={{
-        marginTop: 2,
-        backgroundColor: "#008000",
-        color: "#fff",
-        "&:hover": { backgroundColor: "#007000" },
-    }}
->
-    Actualizar Datos
-</Button>
+                                    variant="outlined"
+                                    onClick={async () => {
+                                        try {
+                                            const clientData = await fetchClientId();
+                                            setShowModal(true); // Open modal
+                                            setPlaceholderName(renderClientName); // Set name for placeholder
+                                            setPlaceholderEmail(renderClientEmail); // Set email for placeholder
+                                            
+                                        } catch (error) {
+                                            console.error("Error fetching client data:", error);
+                                            toast.error("Error al obtener los datos del cliente");
+                                        }
+                                    }}
+                                    sx={{
+                                        marginTop: 2,
+                                        marginRight:2,
+                                        backgroundColor: "#008000",
+                                        color: "#fff",
+                                        "&:hover": { backgroundColor: "#007000" },
+                                    }}
+                                >
+                                    Actualizar Datos
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    
+                                    sx={{
+                                        marginTop: 2,
+                                        backgroundColor: "#ce1414",
+                                        color: "#fff",
+                                        "&:hover": { backgroundColor: "#710b0b" },
+                                    }}
+                                >
+
+                                    Eliminar cuenta
+                                </Button>
                 </>
                 
             )}
@@ -276,7 +271,7 @@ const UserPage = () => {
             <GlobalStyles styles={{ body: { fontFamily: "'Patrick Hand', cursive" } }} />
             <Container maxWidth="xl" sx={{ backgroundColor: '#fafafa ', minHeight: '100vh', padding: 2 }}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={3} md={2} sx={{ backgroundColor: '#008000', color: 'white', padding: 2 }}>
+                    <Grid item xs={12} sm={3} md={2} mt={1} sx={{ backgroundColor: '#008000', color: 'white', padding: 2, minHeight: '100vh', borderRadius: '24px'}}>
                         <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 2 }}>
                             Panel de Usuario
                         </Typography>
