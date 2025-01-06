@@ -14,7 +14,7 @@ const postDish = async (dishData) => {
 const getDish = async () => {
     try {
         const response = await axios.get(`${URL}/dish`);
-         return response.data;
+        return response.data;
     } catch (error) {
         throw error.response?.data || { message: "Error al obtener platillos"};
     };
@@ -23,7 +23,7 @@ const getDish = async () => {
 const getDishById = async (id) => {
     try {
         const response = await axios.get(`${URL}/dish/${id}`);
-         return response.data;
+        return response.data;
     } catch (error) {
         throw error.response?.data || { message: " Error al obtener platillo " }
     };
