@@ -31,7 +31,7 @@ const AdminPage = () => {
   const handleLogout = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('adminName');
-    navigate('/login');
+    navigate('/login'); 
   };
 
   return (

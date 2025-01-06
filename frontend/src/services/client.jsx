@@ -37,14 +37,6 @@ const getAllClients = async () => {
         throw error.response?.data || { message: "Error al obtener los clientes" };
     }
 };
-// const getClientById = async (id) => {
-//     try {
-//         const response = await axios.get(`${URL}/client/${id}`);
-//         return response.data;
-//     } catch (error) {
-//         throw error.response?.data || { message: "Error al obtener el cliente" };
-//     }
-// };
 
 export const getClientById = async (clientId) => {
     const codedToken = sessionStorage.getItem("token");

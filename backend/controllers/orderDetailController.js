@@ -1,13 +1,26 @@
 const OrderDetail = require('../models/orderDetailModel');
+const Client = require('../models/clientModel')
 
 const createOrderDetail = async (req, res) => {
     try {
-        const { drink, dish, client, quantity, specialInstructions } = req.body;
+        const { drink, dish, clientName, quantity, specialInstructions } = req.body;
 
+        // Verifica si clientName existe
+        if (!clientName) {
+            return res.status(400).json({ message: 'El nombre del cliente es requerido' });
+        }
+
+        // Buscar cliente por nombre
+        const client = await Client.findOne({ clientname: clientName });
+        if (!client) {
+            return res.status(404).json({ message: 'Cliente no encontrado' });
+        }
+
+        // Crear el detalle de la orden con el ObjectId del cliente
         const newOrderDetail = new OrderDetail({
             drink,
             dish,
-            client,
+            client: client._id,  // Usar el ObjectId del cliente
             quantity,
             specialInstructions,
         });
@@ -18,6 +31,7 @@ const createOrderDetail = async (req, res) => {
         res.status(500).json({ message: 'Error al crear el detalle de la orden', error: error.message });
     }
 };
+
 
 const getAllOrderDetails = async (req, res) => {
     try {
