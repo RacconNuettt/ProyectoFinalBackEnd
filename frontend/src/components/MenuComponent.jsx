@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Typography, Card, CardMedia, CardContent, Button, Modal, MenuItem, Select, InputLabel, FormControl, TextField } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const URL = import.meta.env.VITE_API_URL;
 
@@ -134,12 +136,12 @@ const MenuComponent = () => {
             );
     
             console.log('Orden creada:', response.data);
+            toast.success('Su orden se realizó correctamente');  // Agregar el toast
             setOpenModal(false);
         } catch (error) {
             console.error('Error al crear la orden:', error);
         }
     };
-    
 
     return (
         <Box>
@@ -242,6 +244,9 @@ const MenuComponent = () => {
                     </Button>
                 </Box>
             </Modal>
+
+            {/* ToastContainer */}
+            <ToastContainer />
         </Box>
     );
 };
