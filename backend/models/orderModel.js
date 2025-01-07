@@ -6,10 +6,6 @@ const orderSchema = new mongoose.Schema({
     ref: 'OrderDetail',
     required: true,
   }],
-  orderDate: {
-    type: Date,
-    default: Date.now,
-  },
   status: {
     type: String,
     enum: ['Pending', 'Preparing', 'Completed', 'Cancelled'],

@@ -32,7 +32,7 @@ const getDishById = async (id) => {
 const updateDish = async (id) => {
     try {
         const response = await axios.put(`${URL}/dish/${id}`);
-        return response.data;
+        return response.data;   
     } catch (error) {
         throw error.response?.data || { message: " Error al actualizar el platillo "};
     };
