@@ -7,6 +7,7 @@ import { updateClient } from '../services/client';
 import { FaHome, FaClipboardList, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { getAllClients } from '../services/client';
 import { getClientById } from '../services/client';
+import { deleteClient } from '../services/client';
 import axios from 'axios';
 
 const UserPage = () => {
@@ -22,6 +23,7 @@ const UserPage = () => {
     const [renderClientEmail, setRenderClientEmail] = useState('');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         const codedToken = sessionStorage.getItem("token");
@@ -55,7 +57,7 @@ const UserPage = () => {
             const decodedToken = jwtDecode(codedToken);
             const clientId = decodedToken.id;
     
-            const clientData = await getClientById(clientId); // Automatically sends token
+            const clientData = await getClientById(clientId);
             return clientData;
         } catch (error) {
             console.error('Error fetching the client id:', error);
@@ -87,7 +89,7 @@ const UserPage = () => {
             if (response) {
                 toast.success("Datos actualizados exitosamente.");
                 setShowModal(false);
-                renderClientInfo(); // Actualiza los datos renderizados
+                renderClientInfo(); 
             } else {
                 toast.error("Respuesta inesperada del servidor.");
             }
@@ -98,7 +100,21 @@ const UserPage = () => {
         }
     };
     
-
+    const handleDelete= async () => {
+        try {
+            const token = sessionStorage.getItem("token");
+            if (!token) throw new Error("No se encontró el token.");
+            const { id } = jwtDecode(token);
+            await deleteClient(id);
+            toast.success('Usuario eliminado correctamente.');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('adminName');
+            navigate('/login'); 
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            toast.error('Error al eliminar el usuario.');
+        }
+      };
     const renderClientInfo = async () => {
         try {
             const codedToken = sessionStorage.getItem("token");
@@ -115,22 +131,20 @@ const UserPage = () => {
     
             const clientId = decodedToken.id;
     
-            const clientData = await getClientById(clientId); // Llama a la API con el ID del cliente
+            const clientData = await getClientById(clientId);
     
             if (!clientData || !clientData.clientname || !clientData.clientemail) {
                 throw new Error("Datos del cliente incompletos o incorrectos");
             }
     
-            // Actualiza el estado con los datos obtenidos
             setRenderClientName(clientData.clientname);
             setRenderClientEmail(clientData.clientemail);
     
-            // Finaliza la carga
             setLoading(false);
         } catch (error) {
             console.error("Error al obtener datos del cliente:", error);
             toast.error("Error al cargar los datos del cliente.");
-            setLoading(false); // Asegúrate de que no se quede en estado de carga
+            setLoading(false);
         }
     };
     
@@ -156,9 +170,9 @@ const UserPage = () => {
                                     onClick={async () => {
                                         try {
                                             const clientData = await fetchClientId();
-                                            setShowModal(true); // Open modal
-                                            setPlaceholderName(renderClientName); // Set name for placeholder
-                                            setPlaceholderEmail(renderClientEmail); // Set email for placeholder
+                                            setShowModal(true); 
+                                            setPlaceholderName(renderClientName); 
+                                            setPlaceholderEmail(renderClientEmail); 
                                             
                                         } catch (error) {
                                             console.error("Error fetching client data:", error);
@@ -177,7 +191,7 @@ const UserPage = () => {
                                 </Button>
                                 <Button
                                     variant="outlined"
-                                    
+                                    onClick={() => setShowDeleteModal(true)}
                                     sx={{
                                         marginTop: 2,
                                         backgroundColor: "#ce1414",
@@ -205,7 +219,7 @@ const UserPage = () => {
                 label="Nombre"
                 value={newClientName}
                 onChange={(e) => setNewClientName(e.target.value)}
-                placeholder={placeholderName} // Set placeholder
+                placeholder={placeholderName}
                 sx={{ mb: 2 }}
             />
             <TextField
@@ -213,7 +227,7 @@ const UserPage = () => {
                 label="Correo Electrónico"
                 value={newClientEmail}
                 onChange={(e) => setNewClientEmail(e.target.value)}
-                placeholder={placeholderEmail} // Set placeholder
+                placeholder={placeholderEmail}
                 sx={{ mb: 2 }}
             />
             <TextField
@@ -244,6 +258,36 @@ const UserPage = () => {
         </DialogActions>
     </form>
 </Dialog>
+    );
+const deleteAccountModal = () => (
+    <Dialog open={showDeleteModal} onClose={() => setShowDeleteModal(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Eliminar cuenta?</DialogTitle>
+        <DialogContent>
+            <Typography>
+                ¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.
+            </Typography>
+        </DialogContent>
+        <DialogActions>
+            <Button
+                variant="contained"
+                sx={{
+                    backgroundColor: '#ce1414',
+                    color: '#fff',
+                    "&:hover": { backgroundColor: "#710b0b" },
+                }}
+                onClick={handleDelete}
+            >
+                Eliminar
+            </Button>
+            <Button
+                variant="outlined"
+                sx={{ color: "#008000" }}
+                onClick={() => setShowDeleteModal(false)}
+            >
+                Cancelar
+            </Button>
+        </DialogActions>
+    </Dialog>
 
     );
 
@@ -311,9 +355,12 @@ const UserPage = () => {
                     <Grid item xs={12} sm={9} md={10}>
                         {content()}
                         {dataUpdateModal()}
+                        {dataUpdateModal()}
+                        {deleteAccountModal()}
                     </Grid>
                 </Grid>
             </Container>
+            
         </>
     );
 };
